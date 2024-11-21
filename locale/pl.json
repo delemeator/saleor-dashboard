@@ -336,7 +336,7 @@
     "string": "Włączenie tego pola wyboru spowoduje usunięcie produktu ze stron wyszukiwania i kategorii. Produkt będzie dostępny na stronach kolekcji."
   },
   "4VivsY": {
-    "string": "Cena całkowita"
+    "string": "Suma"
   },
   "4XRIV5": {
     "context": "add new refund button",
@@ -442,7 +442,7 @@
     "string": "Transakcja jest nieodwracalna. Musisz wysłać zwrot ręcznie."
   },
   "6pPMp9": {
-    "string": "Cena netto"
+    "string": "Suma bez wysyłki"
   },
   "6uy2gU": {
     "string": "Ręcznie zmień uprawnienia dla aplikacji."
@@ -9382,7 +9382,7 @@
     "string": "Sposoby dostawy"
   },
   "c8nvms": {
-    "string": "Wyprzedaże"
+    "string": "Sprzedaż"
   },
   "etP0+D": {
     "string": "Kupony zniżkowe"
