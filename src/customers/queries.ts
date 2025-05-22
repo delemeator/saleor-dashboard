@@ -1,12 +1,4 @@
 import { gql } from "@apollo/client";
-import {
-  CustomerGroupsSearchDocument,
-  CustomerGroupsSearchQuery,
-  CustomerGroupsSearchQueryVariables,
-} from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
-
-import { Customer } from "./types";
 
 export const customerList = gql`
   query ListCustomers(
