@@ -1075,4 +1075,5 @@ export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["us
     ],
   },
   privateMetadata: [],
+  customerGroups: [],
 };
