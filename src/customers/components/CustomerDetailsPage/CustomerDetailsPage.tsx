@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import AccountCustomerGroups from "@dashboard/components/AccountCustomerGroups";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
@@ -17,14 +18,21 @@ import {
   useExtensions,
 } from "@dashboard/extensions/hooks/useExtensions";
 import CustomerGiftCardsCard from "@dashboard/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
-import { AccountErrorFragment, CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
+import {
+  AccountErrorFragment,
+  CustomerDetailsQuery,
+  CustomerGroupsSearchQuery,
+  PermissionEnum,
+} from "@dashboard/graphql";
 import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderListUrl } from "@dashboard/orders/urls";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Option } from "@saleor/macaw-ui-next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -41,6 +49,7 @@ export interface CustomerDetailsPageFormData extends MetadataFormData {
   email: string;
   isActive: boolean;
   note: string;
+  customerGroups: Option[];
 }
 
 export interface CustomerDetailsPageProps {
@@ -51,6 +60,9 @@ export interface CustomerDetailsPageProps {
   saveButtonBar: ConfirmButtonTransitionState;
   onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise<AccountErrorFragment[]>;
   onDelete: () => void;
+  availableCustomerGroups: RelayToFlat<CustomerGroupsSearchQuery["search"]>;
+  fetchMoreCustomerGroups: FetchMoreProps;
+  onCustomerGroupsSearchChange: (value: string) => void;
 }
 
 const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
@@ -61,6 +73,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   saveButtonBar,
   onSubmit,
   onDelete,
+  availableCustomerGroups,
+  fetchMoreCustomerGroups,
+  onCustomerGroupsSearchChange,
 }: CustomerDetailsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -74,6 +89,10 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
     privateMetadata: customer?.privateMetadata
       ? customer?.privateMetadata.map(mapMetadataItemToInput)
       : [],
+    customerGroups:
+      customer?.customerGroups.map(group => {
+        return { value: group.id, label: group.name };
+      }) || [],
   };
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { CUSTOMER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.CUSTOMER_DETAILS);
@@ -133,6 +152,17 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_GIFT_CARD]}>
                 <CustomerGiftCardsCard />
               </RequirePermissions>
+              <CardSpacer />
+              <AccountCustomerGroups
+                formData={data}
+                disabled={disabled}
+                initialSearch={""}
+                errors={[]}
+                availableCustomerGroups={availableCustomerGroups}
+                onChange={change}
+                onSearchChange={onCustomerGroupsSearchChange}
+                {...fetchMoreCustomerGroups}
+              />
             </DetailPageLayout.RightSidebar>
             <Savebar>
               <Savebar.DeleteButton onClick={onDelete} />

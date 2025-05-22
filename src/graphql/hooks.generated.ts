@@ -7986,6 +7986,10 @@ export const CustomerDetailsDocument = gql`
         }
       }
     }
+    customerGroups {
+      id
+      name
+    }
   }
 }
     ${CustomerDetailsFragmentDoc}
@@ -16708,6 +16712,54 @@ export function useSearchCollectionsWithTotalProductsLazyQuery(baseOptions?: Apo
 export type SearchCollectionsWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsQuery>;
 export type SearchCollectionsWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsLazyQuery>;
 export type SearchCollectionsWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>;
+export const CustomerGroupsSearchDocument = gql`
+    query CustomerGroupsSearch($query: String!, $first: Int!, $after: String) {
+  search: customerGroups(first: $first, filter: {search: $query}, after: $after) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useCustomerGroupsSearchQuery__
+ *
+ * To run a query within a React component, call `useCustomerGroupsSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCustomerGroupsSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCustomerGroupsSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useCustomerGroupsSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>(CustomerGroupsSearchDocument, options);
+      }
+export function useCustomerGroupsSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>(CustomerGroupsSearchDocument, options);
+        }
+export type CustomerGroupsSearchQueryHookResult = ReturnType<typeof useCustomerGroupsSearchQuery>;
+export type CustomerGroupsSearchLazyQueryHookResult = ReturnType<typeof useCustomerGroupsSearchLazyQuery>;
+export type CustomerGroupsSearchQueryResult = Apollo.QueryResult<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>;
 export const SearchCustomersDocument = gql`
     query SearchCustomers($after: String, $first: Int!, $query: String!) {
   search: customers(after: $after, first: $first, filter: {search: $query}) {

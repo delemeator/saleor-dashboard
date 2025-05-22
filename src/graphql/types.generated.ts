@@ -16,6 +16,7 @@ export type Scalars = {
   Day: any;
   Decimal: any;
   GenericScalar: any;
+  Hour: any;
   JSON: any;
   JSONString: any;
   Metadata: any;
@@ -27,7 +28,6 @@ export type Scalars = {
   _Any: any;
 };
 
-/** An enumeration. */
 export enum AccountErrorCode {
   ACCOUNT_NOT_CONFIRMED = 'ACCOUNT_NOT_CONFIRMED',
   ACTIVATE_OWN_ACCOUNT = 'ACTIVATE_OWN_ACCOUNT',
@@ -80,9 +80,9 @@ export type AccountInput = {
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user metadata.
+   * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
 };
@@ -99,7 +99,11 @@ export type AccountRegisterInput = {
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
-  /** User public metadata. */
+  /**
+   * User public metadata. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Password. */
   password: Scalars['String'];
@@ -123,9 +127,9 @@ export type AddressInput = {
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
   /**
-   * Address public metadata.
+   * Address public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
@@ -150,7 +154,6 @@ export type AddressInput = {
   streetAddress2?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum AddressTypeEnum {
   BILLING = 'BILLING',
   SHIPPING = 'SHIPPING'
@@ -170,7 +173,6 @@ export enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER'
 }
 
-/** An enumeration. */
 export enum AppErrorCode {
   FORBIDDEN = 'FORBIDDEN',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -284,7 +286,6 @@ export enum AppTypeEnum {
   THIRDPARTY = 'THIRDPARTY'
 }
 
-/** An enumeration. */
 export enum AreaUnitsEnum {
   SQ_CM = 'SQ_CM',
   SQ_DM = 'SQ_DM',
@@ -296,7 +297,6 @@ export enum AreaUnitsEnum {
   SQ_YD = 'SQ_YD'
 }
 
-/** An enumeration. */
 export enum AttributeBulkCreateErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   BLANK = 'BLANK',
@@ -320,7 +320,6 @@ export type AttributeBulkTranslateInput = {
   translationFields: NameTranslationInput;
 };
 
-/** An enumeration. */
 export enum AttributeBulkUpdateErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   BLANK = 'BLANK',
@@ -365,23 +364,19 @@ export type AttributeCreateInput = {
   /**
    * Whether the attribute can be displayed in the admin product list.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /** The entity type which can be used as a reference. */
   entityType?: InputMaybe<AttributeEntityTypeEnum>;
-  /**
-   * External ID of this attribute.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this attribute. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
   /**
    * Whether the attribute can be filtered in storefront.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** The input type to use for entering attribute values in the dashboard. */
@@ -395,7 +390,7 @@ export type AttributeCreateInput = {
   /**
    * The position of the attribute in the storefront navigation (0 by default).
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** The attribute type. */
@@ -410,7 +405,6 @@ export type AttributeCreateInput = {
   visibleInStorefront?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** An enumeration. */
 export enum AttributeEntityTypeEnum {
   PAGE = 'PAGE',
   PRODUCT = 'PRODUCT',
@@ -424,7 +418,6 @@ export type AttributeEntityTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<AttributeEntityTypeEnum>>;
 };
 
-/** An enumeration. */
 export enum AttributeErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -439,7 +432,7 @@ export type AttributeFilterInput = {
   /**
    * Specifies the channel by which the data should be filtered.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
@@ -471,7 +464,6 @@ export type AttributeInput = {
   valuesRange?: InputMaybe<IntRangeInput>;
 };
 
-/** An enumeration. */
 export enum AttributeInputTypeEnum {
   BOOLEAN = 'BOOLEAN',
   DATE = 'DATE',
@@ -521,7 +513,6 @@ export type AttributeSortingInput = {
   field: AttributeSortField;
 };
 
-/** An enumeration. */
 export enum AttributeTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -529,7 +520,6 @@ export enum AttributeTranslateErrorCode {
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum AttributeTypeEnum {
   PAGE_TYPE = 'PAGE_TYPE',
   PRODUCT_TYPE = 'PRODUCT_TYPE'
@@ -553,21 +543,17 @@ export type AttributeUpdateInput = {
   /**
    * Whether the attribute can be displayed in the admin product list.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * External ID of this product.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
   /**
    * Whether the attribute can be filtered in storefront.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute is for variants only. */
@@ -581,7 +567,7 @@ export type AttributeUpdateInput = {
   /**
    * The position of the attribute in the storefront navigation (0 by default).
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** The unit of attribute values. */
@@ -606,11 +592,7 @@ export type AttributeValueBulkTranslateInput = {
 export type AttributeValueCreateInput = {
   /** File content type. */
   contentType?: InputMaybe<Scalars['String']>;
-  /**
-   * External ID of this attribute value.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this attribute value. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
@@ -619,7 +601,7 @@ export type AttributeValueCreateInput = {
   /**
    * Represents the text of the attribute value, plain text without formatting.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   plainText?: InputMaybe<Scalars['String']>;
   /**
@@ -627,7 +609,7 @@ export type AttributeValueCreateInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -649,33 +631,17 @@ export type AttributeValueInput = {
   date?: InputMaybe<Scalars['Date']>;
   /** Represents the date/time value of the attribute value. */
   dateTime?: InputMaybe<Scalars['DateTime']>;
-  /**
-   * Attribute value ID or external reference.
-   *
-   * Added in Saleor 3.9.
-   */
+  /** Attribute value ID or external reference. */
   dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /**
-   * External ID of this attribute.
-   *
-   * Added in Saleor 3.14.
-   */
+  /** External ID of this attribute. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   file?: InputMaybe<Scalars['String']>;
   /** ID of the selected attribute. */
   id?: InputMaybe<Scalars['ID']>;
-  /**
-   * List of attribute value IDs or external references.
-   *
-   * Added in Saleor 3.9.
-   */
+  /** List of attribute value IDs or external references. */
   multiselect?: InputMaybe<Array<AttributeValueSelectableTypeInput>>;
-  /**
-   * Numeric value of an attribute.
-   *
-   * Added in Saleor 3.9.
-   */
+  /** Numeric value of an attribute. */
   numeric?: InputMaybe<Scalars['String']>;
   /** Plain text content. */
   plainText?: InputMaybe<Scalars['String']>;
@@ -683,13 +649,13 @@ export type AttributeValueInput = {
   references?: InputMaybe<Array<Scalars['ID']>>;
   /** Text content in JSON format. */
   richText?: InputMaybe<Scalars['JSONString']>;
-  /**
-   * Attribute value ID or external reference.
-   *
-   * Added in Saleor 3.9.
-   */
+  /** Attribute value ID or external reference. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. This field will be removed in Saleor 4.0. */
+  /**
+   * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+   *
+   * DEPRECATED: this field will be removed.
+   */
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -699,15 +665,9 @@ export type AttributeValueInput = {
  * 2. If externalReference is provided, then attribute value will be resolved by external reference.
  * 3. If value is provided, then attribute value will be resolved by value. If this attribute value doesn't exist, then it will be created.
  * 4. If externalReference and value is provided then new attribute value will be created.
- *
- * Added in Saleor 3.9.
  */
 export type AttributeValueSelectableTypeInput = {
-  /**
-   * External reference of an attribute value.
-   *
-   * Added in Saleor 3.14.
-   */
+  /** External reference of an attribute value. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** ID of an attribute value. */
   id?: InputMaybe<Scalars['ID']>;
@@ -715,7 +675,6 @@ export type AttributeValueSelectableTypeInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum AttributeValueTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -738,11 +697,7 @@ export type AttributeValueTranslationInput = {
 export type AttributeValueUpdateInput = {
   /** File content type. */
   contentType?: InputMaybe<Scalars['String']>;
-  /**
-   * External ID of this attribute value.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this attribute value. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** URL of the file attribute. Every time, a new value is created. */
   fileUrl?: InputMaybe<Scalars['String']>;
@@ -751,7 +706,7 @@ export type AttributeValueUpdateInput = {
   /**
    * Represents the text of the attribute value, plain text without formatting.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   * DEPRECATED: this field will be removed.The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   plainText?: InputMaybe<Scalars['String']>;
   /**
@@ -759,20 +714,14 @@ export type AttributeValueUpdateInput = {
    *
    * Rich text format. For reference see https://editorjs.io/
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   * DEPRECATED: this field will be removed.The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
   value?: InputMaybe<Scalars['String']>;
 };
 
-/**
- * Where filtering options.
- *
- * Added in Saleor 3.11.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
- */
+/** Where filtering options. */
 export type AttributeWhereInput = {
   /** List of conditions that must be met. */
   AND?: InputMaybe<Array<AttributeWhereInput>>;
@@ -797,81 +746,37 @@ export type AttributeWhereInput = {
 export type BulkAttributeValueInput = {
   /** The boolean value of an attribute to resolve. If the passed value is non-existent, it will be created. */
   boolean?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * File content type.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** File content type. */
   contentType?: InputMaybe<Scalars['String']>;
-  /**
-   * Represents the date value of the attribute value.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Represents the date value of the attribute value. */
   date?: InputMaybe<Scalars['Date']>;
-  /**
-   * Represents the date/time value of the attribute value.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Represents the date/time value of the attribute value. */
   dateTime?: InputMaybe<Scalars['DateTime']>;
-  /**
-   * Attribute value ID.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Attribute value ID. */
   dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /**
-   * External ID of this attribute.
-   *
-   * Added in Saleor 3.14.
-   */
+  /** External ID of this attribute. */
   externalReference?: InputMaybe<Scalars['String']>;
-  /**
-   * URL of the file attribute. Every time, a new value is created.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** URL of the file attribute. Every time, a new value is created. */
   file?: InputMaybe<Scalars['String']>;
   /** ID of the selected attribute. */
   id?: InputMaybe<Scalars['ID']>;
-  /**
-   * List of attribute value IDs.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** List of attribute value IDs. */
   multiselect?: InputMaybe<Array<AttributeValueSelectableTypeInput>>;
-  /**
-   * Numeric value of an attribute.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Numeric value of an attribute. */
   numeric?: InputMaybe<Scalars['String']>;
-  /**
-   * Plain text content.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Plain text content. */
   plainText?: InputMaybe<Scalars['String']>;
-  /**
-   * List of entity IDs that will be used as references.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** List of entity IDs that will be used as references. */
   references?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Text content in JSON format.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Text content in JSON format. */
   richText?: InputMaybe<Scalars['JSONString']>;
-  /**
-   * Attribute value ID.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** Attribute value ID. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.This field will be removed in Saleor 4.0. */
+  /**
+   * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+   *
+   * DEPRECATED: this field will be removed.
+   */
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -891,11 +796,7 @@ export type CatalogueInput = {
   collections?: InputMaybe<Array<Scalars['ID']>>;
   /** Products related to the discount. */
   products?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Product variant related to the discount.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Product variant related to the discount. */
   variants?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -919,11 +820,7 @@ export type CategoryFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   search?: InputMaybe<Scalars['String']>;
   slugs?: InputMaybe<Array<Scalars['String']>>;
-  /**
-   * Filter by when was the most recent update.
-   *
-   * Added in Saleor 3.17.
-   */
+  /** Filter by when was the most recent update. */
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
@@ -939,17 +836,17 @@ export type CategoryInput = {
    */
   description?: InputMaybe<Scalars['JSONString']>;
   /**
-   * Fields required to update the category metadata.
+   * Fields required to update the category metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Category name. */
   name?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the category private metadata.
+   * Fields required to update the category private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Search engine optimization fields. */
@@ -971,7 +868,7 @@ export type CategorySortingInput = {
   /**
    * Specifies the channel in which to sort the data.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort categories. */
@@ -992,74 +889,45 @@ export type CategoryWhereInput = {
 export type ChannelCreateInput = {
   /** List of shipping zones to assign to the channel. */
   addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * List of warehouses to assign to the channel.
-   *
-   * Added in Saleor 3.5.
-   */
+  /** List of warehouses to assign to the channel. */
   addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * The channel checkout settings
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The channel checkout settings */
   checkoutSettings?: InputMaybe<CheckoutSettingsInput>;
   /** Currency of the channel. */
   currencyCode: Scalars['String'];
-  /**
-   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
   defaultCountry: CountryCode;
   /** Determine if channel will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Channel public metadata.
+   * Channel public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the channel. */
   name: Scalars['String'];
-  /**
-   * The channel order settings
-   *
-   * Added in Saleor 3.12.
-   */
+  /** The channel order settings */
   orderSettings?: InputMaybe<OrderSettingsInput>;
-  /**
-   * The channel payment settings
-   *
-   * Added in Saleor 3.16.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The channel payment settings */
   paymentSettings?: InputMaybe<PaymentSettingsInput>;
   /**
-   * Channel private metadata.
+   * Channel private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Slug of the channel. */
   slug: Scalars['String'];
-  /**
-   * The channel stock settings.
-   *
-   * Added in Saleor 3.7.
-   */
+  /** The channel stock settings. */
   stockSettings?: InputMaybe<StockSettingsInput>;
 };
 
 export type ChannelDeleteInput = {
-  /** ID of channel to migrate orders from origin channel. */
+  /** ID of a channel to migrate orders from the origin channel. Target channel has to have the same currency as the origin. */
   channelId: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum ChannelErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = 'CHANNELS_CURRENCY_MUST_BE_THE_SAME',
@@ -1081,76 +949,46 @@ export type ChannelListingUpdateInput = {
   preorderThreshold?: InputMaybe<Scalars['Int']>;
   /** Price of the particular variant in channel. */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** Price of the variant before discount. */
+  priorPrice?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
 export type ChannelUpdateInput = {
   /** List of shipping zones to assign to the channel. */
   addShippingZones?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * List of warehouses to assign to the channel.
-   *
-   * Added in Saleor 3.5.
-   */
+  /** List of warehouses to assign to the channel. */
   addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * The channel checkout settings
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The channel checkout settings */
   checkoutSettings?: InputMaybe<CheckoutSettingsInput>;
-  /**
-   * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
   defaultCountry?: InputMaybe<CountryCode>;
   /** Determine if channel will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Channel public metadata.
+   * Channel public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the channel. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * The channel order settings
-   *
-   * Added in Saleor 3.12.
-   */
+  /** The channel order settings */
   orderSettings?: InputMaybe<OrderSettingsInput>;
-  /**
-   * The channel payment settings
-   *
-   * Added in Saleor 3.16.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The channel payment settings */
   paymentSettings?: InputMaybe<PaymentSettingsInput>;
   /**
-   * Channel private metadata.
+   * Channel private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of shipping zones to unassign from the channel. */
   removeShippingZones?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * List of warehouses to unassign from the channel.
-   *
-   * Added in Saleor 3.5.
-   */
+  /** List of warehouses to unassign from the channel. */
   removeWarehouses?: InputMaybe<Array<Scalars['ID']>>;
   /** Slug of the channel. */
   slug?: InputMaybe<Scalars['String']>;
-  /**
-   * The channel stock settings.
-   *
-   * Added in Saleor 3.7.
-   */
+  /** The channel stock settings. */
   stockSettings?: InputMaybe<StockSettingsInput>;
 };
 
@@ -1208,7 +1046,6 @@ export enum CheckoutChargeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
-/** An enumeration. */
 export enum CheckoutCreateFromOrderErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -1217,7 +1054,6 @@ export enum CheckoutCreateFromOrderErrorCode {
   TAX_ERROR = 'TAX_ERROR'
 }
 
-/** An enumeration. */
 export enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
   INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK',
   NOT_FOUND = 'NOT_FOUND',
@@ -1238,17 +1074,42 @@ export type CheckoutCreateInput = {
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** A list of checkout lines, each containing information about an item in the checkout. */
   lines: Array<CheckoutLineInput>;
+  /**
+   * Checkout public metadata. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   *
+   * Added in Saleor 3.21.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Checkout private metadata. Requires one of the following permissions: MANAGE_CHECKOUTS, HANDLE_CHECKOUTS
+   *
+   * Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   *
+   * Added in Saleor 3.21.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Indicates whether the billing address should be saved to the user’s address book upon checkout completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to save the address.
+   *
+   * Added in Saleor 3.21.
+   */
+  saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Indicates whether the shipping address should be saved to the user’s address book upon checkout completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to save the address.
+   *
+   * Added in Saleor 3.21.
+   */
+  saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
   /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. `skipValidation` requires HANDLE_CHECKOUTS and AUTHENTICATED_APP permissions. */
   shippingAddress?: InputMaybe<AddressInput>;
-  /**
-   * The checkout validation rules that can be changed.
-   *
-   * Added in Saleor 3.5.
-   */
+  /** The checkout validation rules that can be changed. */
   validationRules?: InputMaybe<CheckoutValidationRules>;
 };
 
-/** An enumeration. */
 export enum CheckoutErrorCode {
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -1261,6 +1122,7 @@ export enum CheckoutErrorCode {
   INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK',
   INVALID = 'INVALID',
   INVALID_SHIPPING_METHOD = 'INVALID_SHIPPING_METHOD',
+  MISSING_ADDRESS_DATA = 'MISSING_ADDRESS_DATA',
   MISSING_CHANNEL_SLUG = 'MISSING_CHANNEL_SLUG',
   NON_EDITABLE_GIFT_LINE = 'NON_EDITABLE_GIFT_LINE',
   NON_REMOVABLE_GIFT_LINE = 'NON_REMOVABLE_GIFT_LINE',
@@ -1295,23 +1157,15 @@ export type CheckoutFilterInput = {
 };
 
 export type CheckoutLineInput = {
-  /**
-   * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Fields required to update the object's metadata.
+   * Fields required to update the object's metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The number of items purchased. */
   quantity: Scalars['Int'];
@@ -1320,24 +1174,24 @@ export type CheckoutLineInput = {
 };
 
 export type CheckoutLineUpdateInput = {
-  /**
-   * ID of the line.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** ID of the line. */
   lineId?: InputMaybe<Scalars['ID']>;
   /**
-   * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+   * Checkout line public metadata. Will add and update keys. To delete keys use deleteMetadata mutation.
    *
-   * Added in Saleor 3.1.
+   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /** Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: InputMaybe<Scalars['Int']>;
   /**
    * ID of the product variant.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `lineId` instead.
+   * DEPRECATED: this field will be removed. Use `lineId` instead.
    */
   variantId?: InputMaybe<Scalars['ID']>;
 };
@@ -1352,9 +1206,7 @@ export type CheckoutSettingsInput = {
   /**
    * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
    *
-   * Added in Saleor 3.15.
-   *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   useLegacyErrorFlow?: InputMaybe<Scalars['Boolean']>;
 };
@@ -1382,6 +1234,16 @@ export type CheckoutValidationRules = {
   shippingAddress?: InputMaybe<CheckoutAddressValidationRules>;
 };
 
+/** Enum determining the state of a circuit breaker. */
+export enum CircuitBreakerStateEnum {
+  /** The breaker is conducting (requests are passing through). */
+  CLOSED = 'CLOSED',
+  /** The breaker is in a trial period (to close or open). Note that unlike classic breaker patterns, this is not a state where we are throttling the number of requests, it's a state similar to CLOSED but with different thresholds. */
+  HALF_OPEN = 'HALF_OPEN',
+  /** The breaker is tripped (no requests are passing). Breaker will enter half-open state after cooldown period. */
+  OPEN = 'OPEN'
+}
+
 export type CollectionChannelListingUpdateInput = {
   /** List of channels to which the collection should be assigned. */
   addChannels?: InputMaybe<Array<PublishableChannelListingInput>>;
@@ -1403,17 +1265,17 @@ export type CollectionCreateInput = {
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Fields required to update the collection metadata.
+   * Fields required to update the collection metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the collection. */
   name?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the collection private metadata.
+   * Fields required to update the collection private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of products to be added to the collection. */
@@ -1421,7 +1283,7 @@ export type CollectionCreateInput = {
   /**
    * Publication date. ISO 8601 standard.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
@@ -1430,7 +1292,6 @@ export type CollectionCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum CollectionErrorCode {
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -1445,7 +1306,7 @@ export type CollectionFilterInput = {
   /**
    * Specifies the channel by which the data should be filtered.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
@@ -1469,23 +1330,23 @@ export type CollectionInput = {
   /** Informs whether a collection is published. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
   /**
-   * Fields required to update the collection metadata.
+   * Fields required to update the collection metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Name of the collection. */
   name?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the collection private metadata.
+   * Fields required to update the collection private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /**
    * Publication date. ISO 8601 standard.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
@@ -1528,7 +1389,7 @@ export type CollectionSortingInput = {
   /**
    * Specifies the channel in which to sort the data.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort collections. */
@@ -1553,7 +1414,6 @@ export type ConfigurationItemInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = 'BOOLEAN',
   MULTILINE = 'MULTILINE',
@@ -1841,7 +1701,6 @@ export type CountryRateUpdateInput = {
   rate?: InputMaybe<Scalars['Float']>;
 };
 
-/** An enumeration. */
 export enum CustomerBulkUpdateErrorCode {
   BLANK = 'BLANK',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -1862,7 +1721,6 @@ export type CustomerBulkUpdateInput = {
   input: CustomerInput;
 };
 
-/** An enumeration. */
 export enum CustomerEventsEnum {
   ACCOUNT_ACTIVATED = 'ACCOUNT_ACTIVATED',
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
@@ -1883,11 +1741,7 @@ export enum CustomerEventsEnum {
 
 export type CustomerFilterInput = {
   dateJoined?: InputMaybe<DateRangeInput>;
-  /**
-   * Filter by ids.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Filter by ids. */
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   numberOfOrders?: InputMaybe<IntRangeInput>;
@@ -1896,47 +1750,66 @@ export type CustomerFilterInput = {
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
+export enum CustomerGroupErrorCode {
+  UNIQUE = 'UNIQUE'
+}
+
+export type CustomerGroupFilterInput = {
+  ids?: InputMaybe<Array<Scalars['ID']>>;
+  search?: InputMaybe<Scalars['String']>;
+};
+
+export type CustomerGroupInput = {
+  /** Customer group name. */
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type CustomerGroupUpdateInput = {
+  /** List of customer IDs to add to the group. */
+  addCustomers?: InputMaybe<Array<Scalars['ID']>>;
+  /** Name of the customer group. Must be unique. */
+  name?: InputMaybe<Scalars['String']>;
+  /** List of customer IDs to remove from the group. */
+  removeCustomers?: InputMaybe<Array<Scalars['ID']>>;
+};
+
 export type CustomerInput = {
+  /** IDs of customer groups to which the user should be added. */
+  addCustomerGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** Billing address of the customer. */
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
   /** The unique email address of the user. */
   email?: InputMaybe<Scalars['String']>;
-  /**
-   * External ID of the customer.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of the customer. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * User account is confirmed.
-   *
-   * Added in Saleor 3.15.
-   */
+  /** User account is confirmed. */
   isConfirmed?: InputMaybe<Scalars['Boolean']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user metadata.
+   * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user private metadata.
+   * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** IDs of customer groups from which the user should be removed. */
+  removeCustomerGroups?: InputMaybe<Array<Scalars['ID']>>;
 };
 
 export type DateRangeInput = {
@@ -1946,13 +1819,7 @@ export type DateRangeInput = {
   lte?: InputMaybe<Scalars['Date']>;
 };
 
-/**
- * Define the filtering options for date time fields.
- *
- * Added in Saleor 3.11.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
- */
+/** Define the filtering options for date time fields. */
 export type DateTimeFilterInput = {
   /** The value equal to. */
   eq?: InputMaybe<Scalars['DateTime']>;
@@ -1969,13 +1836,7 @@ export type DateTimeRangeInput = {
   lte?: InputMaybe<Scalars['DateTime']>;
 };
 
-/**
- * Define the filtering options for decimal fields.
- *
- * Added in Saleor 3.14.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
- */
+/** Define the filtering options for decimal fields. */
 export type DecimalFilterInput = {
   /** The value equal to. */
   eq?: InputMaybe<Scalars['Decimal']>;
@@ -1998,15 +1859,15 @@ export type DigitalContentInput = {
   /** Determines how many times a download link can be accessed by a customer. */
   maxDownloads?: InputMaybe<Scalars['Int']>;
   /**
-   * Fields required to update the digital content metadata.
+   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Fields required to update the digital content private metadata.
+   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Determines for how many days a download link is active since it was generated. */
@@ -2023,15 +1884,15 @@ export type DigitalContentUploadInput = {
   /** Determines how many times a download link can be accessed by a customer. */
   maxDownloads?: InputMaybe<Scalars['Int']>;
   /**
-   * Fields required to update the digital content metadata.
+   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Fields required to update the digital content private metadata.
+   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Determines for how many days a download link is active since it was generated. */
@@ -2045,7 +1906,6 @@ export type DigitalContentUrlCreateInput = {
   content: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum DiscountErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
@@ -2080,7 +1940,6 @@ export type DiscountedObjectWhereInput = {
   baseTotalPrice?: InputMaybe<DecimalFilterInput>;
 };
 
-/** An enumeration. */
 export enum DistanceUnitsEnum {
   CM = 'CM',
   DM = 'DM',
@@ -2099,18 +1958,52 @@ export type DraftOrderCreateInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: InputMaybe<Scalars['String']>;
-  /** Discount amount for the order. */
-  discount?: InputMaybe<Scalars['PositiveDecimal']>;
   /**
-   * External ID of this order.
+   * Discount amount for the order.
    *
-   * Added in Saleor 3.10.
+   * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
    */
+  discount?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
+  /**
+   * Order language code.
+   *
+   * Added in Saleor 3.21.
+   */
+  languageCode?: InputMaybe<LanguageCodeEnum>;
   /** Variant line input consisting of variant ID and quantity of products. */
   lines?: InputMaybe<Array<OrderLineCreateInput>>;
+  /**
+   * Order public metadata.
+   *
+   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Order private metadata.
+   *
+   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
+  /**
+   * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
+   *
+   * Added in Saleor 3.21.
+   */
+  saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
+   *
+   * Added in Saleor 3.21.
+   */
+  saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** ID of a selected shipping method. */
@@ -2136,16 +2029,50 @@ export type DraftOrderInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: InputMaybe<Scalars['String']>;
-  /** Discount amount for the order. */
-  discount?: InputMaybe<Scalars['PositiveDecimal']>;
   /**
-   * External ID of this order.
+   * Discount amount for the order.
    *
-   * Added in Saleor 3.10.
+   * DEPRECATED: this field will be removed. Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
    */
+  discount?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
+  /**
+   * Order language code.
+   *
+   * Added in Saleor 3.21.
+   */
+  languageCode?: InputMaybe<LanguageCodeEnum>;
+  /**
+   * Order public metadata.
+   *
+   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Order private metadata.
+   *
+   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
   redirectUrl?: InputMaybe<Scalars['String']>;
+  /**
+   * Indicates whether the billing address should be saved to the user’s address book upon draft order completion. Can only be set when a billing address is provided. If not specified along with the address, the default behavior is to not save the address.
+   *
+   * Added in Saleor 3.21.
+   */
+  saveBillingAddress?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Indicates whether the shipping address should be saved to the user’s address book upon draft order completion.Can only be set when a shipping address is provided. If not specified along with the address, the default behavior is to not save the address.
+   *
+   * Added in Saleor 3.21.
+   */
+  saveShippingAddress?: InputMaybe<Scalars['Boolean']>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** ID of a selected shipping method. */
@@ -2208,7 +2135,6 @@ export enum EventDeliveryStatusEnum {
   SUCCESS = 'SUCCESS'
 }
 
-/** An enumeration. */
 export enum ExportErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -2216,7 +2142,6 @@ export enum ExportErrorCode {
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum ExportEventsEnum {
   EXPORTED_FILE_SENT = 'EXPORTED_FILE_SENT',
   EXPORT_DELETED = 'EXPORT_DELETED',
@@ -2301,7 +2226,6 @@ export type ExportVoucherCodesInput = {
   voucherId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum ExternalNotificationErrorCodes {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   INVALID_MODEL_TYPE = 'INVALID_MODEL_TYPE',
@@ -2318,7 +2242,6 @@ export type ExternalNotificationTriggerInput = {
   ids: Array<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum FileTypesEnum {
   CSV = 'CSV',
   XLSX = 'XLSX'
@@ -2329,7 +2252,6 @@ export type FulfillmentCancelInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum FulfillmentStatus {
   CANCELED = 'CANCELED',
   FULFILLED = 'FULFILLED',
@@ -2366,61 +2288,56 @@ export type GiftCardBulkCreateInput = {
 };
 
 export type GiftCardCreateInput = {
-  /**
-   * The gift card tags to add.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** The gift card tags to add. */
   addTags?: InputMaybe<Array<Scalars['String']>>;
   /** Balance of the gift card. */
   balance: PriceInput;
-  /**
-   * Slug of a channel from which the email should be sent.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Slug of a channel from which the email should be sent. */
   channel?: InputMaybe<Scalars['String']>;
   /**
    * Code to use the gift card.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. The code is now auto generated.
+   * DEPRECATED: this field will be removed. The code is now auto generated.
    */
   code?: InputMaybe<Scalars['String']>;
   /**
    * End date of the gift card in ISO 8601 format.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `expiryDate` from `expirySettings` instead.
+   * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
    */
   endDate?: InputMaybe<Scalars['Date']>;
-  /**
-   * The gift card expiry date.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']>;
-  /**
-   * Determine if gift card is active.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determine if gift card is active. */
   isActive: Scalars['Boolean'];
   /**
-   * The gift card note from the staff member.
+   * Gift Card public metadata.
    *
-   * Added in Saleor 3.1.
+   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /** The gift card note from the staff member. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Gift Card private metadata.
+   *
+   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /**
    * Start date of the gift card in ISO 8601 format.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   startDate?: InputMaybe<Scalars['Date']>;
   /** Email of the customer to whom gift card will be sent. */
   userEmail?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum GiftCardErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -2437,7 +2354,6 @@ export type GiftCardEventFilterInput = {
   type?: InputMaybe<GiftCardEventsEnum>;
 };
 
-/** An enumeration. */
 export enum GiftCardEventsEnum {
   ACTIVATED = 'ACTIVATED',
   BALANCE_RESET = 'BALANCE_RESET',
@@ -2476,14 +2392,12 @@ export type GiftCardResendInput = {
   id: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum GiftCardSettingsErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum GiftCardSettingsExpiryTypeEnum {
   EXPIRY_PERIOD = 'EXPIRY_PERIOD',
   NEVER_EXPIRE = 'NEVER_EXPIRE'
@@ -2497,11 +2411,7 @@ export type GiftCardSettingsUpdateInput = {
 };
 
 export enum GiftCardSortField {
-  /**
-   * Sort gift cards by created at.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Sort gift cards by created at. */
   CREATED_AT = 'CREATED_AT',
   /** Sort gift cards by current balance. */
   CURRENT_BALANCE = 'CURRENT_BALANCE',
@@ -2523,51 +2433,45 @@ export type GiftCardTagFilterInput = {
 };
 
 export type GiftCardUpdateInput = {
-  /**
-   * The gift card tags to add.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** The gift card tags to add. */
   addTags?: InputMaybe<Array<Scalars['String']>>;
-  /**
-   * The gift card balance amount.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** The gift card balance amount. */
   balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
   /**
    * End date of the gift card in ISO 8601 format.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `expiryDate` from `expirySettings` instead.
+   * DEPRECATED: this field will be removed. Use `expiryDate` from `expirySettings` instead.
    */
   endDate?: InputMaybe<Scalars['Date']>;
-  /**
-   * The gift card expiry date.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
-   * The gift card tags to remove.
+   * Gift Card public metadata.
    *
-   * Added in Saleor 3.1.
+   * Added in Saleor 3.21. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Gift Card private metadata.
+   *
+   * Added in Saleor 3.21. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** The gift card tags to remove. */
   removeTags?: InputMaybe<Array<Scalars['String']>>;
   /**
    * Start date of the gift card in ISO 8601 format.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   startDate?: InputMaybe<Scalars['Date']>;
 };
 
-/**
- * Define the filtering options for foreign key fields.
- *
- * Added in Saleor 3.14.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
- */
+/** Define the filtering options for foreign key fields. */
 export type GlobalIdFilterInput = {
   /** The value equal to. */
   eq?: InputMaybe<Scalars['ID']>;
@@ -2590,24 +2494,23 @@ export type IntRangeInput = {
 
 export type InvoiceCreateInput = {
   /**
-   * Fields required to update the invoice metadata.
+   * Fields required to update the invoice metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Invoice number. */
   number: Scalars['String'];
   /**
-   * Fields required to update the invoice private metadata.
+   * Fields required to update the invoice private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of an invoice to download. */
   url: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = 'EMAIL_NOT_SET',
   INVALID_STATUS = 'INVALID_STATUS',
@@ -2619,7 +2522,6 @@ export enum InvoiceErrorCode {
   URL_NOT_SET = 'URL_NOT_SET'
 }
 
-/** An enumeration. */
 export enum JobStatusEnum {
   DELETED = 'DELETED',
   FAILED = 'FAILED',
@@ -2627,787 +2529,17 @@ export enum JobStatusEnum {
   SUCCESS = 'SUCCESS'
 }
 
-/** An enumeration. */
 export enum LanguageCodeEnum {
-  AF = 'AF',
-  AF_NA = 'AF_NA',
-  AF_ZA = 'AF_ZA',
-  AGQ = 'AGQ',
-  AGQ_CM = 'AGQ_CM',
-  AK = 'AK',
-  AK_GH = 'AK_GH',
-  AM = 'AM',
-  AM_ET = 'AM_ET',
-  AR = 'AR',
-  AR_AE = 'AR_AE',
-  AR_BH = 'AR_BH',
-  AR_DJ = 'AR_DJ',
-  AR_DZ = 'AR_DZ',
-  AR_EG = 'AR_EG',
-  AR_EH = 'AR_EH',
-  AR_ER = 'AR_ER',
-  AR_IL = 'AR_IL',
-  AR_IQ = 'AR_IQ',
-  AR_JO = 'AR_JO',
-  AR_KM = 'AR_KM',
-  AR_KW = 'AR_KW',
-  AR_LB = 'AR_LB',
-  AR_LY = 'AR_LY',
-  AR_MA = 'AR_MA',
-  AR_MR = 'AR_MR',
-  AR_OM = 'AR_OM',
-  AR_PS = 'AR_PS',
-  AR_QA = 'AR_QA',
-  AR_SA = 'AR_SA',
-  AR_SD = 'AR_SD',
-  AR_SO = 'AR_SO',
-  AR_SS = 'AR_SS',
-  AR_SY = 'AR_SY',
-  AR_TD = 'AR_TD',
-  AR_TN = 'AR_TN',
-  AR_YE = 'AR_YE',
-  AS = 'AS',
-  ASA = 'ASA',
-  ASA_TZ = 'ASA_TZ',
-  AST = 'AST',
-  AST_ES = 'AST_ES',
-  AS_IN = 'AS_IN',
-  AZ = 'AZ',
-  AZ_CYRL = 'AZ_CYRL',
-  AZ_CYRL_AZ = 'AZ_CYRL_AZ',
-  AZ_LATN = 'AZ_LATN',
-  AZ_LATN_AZ = 'AZ_LATN_AZ',
-  BAS = 'BAS',
-  BAS_CM = 'BAS_CM',
-  BE = 'BE',
-  BEM = 'BEM',
-  BEM_ZM = 'BEM_ZM',
-  BEZ = 'BEZ',
-  BEZ_TZ = 'BEZ_TZ',
-  BE_BY = 'BE_BY',
-  BG = 'BG',
-  BG_BG = 'BG_BG',
-  BM = 'BM',
-  BM_ML = 'BM_ML',
-  BN = 'BN',
-  BN_BD = 'BN_BD',
-  BN_IN = 'BN_IN',
-  BO = 'BO',
-  BO_CN = 'BO_CN',
-  BO_IN = 'BO_IN',
-  BR = 'BR',
-  BRX = 'BRX',
-  BRX_IN = 'BRX_IN',
-  BR_FR = 'BR_FR',
-  BS = 'BS',
-  BS_CYRL = 'BS_CYRL',
-  BS_CYRL_BA = 'BS_CYRL_BA',
-  BS_LATN = 'BS_LATN',
-  BS_LATN_BA = 'BS_LATN_BA',
-  CA = 'CA',
-  CA_AD = 'CA_AD',
-  CA_ES = 'CA_ES',
-  CA_ES_VALENCIA = 'CA_ES_VALENCIA',
-  CA_FR = 'CA_FR',
-  CA_IT = 'CA_IT',
-  CCP = 'CCP',
-  CCP_BD = 'CCP_BD',
-  CCP_IN = 'CCP_IN',
-  CE = 'CE',
-  CEB = 'CEB',
-  CEB_PH = 'CEB_PH',
-  CE_RU = 'CE_RU',
-  CGG = 'CGG',
-  CGG_UG = 'CGG_UG',
-  CHR = 'CHR',
-  CHR_US = 'CHR_US',
-  CKB = 'CKB',
-  CKB_IQ = 'CKB_IQ',
-  CKB_IR = 'CKB_IR',
   CS = 'CS',
-  CS_CZ = 'CS_CZ',
-  CU = 'CU',
-  CU_RU = 'CU_RU',
-  CY = 'CY',
-  CY_GB = 'CY_GB',
-  DA = 'DA',
-  DAV = 'DAV',
-  DAV_KE = 'DAV_KE',
-  DA_DK = 'DA_DK',
-  DA_GL = 'DA_GL',
   DE = 'DE',
-  DE_AT = 'DE_AT',
-  DE_BE = 'DE_BE',
-  DE_CH = 'DE_CH',
-  DE_DE = 'DE_DE',
-  DE_IT = 'DE_IT',
-  DE_LI = 'DE_LI',
-  DE_LU = 'DE_LU',
-  DJE = 'DJE',
-  DJE_NE = 'DJE_NE',
-  DSB = 'DSB',
-  DSB_DE = 'DSB_DE',
-  DUA = 'DUA',
-  DUA_CM = 'DUA_CM',
-  DYO = 'DYO',
-  DYO_SN = 'DYO_SN',
-  DZ = 'DZ',
-  DZ_BT = 'DZ_BT',
-  EBU = 'EBU',
-  EBU_KE = 'EBU_KE',
-  EE = 'EE',
-  EE_GH = 'EE_GH',
-  EE_TG = 'EE_TG',
-  EL = 'EL',
-  EL_CY = 'EL_CY',
-  EL_GR = 'EL_GR',
   EN = 'EN',
-  EN_AE = 'EN_AE',
-  EN_AG = 'EN_AG',
-  EN_AI = 'EN_AI',
-  EN_AS = 'EN_AS',
-  EN_AT = 'EN_AT',
-  EN_AU = 'EN_AU',
-  EN_BB = 'EN_BB',
-  EN_BE = 'EN_BE',
-  EN_BI = 'EN_BI',
-  EN_BM = 'EN_BM',
-  EN_BS = 'EN_BS',
-  EN_BW = 'EN_BW',
-  EN_BZ = 'EN_BZ',
-  EN_CA = 'EN_CA',
-  EN_CC = 'EN_CC',
-  EN_CH = 'EN_CH',
-  EN_CK = 'EN_CK',
-  EN_CM = 'EN_CM',
-  EN_CX = 'EN_CX',
-  EN_CY = 'EN_CY',
-  EN_DE = 'EN_DE',
-  EN_DG = 'EN_DG',
-  EN_DK = 'EN_DK',
-  EN_DM = 'EN_DM',
-  EN_ER = 'EN_ER',
-  EN_FI = 'EN_FI',
-  EN_FJ = 'EN_FJ',
-  EN_FK = 'EN_FK',
-  EN_FM = 'EN_FM',
-  EN_GB = 'EN_GB',
-  EN_GD = 'EN_GD',
-  EN_GG = 'EN_GG',
-  EN_GH = 'EN_GH',
-  EN_GI = 'EN_GI',
-  EN_GM = 'EN_GM',
-  EN_GU = 'EN_GU',
-  EN_GY = 'EN_GY',
-  EN_HK = 'EN_HK',
-  EN_IE = 'EN_IE',
-  EN_IL = 'EN_IL',
-  EN_IM = 'EN_IM',
-  EN_IN = 'EN_IN',
-  EN_IO = 'EN_IO',
-  EN_JE = 'EN_JE',
-  EN_JM = 'EN_JM',
-  EN_KE = 'EN_KE',
-  EN_KI = 'EN_KI',
-  EN_KN = 'EN_KN',
-  EN_KY = 'EN_KY',
-  EN_LC = 'EN_LC',
-  EN_LR = 'EN_LR',
-  EN_LS = 'EN_LS',
-  EN_MG = 'EN_MG',
-  EN_MH = 'EN_MH',
-  EN_MO = 'EN_MO',
-  EN_MP = 'EN_MP',
-  EN_MS = 'EN_MS',
-  EN_MT = 'EN_MT',
-  EN_MU = 'EN_MU',
-  EN_MW = 'EN_MW',
-  EN_MY = 'EN_MY',
-  EN_NA = 'EN_NA',
-  EN_NF = 'EN_NF',
-  EN_NG = 'EN_NG',
-  EN_NL = 'EN_NL',
-  EN_NR = 'EN_NR',
-  EN_NU = 'EN_NU',
-  EN_NZ = 'EN_NZ',
-  EN_PG = 'EN_PG',
-  EN_PH = 'EN_PH',
-  EN_PK = 'EN_PK',
-  EN_PN = 'EN_PN',
-  EN_PR = 'EN_PR',
-  EN_PW = 'EN_PW',
-  EN_RW = 'EN_RW',
-  EN_SB = 'EN_SB',
-  EN_SC = 'EN_SC',
-  EN_SD = 'EN_SD',
-  EN_SE = 'EN_SE',
-  EN_SG = 'EN_SG',
-  EN_SH = 'EN_SH',
-  EN_SI = 'EN_SI',
-  EN_SL = 'EN_SL',
-  EN_SS = 'EN_SS',
-  EN_SX = 'EN_SX',
-  EN_SZ = 'EN_SZ',
-  EN_TC = 'EN_TC',
-  EN_TK = 'EN_TK',
-  EN_TO = 'EN_TO',
-  EN_TT = 'EN_TT',
-  EN_TV = 'EN_TV',
-  EN_TZ = 'EN_TZ',
-  EN_UG = 'EN_UG',
-  EN_UM = 'EN_UM',
-  EN_US = 'EN_US',
-  EN_VC = 'EN_VC',
-  EN_VG = 'EN_VG',
-  EN_VI = 'EN_VI',
-  EN_VU = 'EN_VU',
-  EN_WS = 'EN_WS',
-  EN_ZA = 'EN_ZA',
-  EN_ZM = 'EN_ZM',
-  EN_ZW = 'EN_ZW',
-  EO = 'EO',
   ES = 'ES',
-  ES_AR = 'ES_AR',
-  ES_BO = 'ES_BO',
-  ES_BR = 'ES_BR',
-  ES_BZ = 'ES_BZ',
-  ES_CL = 'ES_CL',
-  ES_CO = 'ES_CO',
-  ES_CR = 'ES_CR',
-  ES_CU = 'ES_CU',
-  ES_DO = 'ES_DO',
-  ES_EA = 'ES_EA',
-  ES_EC = 'ES_EC',
-  ES_ES = 'ES_ES',
-  ES_GQ = 'ES_GQ',
-  ES_GT = 'ES_GT',
-  ES_HN = 'ES_HN',
-  ES_IC = 'ES_IC',
-  ES_MX = 'ES_MX',
-  ES_NI = 'ES_NI',
-  ES_PA = 'ES_PA',
-  ES_PE = 'ES_PE',
-  ES_PH = 'ES_PH',
-  ES_PR = 'ES_PR',
-  ES_PY = 'ES_PY',
-  ES_SV = 'ES_SV',
-  ES_US = 'ES_US',
-  ES_UY = 'ES_UY',
-  ES_VE = 'ES_VE',
-  ET = 'ET',
-  ET_EE = 'ET_EE',
-  EU = 'EU',
-  EU_ES = 'EU_ES',
-  EWO = 'EWO',
-  EWO_CM = 'EWO_CM',
-  FA = 'FA',
-  FA_AF = 'FA_AF',
-  FA_IR = 'FA_IR',
-  FF = 'FF',
-  FF_ADLM = 'FF_ADLM',
-  FF_ADLM_BF = 'FF_ADLM_BF',
-  FF_ADLM_CM = 'FF_ADLM_CM',
-  FF_ADLM_GH = 'FF_ADLM_GH',
-  FF_ADLM_GM = 'FF_ADLM_GM',
-  FF_ADLM_GN = 'FF_ADLM_GN',
-  FF_ADLM_GW = 'FF_ADLM_GW',
-  FF_ADLM_LR = 'FF_ADLM_LR',
-  FF_ADLM_MR = 'FF_ADLM_MR',
-  FF_ADLM_NE = 'FF_ADLM_NE',
-  FF_ADLM_NG = 'FF_ADLM_NG',
-  FF_ADLM_SL = 'FF_ADLM_SL',
-  FF_ADLM_SN = 'FF_ADLM_SN',
-  FF_LATN = 'FF_LATN',
-  FF_LATN_BF = 'FF_LATN_BF',
-  FF_LATN_CM = 'FF_LATN_CM',
-  FF_LATN_GH = 'FF_LATN_GH',
-  FF_LATN_GM = 'FF_LATN_GM',
-  FF_LATN_GN = 'FF_LATN_GN',
-  FF_LATN_GW = 'FF_LATN_GW',
-  FF_LATN_LR = 'FF_LATN_LR',
-  FF_LATN_MR = 'FF_LATN_MR',
-  FF_LATN_NE = 'FF_LATN_NE',
-  FF_LATN_NG = 'FF_LATN_NG',
-  FF_LATN_SL = 'FF_LATN_SL',
-  FF_LATN_SN = 'FF_LATN_SN',
-  FI = 'FI',
-  FIL = 'FIL',
-  FIL_PH = 'FIL_PH',
-  FI_FI = 'FI_FI',
-  FO = 'FO',
-  FO_DK = 'FO_DK',
-  FO_FO = 'FO_FO',
   FR = 'FR',
-  FR_BE = 'FR_BE',
-  FR_BF = 'FR_BF',
-  FR_BI = 'FR_BI',
-  FR_BJ = 'FR_BJ',
-  FR_BL = 'FR_BL',
-  FR_CA = 'FR_CA',
-  FR_CD = 'FR_CD',
-  FR_CF = 'FR_CF',
-  FR_CG = 'FR_CG',
-  FR_CH = 'FR_CH',
-  FR_CI = 'FR_CI',
-  FR_CM = 'FR_CM',
-  FR_DJ = 'FR_DJ',
-  FR_DZ = 'FR_DZ',
-  FR_FR = 'FR_FR',
-  FR_GA = 'FR_GA',
-  FR_GF = 'FR_GF',
-  FR_GN = 'FR_GN',
-  FR_GP = 'FR_GP',
-  FR_GQ = 'FR_GQ',
-  FR_HT = 'FR_HT',
-  FR_KM = 'FR_KM',
-  FR_LU = 'FR_LU',
-  FR_MA = 'FR_MA',
-  FR_MC = 'FR_MC',
-  FR_MF = 'FR_MF',
-  FR_MG = 'FR_MG',
-  FR_ML = 'FR_ML',
-  FR_MQ = 'FR_MQ',
-  FR_MR = 'FR_MR',
-  FR_MU = 'FR_MU',
-  FR_NC = 'FR_NC',
-  FR_NE = 'FR_NE',
-  FR_PF = 'FR_PF',
-  FR_PM = 'FR_PM',
-  FR_RE = 'FR_RE',
-  FR_RW = 'FR_RW',
-  FR_SC = 'FR_SC',
-  FR_SN = 'FR_SN',
-  FR_SY = 'FR_SY',
-  FR_TD = 'FR_TD',
-  FR_TG = 'FR_TG',
-  FR_TN = 'FR_TN',
-  FR_VU = 'FR_VU',
-  FR_WF = 'FR_WF',
-  FR_YT = 'FR_YT',
-  FUR = 'FUR',
-  FUR_IT = 'FUR_IT',
-  FY = 'FY',
-  FY_NL = 'FY_NL',
-  GA = 'GA',
-  GA_GB = 'GA_GB',
-  GA_IE = 'GA_IE',
-  GD = 'GD',
-  GD_GB = 'GD_GB',
-  GL = 'GL',
-  GL_ES = 'GL_ES',
-  GSW = 'GSW',
-  GSW_CH = 'GSW_CH',
-  GSW_FR = 'GSW_FR',
-  GSW_LI = 'GSW_LI',
-  GU = 'GU',
-  GUZ = 'GUZ',
-  GUZ_KE = 'GUZ_KE',
-  GU_IN = 'GU_IN',
-  GV = 'GV',
-  GV_IM = 'GV_IM',
-  HA = 'HA',
-  HAW = 'HAW',
-  HAW_US = 'HAW_US',
-  HA_GH = 'HA_GH',
-  HA_NE = 'HA_NE',
-  HA_NG = 'HA_NG',
-  HE = 'HE',
-  HE_IL = 'HE_IL',
-  HI = 'HI',
-  HI_IN = 'HI_IN',
-  HR = 'HR',
-  HR_BA = 'HR_BA',
-  HR_HR = 'HR_HR',
-  HSB = 'HSB',
-  HSB_DE = 'HSB_DE',
-  HU = 'HU',
-  HU_HU = 'HU_HU',
-  HY = 'HY',
-  HY_AM = 'HY_AM',
-  IA = 'IA',
-  ID = 'ID',
-  ID_ID = 'ID_ID',
-  IG = 'IG',
-  IG_NG = 'IG_NG',
-  II = 'II',
-  II_CN = 'II_CN',
-  IS = 'IS',
-  IS_IS = 'IS_IS',
   IT = 'IT',
-  IT_CH = 'IT_CH',
-  IT_IT = 'IT_IT',
-  IT_SM = 'IT_SM',
-  IT_VA = 'IT_VA',
-  JA = 'JA',
-  JA_JP = 'JA_JP',
-  JGO = 'JGO',
-  JGO_CM = 'JGO_CM',
-  JMC = 'JMC',
-  JMC_TZ = 'JMC_TZ',
-  JV = 'JV',
-  JV_ID = 'JV_ID',
-  KA = 'KA',
-  KAB = 'KAB',
-  KAB_DZ = 'KAB_DZ',
-  KAM = 'KAM',
-  KAM_KE = 'KAM_KE',
-  KA_GE = 'KA_GE',
-  KDE = 'KDE',
-  KDE_TZ = 'KDE_TZ',
-  KEA = 'KEA',
-  KEA_CV = 'KEA_CV',
-  KHQ = 'KHQ',
-  KHQ_ML = 'KHQ_ML',
-  KI = 'KI',
-  KI_KE = 'KI_KE',
-  KK = 'KK',
-  KKJ = 'KKJ',
-  KKJ_CM = 'KKJ_CM',
-  KK_KZ = 'KK_KZ',
-  KL = 'KL',
-  KLN = 'KLN',
-  KLN_KE = 'KLN_KE',
-  KL_GL = 'KL_GL',
-  KM = 'KM',
-  KM_KH = 'KM_KH',
-  KN = 'KN',
-  KN_IN = 'KN_IN',
-  KO = 'KO',
-  KOK = 'KOK',
-  KOK_IN = 'KOK_IN',
-  KO_KP = 'KO_KP',
-  KO_KR = 'KO_KR',
-  KS = 'KS',
-  KSB = 'KSB',
-  KSB_TZ = 'KSB_TZ',
-  KSF = 'KSF',
-  KSF_CM = 'KSF_CM',
-  KSH = 'KSH',
-  KSH_DE = 'KSH_DE',
-  KS_ARAB = 'KS_ARAB',
-  KS_ARAB_IN = 'KS_ARAB_IN',
-  KU = 'KU',
-  KU_TR = 'KU_TR',
-  KW = 'KW',
-  KW_GB = 'KW_GB',
-  KY = 'KY',
-  KY_KG = 'KY_KG',
-  LAG = 'LAG',
-  LAG_TZ = 'LAG_TZ',
-  LB = 'LB',
-  LB_LU = 'LB_LU',
-  LG = 'LG',
-  LG_UG = 'LG_UG',
-  LKT = 'LKT',
-  LKT_US = 'LKT_US',
-  LN = 'LN',
-  LN_AO = 'LN_AO',
-  LN_CD = 'LN_CD',
-  LN_CF = 'LN_CF',
-  LN_CG = 'LN_CG',
-  LO = 'LO',
-  LO_LA = 'LO_LA',
-  LRC = 'LRC',
-  LRC_IQ = 'LRC_IQ',
-  LRC_IR = 'LRC_IR',
-  LT = 'LT',
-  LT_LT = 'LT_LT',
-  LU = 'LU',
-  LUO = 'LUO',
-  LUO_KE = 'LUO_KE',
-  LUY = 'LUY',
-  LUY_KE = 'LUY_KE',
-  LU_CD = 'LU_CD',
-  LV = 'LV',
-  LV_LV = 'LV_LV',
-  MAI = 'MAI',
-  MAI_IN = 'MAI_IN',
-  MAS = 'MAS',
-  MAS_KE = 'MAS_KE',
-  MAS_TZ = 'MAS_TZ',
-  MER = 'MER',
-  MER_KE = 'MER_KE',
-  MFE = 'MFE',
-  MFE_MU = 'MFE_MU',
-  MG = 'MG',
-  MGH = 'MGH',
-  MGH_MZ = 'MGH_MZ',
-  MGO = 'MGO',
-  MGO_CM = 'MGO_CM',
-  MG_MG = 'MG_MG',
-  MI = 'MI',
-  MI_NZ = 'MI_NZ',
-  MK = 'MK',
-  MK_MK = 'MK_MK',
-  ML = 'ML',
-  ML_IN = 'ML_IN',
-  MN = 'MN',
-  MNI = 'MNI',
-  MNI_BENG = 'MNI_BENG',
-  MNI_BENG_IN = 'MNI_BENG_IN',
-  MN_MN = 'MN_MN',
-  MR = 'MR',
-  MR_IN = 'MR_IN',
-  MS = 'MS',
-  MS_BN = 'MS_BN',
-  MS_ID = 'MS_ID',
-  MS_MY = 'MS_MY',
-  MS_SG = 'MS_SG',
-  MT = 'MT',
-  MT_MT = 'MT_MT',
-  MUA = 'MUA',
-  MUA_CM = 'MUA_CM',
-  MY = 'MY',
-  MY_MM = 'MY_MM',
-  MZN = 'MZN',
-  MZN_IR = 'MZN_IR',
-  NAQ = 'NAQ',
-  NAQ_NA = 'NAQ_NA',
-  NB = 'NB',
-  NB_NO = 'NB_NO',
-  NB_SJ = 'NB_SJ',
-  ND = 'ND',
-  NDS = 'NDS',
-  NDS_DE = 'NDS_DE',
-  NDS_NL = 'NDS_NL',
-  ND_ZW = 'ND_ZW',
-  NE = 'NE',
-  NE_IN = 'NE_IN',
-  NE_NP = 'NE_NP',
-  NL = 'NL',
-  NL_AW = 'NL_AW',
-  NL_BE = 'NL_BE',
-  NL_BQ = 'NL_BQ',
-  NL_CW = 'NL_CW',
-  NL_NL = 'NL_NL',
-  NL_SR = 'NL_SR',
-  NL_SX = 'NL_SX',
-  NMG = 'NMG',
-  NMG_CM = 'NMG_CM',
-  NN = 'NN',
-  NNH = 'NNH',
-  NNH_CM = 'NNH_CM',
-  NN_NO = 'NN_NO',
-  NUS = 'NUS',
-  NUS_SS = 'NUS_SS',
-  NYN = 'NYN',
-  NYN_UG = 'NYN_UG',
-  OM = 'OM',
-  OM_ET = 'OM_ET',
-  OM_KE = 'OM_KE',
-  OR = 'OR',
-  OR_IN = 'OR_IN',
-  OS = 'OS',
-  OS_GE = 'OS_GE',
-  OS_RU = 'OS_RU',
-  PA = 'PA',
-  PA_ARAB = 'PA_ARAB',
-  PA_ARAB_PK = 'PA_ARAB_PK',
-  PA_GURU = 'PA_GURU',
-  PA_GURU_IN = 'PA_GURU_IN',
-  PCM = 'PCM',
-  PCM_NG = 'PCM_NG',
   PL = 'PL',
-  PL_PL = 'PL_PL',
-  PRG = 'PRG',
-  PS = 'PS',
-  PS_AF = 'PS_AF',
-  PS_PK = 'PS_PK',
-  PT = 'PT',
-  PT_AO = 'PT_AO',
-  PT_BR = 'PT_BR',
-  PT_CH = 'PT_CH',
-  PT_CV = 'PT_CV',
-  PT_GQ = 'PT_GQ',
-  PT_GW = 'PT_GW',
-  PT_LU = 'PT_LU',
-  PT_MO = 'PT_MO',
-  PT_MZ = 'PT_MZ',
-  PT_PT = 'PT_PT',
-  PT_ST = 'PT_ST',
-  PT_TL = 'PT_TL',
-  QU = 'QU',
-  QU_BO = 'QU_BO',
-  QU_EC = 'QU_EC',
-  QU_PE = 'QU_PE',
-  RM = 'RM',
-  RM_CH = 'RM_CH',
-  RN = 'RN',
-  RN_BI = 'RN_BI',
   RO = 'RO',
-  ROF = 'ROF',
-  ROF_TZ = 'ROF_TZ',
-  RO_MD = 'RO_MD',
-  RO_RO = 'RO_RO',
-  RU = 'RU',
-  RU_BY = 'RU_BY',
-  RU_KG = 'RU_KG',
-  RU_KZ = 'RU_KZ',
-  RU_MD = 'RU_MD',
-  RU_RU = 'RU_RU',
-  RU_UA = 'RU_UA',
-  RW = 'RW',
-  RWK = 'RWK',
-  RWK_TZ = 'RWK_TZ',
-  RW_RW = 'RW_RW',
-  SAH = 'SAH',
-  SAH_RU = 'SAH_RU',
-  SAQ = 'SAQ',
-  SAQ_KE = 'SAQ_KE',
-  SAT = 'SAT',
-  SAT_OLCK = 'SAT_OLCK',
-  SAT_OLCK_IN = 'SAT_OLCK_IN',
-  SBP = 'SBP',
-  SBP_TZ = 'SBP_TZ',
-  SD = 'SD',
-  SD_ARAB = 'SD_ARAB',
-  SD_ARAB_PK = 'SD_ARAB_PK',
-  SD_DEVA = 'SD_DEVA',
-  SD_DEVA_IN = 'SD_DEVA_IN',
-  SE = 'SE',
-  SEH = 'SEH',
-  SEH_MZ = 'SEH_MZ',
-  SES = 'SES',
-  SES_ML = 'SES_ML',
-  SE_FI = 'SE_FI',
-  SE_NO = 'SE_NO',
-  SE_SE = 'SE_SE',
-  SG = 'SG',
-  SG_CF = 'SG_CF',
-  SHI = 'SHI',
-  SHI_LATN = 'SHI_LATN',
-  SHI_LATN_MA = 'SHI_LATN_MA',
-  SHI_TFNG = 'SHI_TFNG',
-  SHI_TFNG_MA = 'SHI_TFNG_MA',
-  SI = 'SI',
-  SI_LK = 'SI_LK',
   SK = 'SK',
-  SK_SK = 'SK_SK',
-  SL = 'SL',
-  SL_SI = 'SL_SI',
-  SMN = 'SMN',
-  SMN_FI = 'SMN_FI',
-  SN = 'SN',
-  SN_ZW = 'SN_ZW',
-  SO = 'SO',
-  SO_DJ = 'SO_DJ',
-  SO_ET = 'SO_ET',
-  SO_KE = 'SO_KE',
-  SO_SO = 'SO_SO',
-  SQ = 'SQ',
-  SQ_AL = 'SQ_AL',
-  SQ_MK = 'SQ_MK',
-  SQ_XK = 'SQ_XK',
-  SR = 'SR',
-  SR_CYRL = 'SR_CYRL',
-  SR_CYRL_BA = 'SR_CYRL_BA',
-  SR_CYRL_ME = 'SR_CYRL_ME',
-  SR_CYRL_RS = 'SR_CYRL_RS',
-  SR_CYRL_XK = 'SR_CYRL_XK',
-  SR_LATN = 'SR_LATN',
-  SR_LATN_BA = 'SR_LATN_BA',
-  SR_LATN_ME = 'SR_LATN_ME',
-  SR_LATN_RS = 'SR_LATN_RS',
-  SR_LATN_XK = 'SR_LATN_XK',
-  SU = 'SU',
-  SU_LATN = 'SU_LATN',
-  SU_LATN_ID = 'SU_LATN_ID',
-  SV = 'SV',
-  SV_AX = 'SV_AX',
-  SV_FI = 'SV_FI',
-  SV_SE = 'SV_SE',
-  SW = 'SW',
-  SW_CD = 'SW_CD',
-  SW_KE = 'SW_KE',
-  SW_TZ = 'SW_TZ',
-  SW_UG = 'SW_UG',
-  TA = 'TA',
-  TA_IN = 'TA_IN',
-  TA_LK = 'TA_LK',
-  TA_MY = 'TA_MY',
-  TA_SG = 'TA_SG',
-  TE = 'TE',
-  TEO = 'TEO',
-  TEO_KE = 'TEO_KE',
-  TEO_UG = 'TEO_UG',
-  TE_IN = 'TE_IN',
-  TG = 'TG',
-  TG_TJ = 'TG_TJ',
-  TH = 'TH',
-  TH_TH = 'TH_TH',
-  TI = 'TI',
-  TI_ER = 'TI_ER',
-  TI_ET = 'TI_ET',
-  TK = 'TK',
-  TK_TM = 'TK_TM',
-  TO = 'TO',
-  TO_TO = 'TO_TO',
-  TR = 'TR',
-  TR_CY = 'TR_CY',
-  TR_TR = 'TR_TR',
-  TT = 'TT',
-  TT_RU = 'TT_RU',
-  TWQ = 'TWQ',
-  TWQ_NE = 'TWQ_NE',
-  TZM = 'TZM',
-  TZM_MA = 'TZM_MA',
-  UG = 'UG',
-  UG_CN = 'UG_CN',
-  UK = 'UK',
-  UK_UA = 'UK_UA',
-  UR = 'UR',
-  UR_IN = 'UR_IN',
-  UR_PK = 'UR_PK',
-  UZ = 'UZ',
-  UZ_ARAB = 'UZ_ARAB',
-  UZ_ARAB_AF = 'UZ_ARAB_AF',
-  UZ_CYRL = 'UZ_CYRL',
-  UZ_CYRL_UZ = 'UZ_CYRL_UZ',
-  UZ_LATN = 'UZ_LATN',
-  UZ_LATN_UZ = 'UZ_LATN_UZ',
-  VAI = 'VAI',
-  VAI_LATN = 'VAI_LATN',
-  VAI_LATN_LR = 'VAI_LATN_LR',
-  VAI_VAII = 'VAI_VAII',
-  VAI_VAII_LR = 'VAI_VAII_LR',
-  VI = 'VI',
-  VI_VN = 'VI_VN',
-  VO = 'VO',
-  VUN = 'VUN',
-  VUN_TZ = 'VUN_TZ',
-  WAE = 'WAE',
-  WAE_CH = 'WAE_CH',
-  WO = 'WO',
-  WO_SN = 'WO_SN',
-  XH = 'XH',
-  XH_ZA = 'XH_ZA',
-  XOG = 'XOG',
-  XOG_UG = 'XOG_UG',
-  YAV = 'YAV',
-  YAV_CM = 'YAV_CM',
-  YI = 'YI',
-  YO = 'YO',
-  YO_BJ = 'YO_BJ',
-  YO_NG = 'YO_NG',
-  YUE = 'YUE',
-  YUE_HANS = 'YUE_HANS',
-  YUE_HANS_CN = 'YUE_HANS_CN',
-  YUE_HANT = 'YUE_HANT',
-  YUE_HANT_HK = 'YUE_HANT_HK',
-  ZGH = 'ZGH',
-  ZGH_MA = 'ZGH_MA',
-  ZH = 'ZH',
-  ZH_HANS = 'ZH_HANS',
-  ZH_HANS_CN = 'ZH_HANS_CN',
-  ZH_HANS_HK = 'ZH_HANS_HK',
-  ZH_HANS_MO = 'ZH_HANS_MO',
-  ZH_HANS_SG = 'ZH_HANS_SG',
-  ZH_HANT = 'ZH_HANT',
-  ZH_HANT_HK = 'ZH_HANT_HK',
-  ZH_HANT_MO = 'ZH_HANT_MO',
-  ZH_HANT_TW = 'ZH_HANT_TW',
-  ZU = 'ZU',
-  ZU_ZA = 'ZU_ZA'
+  SV = 'SV'
 }
 
 /**
@@ -3426,7 +2558,6 @@ export enum MarkAsPaidStrategyEnum {
   TRANSACTION_FLOW = 'TRANSACTION_FLOW'
 }
 
-/** An enumeration. */
 export enum MeasurementUnitsEnum {
   ACRE_FT = 'ACRE_FT',
   ACRE_IN = 'ACRE_IN',
@@ -3501,7 +2632,6 @@ export type MenuCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum MenuErrorCode {
   CANNOT_ASSIGN_NODE = 'CANNOT_ASSIGN_NODE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -3598,7 +2728,6 @@ export type MenuSortingInput = {
   field: MenuSortField;
 };
 
-/** An enumeration. */
 export enum MetadataErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -3658,11 +2787,7 @@ export enum OrderAction {
 }
 
 export type OrderAddNoteInput = {
-  /**
-   * Note message.
-   *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
-   */
+  /** Note message. */
   message: Scalars['String'];
 };
 
@@ -3698,11 +2823,19 @@ export type OrderBulkCreateDeliveryMethodInput = {
   shippingPrice?: InputMaybe<TaxedMoneyInput>;
   /** The ID of the tax class. */
   shippingTaxClassId?: InputMaybe<Scalars['ID']>;
-  /** Metadata of the tax class. */
+  /**
+   * Metadata of the tax class. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   shippingTaxClassMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the tax class. */
   shippingTaxClassName?: InputMaybe<Scalars['String']>;
-  /** Private metadata of the tax class. */
+  /**
+   * Private metadata of the tax class. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   shippingTaxClassPrivateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Tax rate of the shipping. */
   shippingTaxRate?: InputMaybe<Scalars['PositiveDecimal']>;
@@ -3712,7 +2845,6 @@ export type OrderBulkCreateDeliveryMethodInput = {
   warehouseName?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderBulkCreateErrorCode {
   BULK_LIMIT = 'BULK_LIMIT',
   FUTURE_DATE = 'FUTURE_DATE',
@@ -3785,11 +2917,19 @@ export type OrderBulkCreateInput = {
   languageCode: LanguageCodeEnum;
   /** List of order lines. */
   lines: Array<OrderBulkCreateOrderLineInput>;
-  /** Metadata of the order. */
+  /**
+   * Metadata of the order. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Notes related to the order. */
   notes?: InputMaybe<Array<OrderBulkCreateNoteInput>>;
-  /** Private metadata of the order. */
+  /**
+   * Private metadata of the order. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view, where users should be redirected to see the order details. */
   redirectUrl?: InputMaybe<Scalars['String']>;
@@ -3814,11 +2954,19 @@ export type OrderBulkCreateInput = {
 export type OrderBulkCreateInvoiceInput = {
   /** The date, when the invoice was created. */
   createdAt: Scalars['DateTime'];
-  /** Metadata of the invoice. */
+  /**
+   * Metadata of the invoice. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Invoice number. */
   number?: InputMaybe<Scalars['String']>;
-  /** Private metadata of the invoice. */
+  /**
+   * Private metadata of the invoice. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of the invoice to download. */
   url?: InputMaybe<Scalars['String']>;
@@ -3846,21 +2994,43 @@ export type OrderBulkCreateOrderLineInput = {
   isGiftCard: Scalars['Boolean'];
   /** Determines whether shipping of the order line items is required. */
   isShippingRequired: Scalars['Boolean'];
-  /** Metadata of the order line. */
+  /**
+   * Metadata of the order line. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
-  /** Private metadata of the order line. */
+  /**
+   * Private metadata of the order line. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the product. */
   productName?: InputMaybe<Scalars['String']>;
+  /**
+   * The SKU of the product.
+   *
+   * Added in Saleor 3.18.
+   */
+  productSku?: InputMaybe<Scalars['String']>;
   /** Number of items in the order line */
   quantity: Scalars['Int'];
   /** The ID of the tax class. */
   taxClassId?: InputMaybe<Scalars['ID']>;
-  /** Metadata of the tax class. */
+  /**
+   * Metadata of the tax class. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   taxClassMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The name of the tax class. */
   taxClassName?: InputMaybe<Scalars['String']>;
-  /** Private metadata of the tax class. */
+  /**
+   * Private metadata of the tax class. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   taxClassPrivateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Tax rate of the order line. */
   taxRate?: InputMaybe<Scalars['PositiveDecimal']>;
@@ -3872,6 +3042,24 @@ export type OrderBulkCreateOrderLineInput = {
   translatedVariantName?: InputMaybe<Scalars['String']>;
   /** Price of the order line excluding applied discount. */
   undiscountedTotalPrice: TaxedMoneyInput;
+  /**
+   * Reason of the discount on order line.
+   *
+   * Added in Saleor 3.19.
+   */
+  unitDiscountReason?: InputMaybe<Scalars['String']>;
+  /**
+   * Type of the discount: fixed or percent
+   *
+   * Added in Saleor 3.19.
+   */
+  unitDiscountType?: InputMaybe<DiscountValueTypeEnum>;
+  /**
+   * Value of the discount. Can store fixed value or percent value
+   *
+   * Added in Saleor 3.19.
+   */
+  unitDiscountValue?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The external ID of the product variant. */
   variantExternalReference?: InputMaybe<Scalars['String']>;
   /** The ID of the product variant. */
@@ -3921,7 +3109,6 @@ export enum OrderChargeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
-/** An enumeration. */
 export enum OrderCreateFromCheckoutErrorCode {
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
@@ -3955,7 +3142,6 @@ export type OrderDiscountCommonInput = {
   valueType: DiscountValueTypeEnum;
 };
 
-/** An enumeration. */
 export enum OrderDiscountType {
   MANUAL = 'MANUAL',
   ORDER_PROMOTION = 'ORDER_PROMOTION',
@@ -3972,7 +3158,6 @@ export type OrderDraftFilterInput = {
   search?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderErrorCode {
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
   CANNOT_CANCEL_FULFILLMENT = 'CANNOT_CANCEL_FULFILLMENT',
@@ -3992,6 +3177,7 @@ export enum OrderErrorCode {
   INVALID_QUANTITY = 'INVALID_QUANTITY',
   INVALID_VOUCHER = 'INVALID_VOUCHER',
   INVALID_VOUCHER_CODE = 'INVALID_VOUCHER_CODE',
+  MISSING_ADDRESS_DATA = 'MISSING_ADDRESS_DATA',
   NON_EDITABLE_GIFT_LINE = 'NON_EDITABLE_GIFT_LINE',
   NON_REMOVABLE_GIFT_LINE = 'NON_REMOVABLE_GIFT_LINE',
   NOT_AVAILABLE_IN_CHANNEL = 'NOT_AVAILABLE_IN_CHANNEL',
@@ -4012,7 +3198,6 @@ export enum OrderErrorCode {
   ZERO_QUANTITY = 'ZERO_QUANTITY'
 }
 
-/** An enumeration. */
 export enum OrderEventsEmailsEnum {
   CONFIRMED = 'CONFIRMED',
   DIGITAL_LINKS = 'DIGITAL_LINKS',
@@ -4107,11 +3292,7 @@ export type OrderFulfillInput = {
   lines: Array<OrderFulfillLineInput>;
   /** If true, send an email notification to the customer. */
   notifyCustomer?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Fulfillment tracking number.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Fulfillment tracking number. */
   trackingNumber?: InputMaybe<Scalars['String']>;
 };
 
@@ -4129,7 +3310,6 @@ export type OrderFulfillStockInput = {
   warehouse: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundCreateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -4142,35 +3322,22 @@ export enum OrderGrantRefundCreateErrorCode {
 export type OrderGrantRefundCreateInput = {
   /** Amount of the granted refund. If not provided, the amount will be calculated automatically based on provided `lines` and `grantRefundForShipping`. */
   amount?: InputMaybe<Scalars['Decimal']>;
-  /**
-   * Determine if granted refund should include shipping costs.
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Determine if granted refund should include shipping costs. */
   grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Lines to assign to granted refund.
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Lines to assign to granted refund. */
   lines?: InputMaybe<Array<OrderGrantRefundCreateLineInput>>;
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
   /**
-   * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
+   * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used. Field required starting from Saleor 3.21.
    *
    * Added in Saleor 3.20.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
-  transactionId?: InputMaybe<Scalars['ID']>;
+  transactionId: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundCreateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -4186,7 +3353,6 @@ export type OrderGrantRefundCreateLineInput = {
   reason?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundUpdateErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -4197,33 +3363,15 @@ export enum OrderGrantRefundUpdateErrorCode {
 }
 
 export type OrderGrantRefundUpdateInput = {
-  /**
-   * Lines to assign to granted refund.
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Lines to assign to granted refund. */
   addLines?: InputMaybe<Array<OrderGrantRefundUpdateLineAddInput>>;
   /** Amount of the granted refund. if not provided and `addLines` or `removeLines` or `grantRefundForShipping` is provided, amount will be calculated automatically. */
   amount?: InputMaybe<Scalars['Decimal']>;
-  /**
-   * Determine if granted refund should include shipping costs.
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Determine if granted refund should include shipping costs. */
   grantRefundForShipping?: InputMaybe<Scalars['Boolean']>;
   /** Reason of the granted refund. */
   reason?: InputMaybe<Scalars['String']>;
-  /**
-   * Lines to remove from granted refund.
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Lines to remove from granted refund. */
   removeLines?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * The ID of the transaction item related to the granted refund. If `amount` provided in the input, the transaction.chargedAmount needs to be equal or greater than provided `amount`.If `amount` is not provided in the input and calculated automatically by Saleor, the `min(calculatedAmount, transaction.chargedAmount)` will be used.Field will be required starting from Saleor 3.21.
@@ -4244,7 +3392,6 @@ export type OrderGrantRefundUpdateLineAddInput = {
   reason?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum OrderGrantRefundUpdateLineErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
@@ -4268,19 +3415,9 @@ export enum OrderGrantedRefundStatusEnum {
 }
 
 export type OrderLineCreateInput = {
-  /**
-   * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.  */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used. */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /** Number of variant items ordered. */
   quantity: Scalars['Int'];
@@ -4293,7 +3430,6 @@ export type OrderLineInput = {
   quantity: Scalars['Int'];
 };
 
-/** An enumeration. */
 export enum OrderNoteAddErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   REQUIRED = 'REQUIRED'
@@ -4304,14 +3440,12 @@ export type OrderNoteInput = {
   message: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum OrderNoteUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
   REQUIRED = 'REQUIRED'
 }
 
-/** An enumeration. */
 export enum OrderOriginEnum {
   BULK_CREATE = 'BULK_CREATE',
   CHECKOUT = 'CHECKOUT',
@@ -4384,39 +3518,28 @@ export type OrderReturnProductsInput = {
   refund?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** An enumeration. */
 export enum OrderSettingsErrorCode {
   INVALID = 'INVALID'
 }
 
 export type OrderSettingsInput = {
-  /**
-   * Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation.
-   *
-   * Added in Saleor 3.15.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Determine if it is possible to place unpaid order by calling `checkoutComplete` mutation. */
   allowUnpaidOrders?: InputMaybe<Scalars['Boolean']>;
   /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. By default set to True */
   automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']>;
   /** When enabled, all non-shippable gift card orders will be fulfilled automatically. By default set to True. */
   automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * The time in days after expired orders will be deleted.Allowed range is from 1 to 120.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The time in days after expired orders will be deleted.Allowed range is from 1 to 120. */
   deleteExpiredOrdersAfter?: InputMaybe<Scalars['Day']>;
   /**
-   * Expiration time in minutes. Default null - means do not expire any orders. Enter 0 or null to disable.
+   * Time in hours after which the draft order line price will be refreshed. Default value is 24 hours. Enter 0 or null to disable.
    *
-   * Added in Saleor 3.13.
+   * Added in Saleor 3.21.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
+  draftOrderLinePriceFreezePeriod?: InputMaybe<Scalars['Hour']>;
+  /** Expiration time in minutes. Default null - means do not expire any orders. Enter 0 or null to disable. */
   expireOrdersAfter?: InputMaybe<Scalars['Minute']>;
   /**
    * Specify whether a coupon applied to draft orders will count toward voucher usage.
@@ -4432,12 +3555,17 @@ export type OrderSettingsInput = {
    * Determine what strategy will be used to mark the order as paid. Based on the chosen option, the proper object will be created and attached to the order when it's manually marked as paid.
    * `PAYMENT_FLOW` - [default option] creates the `Payment` object.
    * `TRANSACTION_FLOW` - creates the `TransactionItem` object.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   markAsPaidStrategy?: InputMaybe<MarkAsPaidStrategyEnum>;
+  /**
+   * This flag only affects orders created from checkout and applies specifically to vouchers of the types: `SPECIFIC_PRODUCT` and `ENTIRE_ORDER` with `applyOncePerOrder` enabled.
+   * - When legacy propagation is enabled, discounts from these vouchers are represented as `OrderDiscount` objects, attached to the order and returned in the `Order.discounts` field. Additionally, percentage-based vouchers are converted to fixed-value discounts.
+   * - When legacy propagation is disabled, discounts are represented as `OrderLineDiscount` objects, attached to individual lines and returned in the `OrderLine.discounts` field. In this case, percentage-based vouchers retain their original type.
+   * In future releases, `OrderLineDiscount` will become the default behavior, and this flag will be deprecated and removed.
+   *
+   * Added in Saleor 3.21.
+   */
+  useLegacyLineDiscountPropagation?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type OrderSettingsUpdateInput = {
@@ -4451,13 +3579,13 @@ export enum OrderSortField {
   /**
    * Sort orders by creation date.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   CREATED_AT = 'CREATED_AT',
   /**
    * Sort orders by creation date.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   CREATION_DATE = 'CREATION_DATE',
   /** Sort orders by customer. */
@@ -4481,7 +3609,6 @@ export type OrderSortingInput = {
   field: OrderSortField;
 };
 
-/** An enumeration. */
 export enum OrderStatus {
   CANCELED = 'CANCELED',
   DRAFT = 'DRAFT',
@@ -4507,12 +3634,30 @@ export enum OrderStatusFilter {
 export type OrderUpdateInput = {
   /** Billing address of the customer. */
   billingAddress?: InputMaybe<AddressInput>;
-  /**
-   * External ID of this order.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
+  /**
+   * Order language code.
+   *
+   * Added in Saleor 3.21.
+   */
+  languageCode?: InputMaybe<LanguageCodeEnum>;
+  /**
+   * Order public metadata.
+   *
+   * Added in Saleor 3.21.Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Order private metadata.
+   *
+   * Added in Saleor 3.21.Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Shipping address of the customer. */
   shippingAddress?: InputMaybe<AddressInput>;
   /** Email address of the customer. */
@@ -4540,14 +3685,10 @@ export type PageCreateInput = {
   /**
    * Publication date. ISO 8601 standard.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['String']>;
-  /**
-   * Publication date time. ISO 8601 standard.
-   *
-   * Added in Saleor 3.3.
-   */
+  /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -4557,7 +3698,6 @@ export type PageCreateInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PageErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -4590,14 +3730,10 @@ export type PageInput = {
   /**
    * Publication date. ISO 8601 standard.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['String']>;
-  /**
-   * Publication date time. ISO 8601 standard.
-   *
-   * Added in Saleor 3.3.
-   */
+  /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -4611,25 +3747,25 @@ export enum PageSortField {
   /**
    * Sort pages by creation date.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   CREATED_AT = 'CREATED_AT',
   /**
    * Sort pages by creation date.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   CREATION_DATE = 'CREATION_DATE',
   /**
    * Sort pages by publication date.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   PUBLICATION_DATE = 'PUBLICATION_DATE',
   /**
    * Sort pages by publication date.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   PUBLISHED_AT = 'PUBLISHED_AT',
   /** Sort pages by slug. */
@@ -4656,6 +3792,7 @@ export type PageTranslationInput = {
   content?: InputMaybe<Scalars['JSONString']>;
   seoDescription?: InputMaybe<Scalars['String']>;
   seoTitle?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
 };
 
@@ -4698,7 +3835,6 @@ export type PageTypeUpdateInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PaymentChargeStatusEnum {
   CANCELLED = 'CANCELLED',
   FULLY_CHARGED = 'FULLY_CHARGED',
@@ -4721,7 +3857,6 @@ export type PaymentCheckBalanceInput = {
   method: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum PaymentErrorCode {
   BALANCE_CHECK_ERROR = 'BALANCE_CHECK_ERROR',
   BILLING_ADDRESS_NOT_SET = 'BILLING_ADDRESS_NOT_SET',
@@ -4745,29 +3880,22 @@ export enum PaymentErrorCode {
 
 export type PaymentFilterInput = {
   checkouts?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Filter by ids.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Filter by ids. */
   ids?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum PaymentGatewayConfigErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PaymentGatewayInitializeErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PaymentGatewayInitializeTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -4804,24 +3932,19 @@ export type PaymentInput = {
   /** A gateway to use with that payment. */
   gateway: Scalars['String'];
   /**
-   * User public metadata.
+   * User public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.1.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
   returnUrl?: InputMaybe<Scalars['String']>;
-  /**
-   * Payment store type.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Payment store type. */
   storePaymentMethod?: InputMaybe<StorePaymentMethodEnum>;
   /** Client-side generated payment token, representing customer's billing data in a secure manner. */
   token?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PaymentMethodInitializeTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -4830,7 +3953,6 @@ export enum PaymentMethodInitializeTokenizationErrorCode {
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PaymentMethodProcessTokenizationErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -4859,17 +3981,10 @@ export enum PaymentMethodTokenizationResult {
 }
 
 export type PaymentSettingsInput = {
-  /**
-   * Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.
-   *
-   * Added in Saleor 3.16.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction. */
   defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
 };
 
-/** An enumeration. */
 export enum PermissionEnum {
   HANDLE_CHECKOUTS = 'HANDLE_CHECKOUTS',
   HANDLE_PAYMENTS = 'HANDLE_PAYMENTS',
@@ -4898,13 +4013,7 @@ export enum PermissionEnum {
 }
 
 export type PermissionGroupCreateInput = {
-  /**
-   * List of channels to assign to this group.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** List of channels to assign to this group. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** List of permission code names to assign to this group. */
   addPermissions?: InputMaybe<Array<PermissionEnum>>;
@@ -4912,17 +4021,10 @@ export type PermissionGroupCreateInput = {
   addUsers?: InputMaybe<Array<Scalars['ID']>>;
   /** Group name. */
   name: Scalars['String'];
-  /**
-   * Determine if the group has restricted access to channels.  DEFAULT: False
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Determine if the group has restricted access to channels.  DEFAULT: False */
   restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
 };
 
-/** An enumeration. */
 export enum PermissionGroupErrorCode {
   ASSIGN_NON_STAFF_MEMBER = 'ASSIGN_NON_STAFF_MEMBER',
   CANNOT_REMOVE_FROM_LAST_GROUP = 'CANNOT_REMOVE_FROM_LAST_GROUP',
@@ -4954,13 +4056,7 @@ export type PermissionGroupSortingInput = {
 };
 
 export type PermissionGroupUpdateInput = {
-  /**
-   * List of channels to assign to this group.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** List of channels to assign to this group. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** List of permission code names to assign to this group. */
   addPermissions?: InputMaybe<Array<PermissionEnum>>;
@@ -4968,25 +4064,13 @@ export type PermissionGroupUpdateInput = {
   addUsers?: InputMaybe<Array<Scalars['ID']>>;
   /** Group name. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * List of channels to unassign from this group.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** List of channels to unassign from this group. */
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** List of permission code names to unassign from this group. */
   removePermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to unassign from this group. */
   removeUsers?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Determine if the group has restricted access to channels.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Determine if the group has restricted access to channels. */
   restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -4995,7 +4079,6 @@ export enum PluginConfigurationType {
   PER_CHANNEL = 'PER_CHANNEL'
 }
 
-/** An enumeration. */
 export enum PluginErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -5035,7 +4118,6 @@ export type PluginUpdateInput = {
   configuration?: InputMaybe<Array<ConfigurationItemInput>>;
 };
 
-/** An enumeration. */
 export enum PostalCodeRuleInclusionTypeEnum {
   EXCLUDE = 'EXCLUDE',
   INCLUDE = 'INCLUDE'
@@ -5067,22 +4149,14 @@ export type ProductAttributeAssignInput = {
   id: Scalars['ID'];
   /** The attribute type to be assigned as. */
   type: ProductAttributeType;
-  /**
-   * Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric'].
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric']. */
   variantSelection?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ProductAttributeAssignmentUpdateInput = {
   /** The ID of the attribute to assign. */
   id: Scalars['ID'];
-  /**
-   * Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric'].
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric']. */
   variantSelection: Scalars['Boolean'];
 };
 
@@ -5091,7 +4165,6 @@ export enum ProductAttributeType {
   VARIANT = 'VARIANT'
 }
 
-/** An enumeration. */
 export enum ProductBulkCreateErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
@@ -5120,7 +4193,7 @@ export type ProductBulkCreateInput = {
   /**
    * Determine if taxes are being charged for the product.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -5135,11 +4208,19 @@ export type ProductBulkCreateInput = {
   externalReference?: InputMaybe<Scalars['String']>;
   /** List of media inputs associated with the product. */
   media?: InputMaybe<Array<MediaInput>>;
-  /** Fields required to update the product metadata. */
+  /**
+   * Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
-  /** Fields required to update the product private metadata. */
+  /**
+   * Fields required to update the product private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
   productType: Scalars['ID'];
@@ -5154,7 +4235,7 @@ export type ProductBulkCreateInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Input list of product variants to create. */
@@ -5177,16 +4258,12 @@ export type ProductBulkTranslateInput = {
 export type ProductChannelListingAddInput = {
   /** List of variants to which the channel should be assigned. */
   addVariants?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed.
-   *
-   * Added in Saleor 3.3.
-   */
+  /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
   availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
   /**
    * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `availableForPurchaseAt` field instead.
+   * DEPRECATED: this field will be removed. Use `availableForPurchaseAt` field instead.
    */
   availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
   /** ID of a channel. */
@@ -5198,14 +4275,10 @@ export type ProductChannelListingAddInput = {
   /**
    * Publication date. ISO 8601 standard.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
-  /**
-   * Publication date time. ISO 8601 standard.
-   *
-   * Added in Saleor 3.3.
-   */
+  /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** List of variants from which the channel should be unassigned. */
   removeVariants?: InputMaybe<Array<Scalars['ID']>>;
@@ -5243,7 +4316,7 @@ export type ProductCreateInput = {
   /**
    * Determine if taxes are being charged for the product.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -5254,24 +4327,20 @@ export type ProductCreateInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']>;
-  /**
-   * External ID of this product.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product metadata.
+   * Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product private metadata.
+   * Fields required to update the product private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** ID of the type that product belongs to. */
@@ -5287,14 +4356,13 @@ export type ProductCreateInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
 };
 
-/** An enumeration. */
 export enum ProductErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
@@ -5335,17 +4403,13 @@ export enum ProductFieldEnum {
 
 export type ProductFilterInput = {
   attributes?: InputMaybe<Array<AttributeInput>>;
-  /**
-   * Filter by the date of availability for purchase.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Filter by the date of availability for purchase. */
   availableFrom?: InputMaybe<Scalars['DateTime']>;
   categories?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * Specifies the channel by which the data should be filtered.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -5354,33 +4418,21 @@ export type ProductFilterInput = {
   hasCategory?: InputMaybe<Scalars['Boolean']>;
   hasPreorderedVariants?: InputMaybe<Scalars['Boolean']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Filter by availability for purchase.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Filter by availability for purchase. */
   isAvailable?: InputMaybe<Scalars['Boolean']>;
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Filter by visibility in product listings.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Filter by visibility in product listings. */
   isVisibleInListing?: InputMaybe<Scalars['Boolean']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   /** Filter by the lowest variant price after discounts. */
   minimalPrice?: InputMaybe<PriceRangeInput>;
   price?: InputMaybe<PriceRangeInput>;
   productTypes?: InputMaybe<Array<Scalars['ID']>>;
-  /**
-   * Filter by the publication date.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Filter by the publication date. */
   publishedFrom?: InputMaybe<Scalars['DateTime']>;
   search?: InputMaybe<Scalars['String']>;
   slugs?: InputMaybe<Array<Scalars['String']>>;
-  /** Filter by variants having specific stock status. */
+  /** Filter by specific product stock status (considering all variant stocks combined). */
   stockAvailability?: InputMaybe<StockAvailability>;
   stocks?: InputMaybe<ProductStockFilterInput>;
   /** Filter by when was the most recent update. */
@@ -5395,7 +4447,7 @@ export type ProductInput = {
   /**
    * Determine if taxes are being charged for the product.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   * DEPRECATED: this field will be removed. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
    */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
@@ -5406,24 +4458,20 @@ export type ProductInput = {
    * Rich text format. For reference see https://editorjs.io/
    */
   description?: InputMaybe<Scalars['JSONString']>;
-  /**
-   * External ID of this product.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product metadata.
+   * Fields required to update the product metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Product name. */
   name?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product private metadata.
+   * Fields required to update the product private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Defines the product rating value. */
@@ -5437,7 +4485,7 @@ export type ProductInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
@@ -5455,7 +4503,6 @@ export type ProductMediaCreateInput = {
   product: Scalars['ID'];
 };
 
-/** An enumeration. */
 export enum ProductMediaType {
   IMAGE = 'IMAGE',
   VIDEO = 'VIDEO'
@@ -5475,7 +4522,7 @@ export type ProductOrder = {
   /**
    * Specifies the channel in which to sort the data.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort products. */
@@ -5491,11 +4538,7 @@ export enum ProductOrderField {
    * This option requires a channel filter to work as the values can vary between channels.
    */
   COLLECTION = 'COLLECTION',
-  /**
-   * Sort products by creation date.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Sort products by creation date. */
   CREATED_AT = 'CREATED_AT',
   /** Sort products by update date. */
   DATE = 'DATE',
@@ -5548,7 +4591,6 @@ export type ProductStockFilterInput = {
   warehouseIds?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum ProductTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -5596,7 +4638,7 @@ export type ProductTypeInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   * DEPRECATED: this field will be removed. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** List of attributes used to distinguish between different variants of a product. */
@@ -5605,7 +4647,6 @@ export type ProductTypeInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
 };
 
-/** An enumeration. */
 export enum ProductTypeKindEnum {
   GIFT_CARD = 'GIFT_CARD',
   NORMAL = 'NORMAL'
@@ -5632,37 +4673,25 @@ export type ProductVariantBulkCreateInput = {
   attributes: Array<BulkAttributeValueInput>;
   /** List of prices assigned to channels. */
   channelListings?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
-  /**
-   * External ID of this product variant.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product variant. */
   externalReference?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product variant metadata.
+   * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if variant is in preorder.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
-   * Fields required to update the product variant private metadata.
+   * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
@@ -5674,7 +4703,6 @@ export type ProductVariantBulkCreateInput = {
   weight?: InputMaybe<Scalars['WeightScalar']>;
 };
 
-/** An enumeration. */
 export enum ProductVariantBulkErrorCode {
   ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
   ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
@@ -5702,65 +4730,37 @@ export type ProductVariantBulkTranslateInput = {
   translationFields: NameTranslationInput;
 };
 
-/**
- * Input fields to update product variants.
- *
- * Added in Saleor 3.11.
- */
+/** Input fields to update product variants. */
 export type ProductVariantBulkUpdateInput = {
   /** List of attributes specific to this variant. */
   attributes?: InputMaybe<Array<BulkAttributeValueInput>>;
-  /**
-   * Channel listings input.
-   *
-   * Added in Saleor 3.12.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Channel listings input. */
   channelListings?: InputMaybe<ProductVariantChannelListingUpdateInput>;
-  /**
-   * External ID of this product variant.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product variant. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** ID of the product variant to update. */
   id: Scalars['ID'];
   /**
-   * Fields required to update the product variant metadata.
+   * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if variant is in preorder.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
-   * Fields required to update the product variant private metadata.
+   * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
-  /**
-   * Stocks input.
-   *
-   * Added in Saleor 3.12.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Stocks input. */
   stocks?: InputMaybe<ProductVariantStocksUpdateInput>;
   /** Determines if the inventory of this variant should be tracked. If false, the quantity won't change when customers buy this item. If the field is not provided, `Shop.trackInventoryByDefault` will be used. */
   trackInventory?: InputMaybe<Scalars['Boolean']>;
@@ -5773,14 +4773,16 @@ export type ProductVariantChannelListingAddInput = {
   channelId: Scalars['ID'];
   /** Cost price of the variant in channel. */
   costPrice?: InputMaybe<Scalars['PositiveDecimal']>;
-  /**
-   * The threshold for preorder variant in channel.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** The threshold for preorder variant in channel. */
   preorderThreshold?: InputMaybe<Scalars['Int']>;
   /** Price of the particular variant in channel. */
   price: Scalars['PositiveDecimal'];
+  /**
+   * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
+   *
+   * Added in Saleor 3.21.
+   */
+  priorPrice?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
 export type ProductVariantChannelListingUpdateInput = {
@@ -5795,39 +4797,27 @@ export type ProductVariantChannelListingUpdateInput = {
 export type ProductVariantCreateInput = {
   /** List of attributes specific to this variant. */
   attributes: Array<AttributeValueInput>;
-  /**
-   * External ID of this product variant.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product variant. */
   externalReference?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product variant metadata.
+   * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if variant is in preorder.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
-   * Fields required to update the product variant private metadata.
+   * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** Product ID of which type is the variant. */
   product: Scalars['ID'];
-  /**
-   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
@@ -5844,43 +4834,33 @@ export type ProductVariantFilterInput = {
   metadata?: InputMaybe<Array<MetadataFilter>>;
   search?: InputMaybe<Scalars['String']>;
   sku?: InputMaybe<Array<Scalars['String']>>;
+  /** Filter by product variant stock status. */
+  stockAvailability?: InputMaybe<StockAvailability>;
   updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type ProductVariantInput = {
   /** List of attributes specific to this variant. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
-  /**
-   * External ID of this product variant.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of this product variant. */
   externalReference?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the product variant metadata.
+   * Fields required to update the product variant metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Variant name. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Determines if variant is in preorder.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines if variant is in preorder. */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
-   * Fields required to update the product variant private metadata.
+   * Fields required to update the product variant private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.8.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /** Stock keeping unit. */
   sku?: InputMaybe<Scalars['String']>;
@@ -5911,7 +4891,6 @@ export type ProductVariantStocksUpdateInput = {
   update?: InputMaybe<Array<StockUpdateInput>>;
 };
 
-/** An enumeration. */
 export enum ProductVariantTranslateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -5926,6 +4905,8 @@ export type ProductVariantWhereInput = {
   OR?: InputMaybe<Array<ProductVariantWhereInput>>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
+  /** Filter by variant stock status. */
+  stockAvailability?: InputMaybe<StockAvailability>;
 };
 
 export type ProductWhereInput = {
@@ -5967,7 +4948,7 @@ export type ProductWhereInput = {
   publishedFrom?: InputMaybe<Scalars['DateTime']>;
   /** Filter by product slug. */
   slug?: InputMaybe<StringFilterInput>;
-  /** Filter by variants having specific stock status. */
+  /** Filter by specific product stock status (considering all variant stocks combined). */
   stockAvailability?: InputMaybe<StockAvailability>;
   /** Filter by stock of the product variant. */
   stocks?: InputMaybe<ProductStockFilterInput>;
@@ -5975,7 +4956,6 @@ export type ProductWhereInput = {
   updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
 
-/** An enumeration. */
 export enum PromotionCreateErrorCode {
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6008,13 +4988,11 @@ export type PromotionCreateInput = {
   type: PromotionTypeEnum;
 };
 
-/** An enumeration. */
 export enum PromotionDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum PromotionEventsEnum {
   PROMOTION_CREATED = 'PROMOTION_CREATED',
   PROMOTION_ENDED = 'PROMOTION_ENDED',
@@ -6025,7 +5003,6 @@ export enum PromotionEventsEnum {
   RULE_UPDATED = 'RULE_UPDATED'
 }
 
-/** An enumeration. */
 export enum PromotionRuleCreateErrorCode {
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6044,6 +5021,8 @@ export type PromotionRuleCreateInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  /** List of customer group ids to which the rule should apply to. */
+  customerGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
   /**
@@ -6080,7 +5059,6 @@ export type PromotionRuleCreateInput = {
   rewardValueType?: InputMaybe<RewardValueTypeEnum>;
 };
 
-/** An enumeration. */
 export enum PromotionRuleDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND'
@@ -6091,6 +5069,8 @@ export type PromotionRuleInput = {
   cataloguePredicate?: InputMaybe<CataloguePredicateInput>;
   /** List of channel ids to which the rule should apply to. */
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  /** List of customer group ids to which the rule should apply to. */
+  customerGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** Promotion rule description. */
   description?: InputMaybe<Scalars['JSON']>;
   /**
@@ -6135,7 +5115,6 @@ export type PromotionRuleTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PromotionRuleUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GIFTS_NUMBER_LIMIT = 'GIFTS_NUMBER_LIMIT',
@@ -6152,6 +5131,8 @@ export enum PromotionRuleUpdateErrorCode {
 export type PromotionRuleUpdateInput = {
   /** List of channel ids to add. */
   addChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /** List of customer group IDs to add. */
+  addCustomerGroups?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * List of variant IDs available as a gift to add.
    *
@@ -6176,6 +5157,8 @@ export type PromotionRuleUpdateInput = {
   orderPredicate?: InputMaybe<OrderPredicateInput>;
   /** List of channel ids to remove. */
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /** List of customer group IDs to remove. */
+  removeCustomerGroups?: InputMaybe<Array<Scalars['ID']>>;
   /**
    * List of variant IDs available as a gift to remove.
    *
@@ -6226,7 +5209,6 @@ export type PromotionTranslationInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum PromotionTypeEnum {
   CATALOGUE = 'CATALOGUE',
   ORDER = 'ORDER'
@@ -6239,7 +5221,6 @@ export type PromotionTypeEnumFilterInput = {
   oneOf?: InputMaybe<Array<PromotionTypeEnum>>;
 };
 
-/** An enumeration. */
 export enum PromotionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6283,14 +5264,10 @@ export type PublishableChannelListingInput = {
   /**
    * Publication date. ISO 8601 standard.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `publishedAt` field instead.
+   * DEPRECATED: this field will be removed. Use `publishedAt` field instead.
    */
   publicationDate?: InputMaybe<Scalars['Date']>;
-  /**
-   * Publication date time. ISO 8601 standard.
-   *
-   * Added in Saleor 3.3.
-   */
+  /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -6306,13 +5283,11 @@ export enum ReportingPeriod {
   TODAY = 'TODAY'
 }
 
-/** An enumeration. */
 export enum RewardTypeEnum {
   GIFT = 'GIFT',
   SUBTOTAL_DISCOUNT = 'SUBTOTAL_DISCOUNT'
 }
 
-/** An enumeration. */
 export enum RewardValueTypeEnum {
   FIXED = 'FIXED',
   PERCENTAGE = 'PERCENTAGE'
@@ -6386,7 +5361,7 @@ export type SaleSortingInput = {
   /**
    * Specifies the channel in which to sort the data.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort sales. */
@@ -6400,7 +5375,6 @@ export enum SaleType {
   PERCENTAGE = 'PERCENTAGE'
 }
 
-/** An enumeration. */
 export enum SendConfirmationEmailErrorCode {
   ACCOUNT_CONFIRMED = 'ACCOUNT_CONFIRMED',
   CONFIRMATION_ALREADY_REQUESTED = 'CONFIRMATION_ALREADY_REQUESTED',
@@ -6415,7 +5389,6 @@ export type SeoInput = {
   title?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum ShippingErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
@@ -6445,7 +5418,6 @@ export type ShippingMethodChannelListingInput = {
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum ShippingMethodTypeEnum {
   PRICE = 'PRICE',
   WEIGHT = 'WEIGHT'
@@ -6539,7 +5511,6 @@ export type ShippingZoneUpdateInput = {
   removeWarehouses?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum ShopErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   CANNOT_FETCH_TAX_RATES = 'CANNOT_FETCH_TAX_RATES',
@@ -6551,18 +5522,14 @@ export enum ShopErrorCode {
 }
 
 export type ShopSettingsInput = {
-  /**
-   * Enable possibility to login without account confirmation.
-   *
-   * Added in Saleor 3.15.
-   */
+  /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']>;
   /** Enable automatic fulfillment for all digital products. */
   automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']>;
   /**
    * Charge taxes on shipping.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
+   * DEPRECATED: this field will be removed. To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
    */
   chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
   /** URL of a view where customers can set their password. */
@@ -6582,64 +5549,40 @@ export type ShopSettingsInput = {
   /**
    * Display prices with tax in store.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
    */
   displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Enable automatic account confirmation by email.
-   *
-   * Added in Saleor 3.14.
-   */
+  /** Enable automatic account confirmation by email. */
   enableAccountConfirmationByEmail?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Enable ability to approve fulfillments which are unpaid.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Enable ability to approve fulfillments which are unpaid. */
   fulfillmentAllowUnpaid?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Enable automatic approval of all new fulfillments.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Enable automatic approval of all new fulfillments. */
   fulfillmentAutoApprove?: InputMaybe<Scalars['Boolean']>;
   /** Header text. */
   headerText?: InputMaybe<Scalars['String']>;
   /**
    * Include taxes in prices.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   * DEPRECATED: this field will be removed. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
    */
   includeTaxesInPrices?: InputMaybe<Scalars['Boolean']>;
-  /**
-   * Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
   /**
-   * Shop public metadata.
+   * Shop public metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * Shop private metadata.
+   * Shop private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.15.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable. */
   reserveStockDurationAnonymousUser?: InputMaybe<Scalars['Int']>;
-  /**
-   * Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable. */
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
@@ -6670,17 +5613,17 @@ export type StaffCreateInput = {
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user metadata.
+   * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user private metadata.
+   * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
@@ -6717,17 +5660,17 @@ export type StaffUpdateInput = {
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user metadata.
+   * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user private metadata.
+   * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of permission group IDs from which user should be unassigned. */
@@ -6745,7 +5688,6 @@ export enum StockAvailability {
   OUT_OF_STOCK = 'OUT_OF_STOCK'
 }
 
-/** An enumeration. */
 export enum StockBulkUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6766,7 +5708,6 @@ export type StockBulkUpdateInput = {
   warehouseId?: InputMaybe<Scalars['ID']>;
 };
 
-/** An enumeration. */
 export enum StockErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6824,7 +5765,6 @@ export enum StorePaymentMethodEnum {
   ON_SESSION = 'ON_SESSION'
 }
 
-/** An enumeration. */
 export enum StoredPaymentMethodRequestDeleteErrorCode {
   CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
   GATEWAY_ERROR = 'GATEWAY_ERROR',
@@ -6849,13 +5789,7 @@ export enum StoredPaymentMethodRequestDeleteResult {
   SUCCESSFULLY_DELETED = 'SUCCESSFULLY_DELETED'
 }
 
-/**
- * Define the filtering options for string fields.
- *
- * Added in Saleor 3.11.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
- */
+/** Define the filtering options for string fields. */
 export type StringFilterInput = {
   /** The value equal to. */
   eq?: InputMaybe<Scalars['String']>;
@@ -6868,7 +5802,6 @@ export enum TaxCalculationStrategy {
   TAX_APP = 'TAX_APP'
 }
 
-/** An enumeration. */
 export enum TaxClassCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6882,7 +5815,6 @@ export type TaxClassCreateInput = {
   name: Scalars['String'];
 };
 
-/** An enumeration. */
 export enum TaxClassDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -6914,7 +5846,6 @@ export type TaxClassSortingInput = {
   field: TaxClassSortField;
 };
 
-/** An enumeration. */
 export enum TaxClassUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6953,7 +5884,6 @@ export type TaxConfigurationPerCountryInput = {
   taxCalculationStrategy?: InputMaybe<TaxCalculationStrategy>;
 };
 
-/** An enumeration. */
 export enum TaxConfigurationUpdateErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6982,14 +5912,12 @@ export type TaxConfigurationUpdateInput = {
   updateCountriesConfiguration?: InputMaybe<Array<TaxConfigurationPerCountryInput>>;
 };
 
-/** An enumeration. */
 export enum TaxCountryConfigurationDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum TaxCountryConfigurationUpdateErrorCode {
   CANNOT_CREATE_NEGATIVE_RATE = 'CANNOT_CREATE_NEGATIVE_RATE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -6998,7 +5926,6 @@ export enum TaxCountryConfigurationUpdateErrorCode {
   ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED = 'ONLY_ONE_DEFAULT_COUNTRY_RATE_ALLOWED'
 }
 
-/** An enumeration. */
 export enum TaxExemptionManageErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7019,7 +5946,6 @@ export type TaxedMoneyInput = {
   net: Scalars['PositiveDecimal'];
 };
 
-/** An enumeration. */
 export enum ThumbnailFormatEnum {
   AVIF = 'AVIF',
   ORIGINAL = 'ORIGINAL',
@@ -7033,7 +5959,6 @@ export type TimePeriodInputType = {
   type: TimePeriodTypeEnum;
 };
 
-/** An enumeration. */
 export enum TimePeriodTypeEnum {
   DAY = 'DAY',
   MONTH = 'MONTH',
@@ -7068,7 +5993,6 @@ export enum TransactionActionEnum {
   REFUND = 'REFUND'
 }
 
-/** An enumeration. */
 export enum TransactionCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -7081,11 +6005,7 @@ export enum TransactionCreateErrorCode {
 export type TransactionCreateInput = {
   /** Amount authorized by this transaction. */
   amountAuthorized?: InputMaybe<MoneyInput>;
-  /**
-   * Amount canceled by this transaction.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** Amount canceled by this transaction. */
   amountCanceled?: InputMaybe<MoneyInput>;
   /** Amount charged by this transaction. */
   amountCharged?: InputMaybe<MoneyInput>;
@@ -7093,52 +6013,35 @@ export type TransactionCreateInput = {
   amountRefunded?: InputMaybe<MoneyInput>;
   /** List of all possible actions for the transaction */
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
-  /**
-   * The url that will allow to redirect user to payment provider page with transaction event details.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** The url that will allow to redirect user to payment provider page with transaction event details. */
   externalUrl?: InputMaybe<Scalars['String']>;
-  /**
-   * The message of the transaction.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** The message of the transaction. */
   message?: InputMaybe<Scalars['String']>;
-  /** Payment public metadata. */
+  /**
+   * Payment public metadata. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Payment name of the transaction.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** Payment name of the transaction. */
   name?: InputMaybe<Scalars['String']>;
-  /** Payment private metadata. */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * PSP Reference of the transaction.
+   * Payment private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.13.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** PSP Reference of the transaction.  */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
 export type TransactionEventInput = {
-  /**
-   * The message related to the event.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** The message related to the event. */
   message?: InputMaybe<Scalars['String']>;
-  /**
-   * PSP Reference related to this action.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** PSP Reference related to this action. */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum TransactionEventReportErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7209,7 +6112,6 @@ export enum TransactionFlowStrategyEnum {
   CHARGE = 'CHARGE'
 }
 
-/** An enumeration. */
 export enum TransactionInitializeErrorCode {
   CHECKOUT_COMPLETION_IN_PROGRESS = 'CHECKOUT_COMPLETION_IN_PROGRESS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7218,7 +6120,6 @@ export enum TransactionInitializeErrorCode {
   UNIQUE = 'UNIQUE'
 }
 
-/** An enumeration. */
 export enum TransactionKind {
   ACTION_TO_CONFIRM = 'ACTION_TO_CONFIRM',
   AUTH = 'AUTH',
@@ -7232,7 +6133,6 @@ export enum TransactionKind {
   VOID = 'VOID'
 }
 
-/** An enumeration. */
 export enum TransactionProcessErrorCode {
   CHECKOUT_COMPLETION_IN_PROGRESS = 'CHECKOUT_COMPLETION_IN_PROGRESS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7243,7 +6143,6 @@ export enum TransactionProcessErrorCode {
   TRANSACTION_ALREADY_PROCESSED = 'TRANSACTION_ALREADY_PROCESSED'
 }
 
-/** An enumeration. */
 export enum TransactionRequestActionErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7251,7 +6150,6 @@ export enum TransactionRequestActionErrorCode {
   NOT_FOUND = 'NOT_FOUND'
 }
 
-/** An enumeration. */
 export enum TransactionRequestRefundForGrantedRefundErrorCode {
   AMOUNT_GREATER_THAN_AVAILABLE = 'AMOUNT_GREATER_THAN_AVAILABLE',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7262,7 +6160,6 @@ export enum TransactionRequestRefundForGrantedRefundErrorCode {
   REFUND_IS_PENDING = 'REFUND_IS_PENDING'
 }
 
-/** An enumeration. */
 export enum TransactionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
@@ -7275,11 +6172,7 @@ export enum TransactionUpdateErrorCode {
 export type TransactionUpdateInput = {
   /** Amount authorized by this transaction. */
   amountAuthorized?: InputMaybe<MoneyInput>;
-  /**
-   * Amount canceled by this transaction.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** Amount canceled by this transaction. */
   amountCanceled?: InputMaybe<MoneyInput>;
   /** Amount charged by this transaction. */
   amountCharged?: InputMaybe<MoneyInput>;
@@ -7287,33 +6180,25 @@ export type TransactionUpdateInput = {
   amountRefunded?: InputMaybe<MoneyInput>;
   /** List of all possible actions for the transaction */
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
-  /**
-   * The url that will allow to redirect user to payment provider page with transaction event details.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** The url that will allow to redirect user to payment provider page with transaction event details. */
   externalUrl?: InputMaybe<Scalars['String']>;
-  /**
-   * The message of the transaction.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** The message of the transaction. */
   message?: InputMaybe<Scalars['String']>;
-  /** Payment public metadata. */
+  /**
+   * Payment public metadata. Can be read by any API client authorized to read the object it's attached to.
+   *
+   * Warning: never store sensitive information, including financial data such as credit card details.
+   */
   metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Payment name of the transaction.
-   *
-   * Added in Saleor 3.13.
-   */
+  /** Payment name of the transaction. */
   name?: InputMaybe<Scalars['String']>;
-  /** Payment private metadata. */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /**
-   * PSP Reference of the transaction.
+   * Payment private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.13.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** PSP Reference of the transaction.  */
   pspReference?: InputMaybe<Scalars['String']>;
 };
 
@@ -7333,12 +6218,12 @@ export enum TranslatableKinds {
   VOUCHER = 'VOUCHER'
 }
 
-/** An enumeration. */
 export enum TranslationErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
   NOT_FOUND = 'NOT_FOUND',
-  REQUIRED = 'REQUIRED'
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE'
 }
 
 export type TranslationInput = {
@@ -7351,28 +6236,28 @@ export type TranslationInput = {
   name?: InputMaybe<Scalars['String']>;
   seoDescription?: InputMaybe<Scalars['String']>;
   seoTitle?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateInvoiceInput = {
   /**
-   * Fields required to update the invoice metadata.
+   * Fields required to update the invoice metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Invoice number */
   number?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the invoice private metadata.
+   * Fields required to update the invoice private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of an invoice to download. */
   url?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum UploadErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR'
 }
@@ -7386,11 +6271,7 @@ export type UserCreateInput = {
   defaultShippingAddress?: InputMaybe<AddressInput>;
   /** The unique email address of the user. */
   email?: InputMaybe<Scalars['String']>;
-  /**
-   * External ID of the customer.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of the customer. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
@@ -7399,9 +6280,7 @@ export type UserCreateInput = {
   /**
    * User account is confirmed.
    *
-   * Added in Saleor 3.15.
-   *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    *
    * The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
    */
@@ -7411,17 +6290,17 @@ export type UserCreateInput = {
   /** Family name. */
   lastName?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user metadata.
+   * Fields required to update the user metadata. Can be read by any API client authorized to read the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
   /**
-   * Fields required to update the user private metadata.
+   * Fields required to update the user private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
-   * Added in Saleor 3.14.
+   * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
@@ -7456,7 +6335,6 @@ export enum VariantAttributeScope {
   VARIANT_SELECTION = 'VARIANT_SELECTION'
 }
 
-/** An enumeration. */
 export enum VolumeUnitsEnum {
   ACRE_FT = 'ACRE_FT',
   ACRE_IN = 'ACRE_IN',
@@ -7489,7 +6367,6 @@ export type VoucherChannelListingInput = {
   removeChannels?: InputMaybe<Array<Scalars['ID']>>;
 };
 
-/** An enumeration. */
 export enum VoucherCodeBulkDeleteErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
@@ -7527,7 +6404,11 @@ export type VoucherInput = {
   applyOncePerOrder?: InputMaybe<Scalars['Boolean']>;
   /** Categories discounted by the voucher. */
   categories?: InputMaybe<Array<Scalars['ID']>>;
-  /** Code to use the voucher. This field will be removed in Saleor 4.0. Use `addCodes` instead. */
+  /**
+   * Code to use the voucher.
+   *
+   * DEPRECATED: this field will be removed. Use `addCodes` instead.
+   */
   code?: InputMaybe<Scalars['String']>;
   /** Collections discounted by the voucher. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -7561,11 +6442,7 @@ export type VoucherInput = {
   type?: InputMaybe<VoucherTypeEnum>;
   /** Limit number of times this voucher can be used in total. */
   usageLimit?: InputMaybe<Scalars['Int']>;
-  /**
-   * Variants discounted by the voucher.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Variants discounted by the voucher. */
   variants?: InputMaybe<Array<Scalars['ID']>>;
 };
 
@@ -7573,7 +6450,7 @@ export enum VoucherSortField {
   /**
    * Sort vouchers by code.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.
+   * DEPRECATED: this field will be removed.
    */
   CODE = 'CODE',
   /** Sort vouchers by end date. */
@@ -7608,7 +6485,7 @@ export type VoucherSortingInput = {
   /**
    * Specifies the channel in which to sort the data.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use root-level channel argument instead.
+   * DEPRECATED: this field will be removed. Use root-level channel argument instead.
    */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort vouchers. */
@@ -7623,7 +6500,6 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = 'SPECIFIC_PRODUCT'
 }
 
-/** An enumeration. */
 export enum WarehouseClickAndCollectOptionEnum {
   ALL = 'ALL',
   DISABLED = 'DISABLED',
@@ -7635,25 +6511,20 @@ export type WarehouseCreateInput = {
   address: AddressInput;
   /** The email address of the warehouse. */
   email?: InputMaybe<Scalars['String']>;
-  /**
-   * External ID of the warehouse.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of the warehouse. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Warehouse name. */
   name: Scalars['String'];
   /**
    * Shipping zones supported by the warehouse.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Providing the zone ids will raise a ValidationError.
+   * DEPRECATED: this field will be removed. Providing the zone ids will raise a ValidationError.
    */
   shippingZones?: InputMaybe<Array<Scalars['ID']>>;
   /** Warehouse slug. */
   slug?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum WarehouseErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7688,25 +6559,13 @@ export type WarehouseSortingInput = {
 export type WarehouseUpdateInput = {
   /** Address of the warehouse. */
   address?: InputMaybe<AddressInput>;
-  /**
-   * Click and collect options: local, all or disabled.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Click and collect options: local, all or disabled. */
   clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
   /** The email address of the warehouse. */
   email?: InputMaybe<Scalars['String']>;
-  /**
-   * External ID of the warehouse.
-   *
-   * Added in Saleor 3.10.
-   */
+  /** External ID of the warehouse. */
   externalReference?: InputMaybe<Scalars['String']>;
-  /**
-   * Visibility of warehouse stocks.
-   *
-   * Added in Saleor 3.1.
-   */
+  /** Visibility of warehouse stocks. */
   isPrivate?: InputMaybe<Scalars['Boolean']>;
   /** Warehouse name. */
   name?: InputMaybe<Scalars['String']>;
@@ -7719,34 +6578,24 @@ export type WebhookCreateInput = {
   app?: InputMaybe<Scalars['ID']>;
   /** The asynchronous events that webhook wants to subscribe. */
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
-  /**
-   * Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
-   *
-   * Added in Saleor 3.12.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: InputMaybe<Scalars['JSONString']>;
   /**
    * The events that webhook wants to subscribe.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `asyncEvents` or `syncEvents` instead.
+   * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** The name of the webhook. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Subscription query used to define a webhook payload.
-   *
-   * Added in Saleor 3.2.
-   */
+  /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']>;
   /**
    * The secret key used to create a hash signature with each payload.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
@@ -7755,7 +6604,6 @@ export type WebhookCreateInput = {
   targetUrl?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum WebhookDryRunErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID_ID = 'INVALID_ID',
@@ -7768,7 +6616,6 @@ export enum WebhookDryRunErrorCode {
   UNABLE_TO_PARSE = 'UNABLE_TO_PARSE'
 }
 
-/** An enumeration. */
 export enum WebhookErrorCode {
   DELETE_FAILED = 'DELETE_FAILED',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -7808,8 +6655,7 @@ export enum WebhookEventTypeAsyncEnum {
   ADDRESS_UPDATED = 'ADDRESS_UPDATED',
   /**
    * All the events.
-   *
-   * DEPRECATED: this value will be removed in Saleor 4.0.
+   * @deprecated No longer supported
    */
   ANY_EVENTS = 'ANY_EVENTS',
   /** An app deleted. */
@@ -7851,11 +6697,7 @@ export enum WebhookEventTypeAsyncEnum {
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
-  /**
-   * A checkout metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
@@ -7863,11 +6705,7 @@ export enum WebhookEventTypeAsyncEnum {
   COLLECTION_CREATED = 'COLLECTION_CREATED',
   /** A collection is deleted. */
   COLLECTION_DELETED = 'COLLECTION_DELETED',
-  /**
-   * A collection metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A collection metadata is updated. */
   COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   /** A collection is updated. */
   COLLECTION_UPDATED = 'COLLECTION_UPDATED',
@@ -7875,11 +6713,7 @@ export enum WebhookEventTypeAsyncEnum {
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
   /** A customer account is deleted. */
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
-  /**
-   * A customer account metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
@@ -7895,36 +6729,18 @@ export enum WebhookEventTypeAsyncEnum {
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
   /** A new fulfillment is created. */
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
-  /**
-   * A fulfillment metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A fulfillment metadata is updated. */
   FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   FULFILLMENT_TRACKING_NUMBER_UPDATED = 'FULFILLMENT_TRACKING_NUMBER_UPDATED',
   /** A new gift card created. */
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /**
-   * A gift card export is completed.
-   *
-   * Added in Saleor 3.16.
-   */
+  /** A gift card export is completed. */
   GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
-  /**
-   * A gift card metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
-  /**
-   * A gift card has been sent.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** A gift card has been sent. */
   GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   /** A gift card status is changed. */
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
@@ -7950,19 +6766,12 @@ export enum WebhookEventTypeAsyncEnum {
   MENU_UPDATED = 'MENU_UPDATED',
   /**
    * User notification triggered.
-   *
-   * DEPRECATED: this value will be removed in Saleor 4.0. See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/docs/next/upgrade-guides/notify-user-deprecation
+   * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
   /** An observability event is created. */
   OBSERVABILITY = 'OBSERVABILITY',
-  /**
-   * Orders are imported.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
@@ -7976,35 +6785,13 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /**
-   * The order is fully refunded.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The order is fully refunded. */
   ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
-  /**
-   * An order metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** An order metadata is updated. */
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
-  /**
-   * Payment has been made. The order may be partially or fully paid.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Payment has been made. The order may be partially or fully paid. */
   ORDER_PAID = 'ORDER_PAID',
-  /**
-   * The order received a refund. The order may be partially or fully refunded.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The order received a refund. The order may be partially or fully refunded. */
   ORDER_REFUNDED = 'ORDER_REFUNDED',
   /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
@@ -8030,35 +6817,15 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /**
-   * A product export is completed.
-   *
-   * Added in Saleor 3.16.
-   */
+  /** A product export is completed. */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
-  /**
-   * A new product media is created.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
-  /**
-   * A product media is deleted.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A product media is deleted. */
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
-  /**
-   * A product media is updated.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A product media is updated. */
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
-  /**
-   * A product metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A product metadata is updated. */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
@@ -8068,11 +6835,7 @@ export enum WebhookEventTypeAsyncEnum {
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
-  /**
-   * A product variant metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
@@ -8114,19 +6877,11 @@ export enum WebhookEventTypeAsyncEnum {
   SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
-  /**
-   * A shipping zone metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A shipping zone metadata is updated. */
   SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A shipping zone is updated. */
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
-  /**
-   * Shop metadata is updated.
-   *
-   * Added in Saleor 3.15.
-   */
+  /** Shop metadata is updated. */
   SHOP_METADATA_UPDATED = 'SHOP_METADATA_UPDATED',
   /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
@@ -8136,17 +6891,9 @@ export enum WebhookEventTypeAsyncEnum {
   STAFF_SET_PASSWORD_REQUESTED = 'STAFF_SET_PASSWORD_REQUESTED',
   /** A staff user is updated. */
   STAFF_UPDATED = 'STAFF_UPDATED',
-  /**
-   * A thumbnail is created.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A thumbnail is created. */
   THUMBNAIL_CREATED = 'THUMBNAIL_CREATED',
-  /**
-   * Transaction item metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Transaction item metadata is updated. */
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
@@ -8164,11 +6911,7 @@ export enum WebhookEventTypeAsyncEnum {
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
   VOUCHER_DELETED = 'VOUCHER_DELETED',
-  /**
-   * A voucher metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A voucher metadata is updated. */
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** A voucher is updated. */
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
@@ -8176,11 +6919,7 @@ export enum WebhookEventTypeAsyncEnum {
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
   /** A warehouse is deleted. */
   WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
-  /**
-   * A warehouse metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A warehouse metadata is updated. */
   WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   /** A warehouse is updated. */
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED'
@@ -8210,8 +6949,7 @@ export enum WebhookEventTypeEnum {
   ADDRESS_UPDATED = 'ADDRESS_UPDATED',
   /**
    * All the events.
-   *
-   * DEPRECATED: this value will be removed in Saleor 4.0.
+   * @deprecated No longer supported
    */
   ANY_EVENTS = 'ANY_EVENTS',
   /** An app deleted. */
@@ -8250,22 +6988,14 @@ export enum WebhookEventTypeEnum {
   CHANNEL_STATUS_CHANGED = 'CHANNEL_STATUS_CHANGED',
   /** A channel is updated. */
   CHANNEL_UPDATED = 'CHANNEL_UPDATED',
-  /**
-   * Event called for checkout tax calculation.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Event called for checkout tax calculation. */
   CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
   CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
-  /**
-   * A checkout metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A checkout metadata is updated. */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
@@ -8273,11 +7003,7 @@ export enum WebhookEventTypeEnum {
   COLLECTION_CREATED = 'COLLECTION_CREATED',
   /** A collection is deleted. */
   COLLECTION_DELETED = 'COLLECTION_DELETED',
-  /**
-   * A collection metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A collection metadata is updated. */
   COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   /** A collection is updated. */
   COLLECTION_UPDATED = 'COLLECTION_UPDATED',
@@ -8285,11 +7011,7 @@ export enum WebhookEventTypeEnum {
   CUSTOMER_CREATED = 'CUSTOMER_CREATED',
   /** A customer account is deleted. */
   CUSTOMER_DELETED = 'CUSTOMER_DELETED',
-  /**
-   * A customer account metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A customer account metadata is updated. */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   /** A customer account is updated. */
   CUSTOMER_UPDATED = 'CUSTOMER_UPDATED',
@@ -8305,36 +7027,18 @@ export enum WebhookEventTypeEnum {
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
   /** A new fulfillment is created. */
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
-  /**
-   * A fulfillment metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A fulfillment metadata is updated. */
   FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   FULFILLMENT_TRACKING_NUMBER_UPDATED = 'FULFILLMENT_TRACKING_NUMBER_UPDATED',
   /** A new gift card created. */
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
-  /**
-   * A gift card export is completed.
-   *
-   * Added in Saleor 3.16.
-   */
+  /** A gift card export is completed. */
   GIFT_CARD_EXPORT_COMPLETED = 'GIFT_CARD_EXPORT_COMPLETED',
-  /**
-   * A gift card metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A gift card metadata is updated. */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
-  /**
-   * A gift card has been sent.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** A gift card has been sent. */
   GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   /** A gift card status is changed. */
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
@@ -8361,25 +7065,14 @@ export enum WebhookEventTypeEnum {
   MENU_UPDATED = 'MENU_UPDATED',
   /**
    * User notification triggered.
-   *
-   * DEPRECATED: this value will be removed in Saleor 4.0. See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/docs/next/upgrade-guides/notify-user-deprecation
+   * @deprecated See the docs for more details about migrating from NOTIFY_USER to other events: https://docs.saleor.io/upgrade-guides/core/3-16-to-3-17#migrating-from-notify_user
    */
   NOTIFY_USER = 'NOTIFY_USER',
   /** An observability event is created. */
   OBSERVABILITY = 'OBSERVABILITY',
-  /**
-   * Orders are imported.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Orders are imported. */
   ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
-  /**
-   * Event called for order tax calculation.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Event called for order tax calculation. */
   ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
@@ -8395,35 +7088,13 @@ export enum WebhookEventTypeEnum {
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
-  /**
-   * The order is fully refunded.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The order is fully refunded. */
   ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
-  /**
-   * An order metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** An order metadata is updated. */
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
-  /**
-   * Payment has been made. The order may be partially or fully paid.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Payment has been made. The order may be partially or fully paid. */
   ORDER_PAID = 'ORDER_PAID',
-  /**
-   * The order received a refund. The order may be partially or fully refunded.
-   *
-   * Added in Saleor 3.14.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** The order received a refund. The order may be partially or fully refunded. */
   ORDER_REFUNDED = 'ORDER_REFUNDED',
   /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
@@ -8467,35 +7138,15 @@ export enum WebhookEventTypeEnum {
   PRODUCT_CREATED = 'PRODUCT_CREATED',
   /** A product is deleted. */
   PRODUCT_DELETED = 'PRODUCT_DELETED',
-  /**
-   * A product export is completed.
-   *
-   * Added in Saleor 3.16.
-   */
+  /** A product export is completed. */
   PRODUCT_EXPORT_COMPLETED = 'PRODUCT_EXPORT_COMPLETED',
-  /**
-   * A new product media is created.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A new product media is created. */
   PRODUCT_MEDIA_CREATED = 'PRODUCT_MEDIA_CREATED',
-  /**
-   * A product media is deleted.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A product media is deleted. */
   PRODUCT_MEDIA_DELETED = 'PRODUCT_MEDIA_DELETED',
-  /**
-   * A product media is updated.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A product media is updated. */
   PRODUCT_MEDIA_UPDATED = 'PRODUCT_MEDIA_UPDATED',
-  /**
-   * A product metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A product metadata is updated. */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   /** A product is updated. */
   PRODUCT_UPDATED = 'PRODUCT_UPDATED',
@@ -8505,11 +7156,7 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_CREATED = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   PRODUCT_VARIANT_DELETED = 'PRODUCT_VARIANT_DELETED',
-  /**
-   * A product variant metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A product variant metadata is updated. */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   PRODUCT_VARIANT_OUT_OF_STOCK = 'PRODUCT_VARIANT_OUT_OF_STOCK',
@@ -8553,19 +7200,11 @@ export enum WebhookEventTypeEnum {
   SHIPPING_ZONE_CREATED = 'SHIPPING_ZONE_CREATED',
   /** A shipping zone is deleted. */
   SHIPPING_ZONE_DELETED = 'SHIPPING_ZONE_DELETED',
-  /**
-   * A shipping zone metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A shipping zone metadata is updated. */
   SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A shipping zone is updated. */
   SHIPPING_ZONE_UPDATED = 'SHIPPING_ZONE_UPDATED',
-  /**
-   * Shop metadata is updated.
-   *
-   * Added in Saleor 3.15.
-   */
+  /** Shop metadata is updated. */
   SHOP_METADATA_UPDATED = 'SHOP_METADATA_UPDATED',
   /** A new staff user is created. */
   STAFF_CREATED = 'STAFF_CREATED',
@@ -8576,43 +7215,17 @@ export enum WebhookEventTypeEnum {
   /** A staff user is updated. */
   STAFF_UPDATED = 'STAFF_UPDATED',
   STORED_PAYMENT_METHOD_DELETE_REQUESTED = 'STORED_PAYMENT_METHOD_DELETE_REQUESTED',
-  /**
-   * A thumbnail is created.
-   *
-   * Added in Saleor 3.12.
-   */
+  /** A thumbnail is created. */
   THUMBNAIL_CREATED = 'THUMBNAIL_CREATED',
-  /**
-   * Event called when cancel has been requested for transaction.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Event called when cancel has been requested for transaction. */
   TRANSACTION_CANCELATION_REQUESTED = 'TRANSACTION_CANCELATION_REQUESTED',
-  /**
-   * Event called when charge has been requested for transaction.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Event called when charge has been requested for transaction. */
   TRANSACTION_CHARGE_REQUESTED = 'TRANSACTION_CHARGE_REQUESTED',
   TRANSACTION_INITIALIZE_SESSION = 'TRANSACTION_INITIALIZE_SESSION',
-  /**
-   * Transaction item metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** Transaction item metadata is updated. */
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   TRANSACTION_PROCESS_SESSION = 'TRANSACTION_PROCESS_SESSION',
-  /**
-   * Event called when refund has been requested for transaction.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Event called when refund has been requested for transaction. */
   TRANSACTION_REFUND_REQUESTED = 'TRANSACTION_REFUND_REQUESTED',
   /** A new translation is created. */
   TRANSLATION_CREATED = 'TRANSLATION_CREATED',
@@ -8630,11 +7243,7 @@ export enum WebhookEventTypeEnum {
   VOUCHER_CREATED = 'VOUCHER_CREATED',
   /** A voucher is deleted. */
   VOUCHER_DELETED = 'VOUCHER_DELETED',
-  /**
-   * A voucher metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A voucher metadata is updated. */
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** A voucher is updated. */
   VOUCHER_UPDATED = 'VOUCHER_UPDATED',
@@ -8642,11 +7251,7 @@ export enum WebhookEventTypeEnum {
   WAREHOUSE_CREATED = 'WAREHOUSE_CREATED',
   /** A warehouse is deleted. */
   WAREHOUSE_DELETED = 'WAREHOUSE_DELETED',
-  /**
-   * A warehouse metadata is updated.
-   *
-   * Added in Saleor 3.8.
-   */
+  /** A warehouse metadata is updated. */
   WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   /** A warehouse is updated. */
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED'
@@ -8654,20 +7259,12 @@ export enum WebhookEventTypeEnum {
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeSyncEnum {
-  /**
-   * Event called for checkout tax calculation.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Event called for checkout tax calculation. */
   CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
   /** Filter shipping methods for checkout. */
   CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
   LIST_STORED_PAYMENT_METHODS = 'LIST_STORED_PAYMENT_METHODS',
-  /**
-   * Event called for order tax calculation.
-   *
-   * Added in Saleor 3.6.
-   */
+  /** Event called for order tax calculation. */
   ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
   /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
@@ -8692,35 +7289,16 @@ export enum WebhookEventTypeSyncEnum {
   /** Fetch external shipping methods for checkout. */
   SHIPPING_LIST_METHODS_FOR_CHECKOUT = 'SHIPPING_LIST_METHODS_FOR_CHECKOUT',
   STORED_PAYMENT_METHOD_DELETE_REQUESTED = 'STORED_PAYMENT_METHOD_DELETE_REQUESTED',
-  /**
-   * Event called when cancel has been requested for transaction.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Event called when cancel has been requested for transaction. */
   TRANSACTION_CANCELATION_REQUESTED = 'TRANSACTION_CANCELATION_REQUESTED',
-  /**
-   * Event called when charge has been requested for transaction.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Event called when charge has been requested for transaction. */
   TRANSACTION_CHARGE_REQUESTED = 'TRANSACTION_CHARGE_REQUESTED',
   TRANSACTION_INITIALIZE_SESSION = 'TRANSACTION_INITIALIZE_SESSION',
   TRANSACTION_PROCESS_SESSION = 'TRANSACTION_PROCESS_SESSION',
-  /**
-   * Event called when refund has been requested for transaction.
-   *
-   * Added in Saleor 3.13.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Event called when refund has been requested for transaction. */
   TRANSACTION_REFUND_REQUESTED = 'TRANSACTION_REFUND_REQUESTED'
 }
 
-/** An enumeration. */
 export enum WebhookSampleEventTypeEnum {
   ACCOUNT_CHANGE_EMAIL_REQUESTED = 'ACCOUNT_CHANGE_EMAIL_REQUESTED',
   ACCOUNT_CONFIRMATION_REQUESTED = 'ACCOUNT_CONFIRMATION_REQUESTED',
@@ -8865,7 +7443,6 @@ export enum WebhookSampleEventTypeEnum {
   WAREHOUSE_UPDATED = 'WAREHOUSE_UPDATED'
 }
 
-/** An enumeration. */
 export enum WebhookTriggerErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID_ID = 'INVALID_ID',
@@ -8884,34 +7461,24 @@ export type WebhookUpdateInput = {
   app?: InputMaybe<Scalars['ID']>;
   /** The asynchronous events that webhook wants to subscribe. */
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
-  /**
-   * Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed.
-   *
-   * Added in Saleor 3.12.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   */
+  /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: InputMaybe<Scalars['JSONString']>;
   /**
    * The events that webhook wants to subscribe.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use `asyncEvents` or `syncEvents` instead.
+   * DEPRECATED: this field will be removed. Use `asyncEvents` or `syncEvents` instead.
    */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** The new name of the webhook. */
   name?: InputMaybe<Scalars['String']>;
-  /**
-   * Subscription query used to define a webhook payload.
-   *
-   * Added in Saleor 3.2.
-   */
+  /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']>;
   /**
    * Use to create a hash signature with each payload.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   * DEPRECATED: this field will be removed. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
    */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
@@ -8920,7 +7487,6 @@ export type WebhookUpdateInput = {
   targetUrl?: InputMaybe<Scalars['String']>;
 };
 
-/** An enumeration. */
 export enum WeightUnitsEnum {
   G = 'G',
   KG = 'KG',
@@ -9737,7 +8303,7 @@ export type CustomerDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } } } }> } | null, lastPlacedOrder: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any } }> } | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
+export type CustomerDetailsQuery = { __typename: 'Query', user: { __typename: 'User', dateJoined: any, lastLogin: any | null, note: string | null, isActive: boolean, id: string, email: string, firstName: string, lastName: string, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata?: Array<{ __typename: 'MetadataItem', key: string, value: string }>, orders?: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any, number: string, paymentStatus: PaymentChargeStatusEnum, chargeStatus: OrderChargeStatusEnum, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', currency: string, amount: number } } } }> } | null, lastPlacedOrder: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, created: any } }> } | null, customerGroups: Array<{ __typename: 'CustomerGroup', id: string, name: string }> | null, defaultShippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, defaultBillingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null };
 
 export type CustomerAddressesQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11980,6 +10546,15 @@ export type SearchCollectionsWithTotalProductsQueryVariables = Exact<{
 
 
 export type SearchCollectionsWithTotalProductsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+
+export type CustomerGroupsSearchQueryVariables = Exact<{
+  query: Scalars['String'];
+  first: Scalars['Int'];
+  after?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CustomerGroupsSearchQuery = { __typename: 'Query', search: { __typename: 'CustomerGroupCountableConnection', edges: Array<{ __typename: 'CustomerGroupCountableEdge', node: { __typename: 'CustomerGroup', id: string, name: string } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type SearchCustomersQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
