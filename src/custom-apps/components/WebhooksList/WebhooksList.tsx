@@ -1,4 +1,3 @@
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -8,11 +7,12 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { isUnnamed } from "@dashboard/custom-apps/utils";
 import { WebhookFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages, commonStatusMessages, sectionNames } from "@dashboard/intl";
 import { renderCollection, stopPropagation } from "@dashboard/misc";
 import { TableBody, TableCell, TableHead } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -29,7 +29,14 @@ export interface WebhooksListProps {
 const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
   const intl = useIntl();
   const classes = useStyles();
+  const navigate = useNavigator();
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
+
+  const handleCreateWebhook = () => {
+    if (!createHref) return;
+
+    navigate(createHref);
+  };
 
   return (
     <DashboardCard>
@@ -39,7 +46,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRem
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
           {!!createHref && (
-            <Button variant="secondary" href={createHref} data-test-id="create-webhook">
+            <Button variant="secondary" onClick={handleCreateWebhook} data-test-id="create-webhook">
               <FormattedMessage {...messages.createWebhook} />
             </Button>
           )}

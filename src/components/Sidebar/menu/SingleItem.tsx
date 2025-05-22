@@ -1,4 +1,4 @@
-import { extensionMountPoints, useExtensions } from "@dashboard/apps/hooks/useExtensions";
+import { extensionMountPoints, useExtensions } from "@dashboard/extensions/hooks/useExtensions";
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -19,6 +19,10 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
     if (extension) {
       extension.open();
     }
+
+    if (menuItem.onClick) {
+      menuItem.onClick();
+    }
   };
 
   return (
@@ -28,6 +32,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       active={active}
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
+      position="relative"
     >
       <Link
         to={menuItem.url || ""}
@@ -51,6 +56,11 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
           </Text>
         </Box>
       </Link>
+      {menuItem.endAdornment && (
+        <Box position="absolute" right={2} zIndex={"3"}>
+          {menuItem.endAdornment}
+        </Box>
+      )}
     </List.Item>
   );
 };

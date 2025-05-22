@@ -1,11 +1,6 @@
 // @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForProductOverviewActions,
-  useExtensions,
-} from "@dashboard/apps/hooks/useExtensions";
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -16,6 +11,12 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForProductOverviewActions,
+  useExtensions,
+} from "@dashboard/extensions/hooks/useExtensions";
 import {
   Exact,
   GridAttributesQuery,
@@ -109,6 +110,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     ...listProps
   } = props;
   const intl = useIntl();
+  const subtitle = useContextualLink("product_list");
   const location = useLocation();
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -133,6 +135,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         withoutBorder
         isAlignToRight={false}
         title={intl.formatMessage(sectionNames.products)}
+        subtitle={subtitle}
       >
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">

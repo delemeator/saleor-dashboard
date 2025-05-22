@@ -18,6 +18,9 @@ jobs:
       BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
       BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
+      SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
+      RUN_SLUG: ${{ steps.cloud_variables.outputs.RUN_SLUG }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -69,6 +72,7 @@ jobs:
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
       - name: Prepare accounts
         id: accounts
@@ -81,24 +85,9 @@ jobs:
           E2E_ENCODE_PASS: ${{ secrets.E2E_ENCODE_PASS }}
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
-
-  create-run-on-testmo:
-    runs-on: ubuntu-22.04
-    needs: initialize-cloud
-    outputs:
-      testmo-run-id: ${{ steps.init-testmo.outputs.testmo-run-id }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/testmo/testmo-init
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunName: "Playwright run ${{github.ref_name}}"
-        id: init-testmo
-
   run-tests:
     runs-on: ubuntu-22.04
-    needs: ["initialize-cloud", "create-run-on-testmo"]
+    needs: ["initialize-cloud"]
     strategy:
       fail-fast: false
       matrix:
@@ -120,49 +109,32 @@ jobs:
           MAILPITURL: ${{ secrets.MAILPITURL }}
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
+          ENABLED_SERVICE_NAME_HEADER: true
           URL_TO_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           PROJECT: "e2e apps-e2e"
-
-      - name: submit-results-to-testmo
-        if: always()
-        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
+          DASHBOARD_VERSION: ${{ needs.initialize-cloud.outputs.RUN_SLUG }}
+          BRANCH_NAME: ${{ github.ref}}
+          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
   tests-complete:
-    if: '!cancelled()'
-    needs: ["initialize-cloud", "run-tests", "create-run-on-testmo"]
+    if: "!cancelled()"
+    needs: ["initialize-cloud", "run-tests"]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Merge playwright reports
         uses: ./.github/actions/merge-pw-reports
-
-      - name: complete testmo report
-        uses: ./.github/actions/testmo/testmo-finish
         with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
 
-      - name: send message on slack
-        working-directory: ".github"
-        env:
-          run_id: ${{ needs.create-run-on-testmo.outputs.testmo-run-id }}
-          url_to_action: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          testmo_token: ${{ secrets.TESTMO_TOKEN }}
-          environment: ${{ needs.initialize-cloud.outputs.BASE_URL }}
-          slack_webhook_url: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          ref_name: ${{github.ref_name}}
+      - name: Create flaky report
+        uses: ./.github/actions/flaky-tests-report
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-        run: |
-          node workflows/postTestsResults.js \
-          --run_id "$run_id" \
-          --testmo_token "$testmo_token" \
-          --slack_webhook_url "$slack_webhook_url" \
-          --environment "$environment" \
-          --url_to_action "$url_to_action" \
-          --ref_name "$ref_name"
+      - name: Push flaky report
+        uses: ./.github/actions/push-flaky-test-report
+        with:
+          VAULT_URL: ${{ secrets.VAULT_URL }}
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}

@@ -3,6 +3,7 @@ import {
   AddressInput,
   CountryCode,
   DateRangeInput,
+  OrderChargeStatusEnum,
   OrderStatus,
   OrderStatusFilter,
   PaymentChargeStatusEnum,
@@ -123,6 +124,25 @@ export const transformPaymentStatus = (
     localized: status,
     status: StatusType.ERROR,
   };
+};
+
+export const transformChargedStatus = (status: OrderChargeStatusEnum, intl: IntlShape) => {
+  switch (status) {
+    case OrderChargeStatusEnum.OVERCHARGED:
+      return {
+        localized: intl.formatMessage({
+          defaultMessage: "Overcharged",
+          id: "4VLj3S",
+          description: "overcharged order status",
+        }),
+        status: StatusType.WARNING,
+      };
+    default:
+      return {
+        localized: status,
+        status: StatusType.ERROR,
+      };
+  }
 };
 
 export const transformOrderStatus = (
@@ -522,7 +542,7 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
 });
 
 export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
-  if (!data || !data.firstName || !data.lastName) {
+  if (!data || (!data.firstName && !data.lastName)) {
     return "";
   }
 
@@ -566,9 +586,6 @@ export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) 
   obj.id !== idToCompare;
 
 export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(getById(id));
-
-export const COLOR_WARNING = "#FBE5AC";
-export const COLOR_WARNING_DARK = "#3E2F0A";
 
 export type PillStatusType = "error" | "warning" | "info" | "success" | "generic";
 
@@ -628,7 +645,12 @@ const getAllRemovedRowsBeforeRowIndex = (rowIndex: number, removedRowsIndexs: nu
 export const getDatagridRowDataIndex = (rowIndex: number, removedRowsIndexs: number[]) =>
   rowIndex + getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
 
-export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: string[]) => {
+export const fuzzySearch = <T>(
+  array: T[],
+  query: string | undefined,
+  keys: string[],
+  threshold = 0.3,
+) => {
   if (!query) {
     return array;
   }
@@ -636,7 +658,7 @@ export const fuzzySearch = <T>(array: T[], query: string | undefined, keys: stri
   const fuse = new Fuse(array, {
     keys,
     includeScore: true,
-    threshold: 0.3,
+    threshold,
   });
 
   return fuse.search(query.toLocaleLowerCase()).map(({ item }) => item);

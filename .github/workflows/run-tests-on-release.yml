@@ -18,10 +18,6 @@ on:
     secrets:
       STAGING_TOKEN:
         required: true
-      TESTMO_URL:
-        required: true
-      TESTMO_TOKEN:
-        required: true
       E2E_USER_NAME:
         required: true
       E2E_USER_PASSWORD:
@@ -40,7 +36,7 @@ on:
       RUN_URL:
         value: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         description: Url to job run
-      PR_COMMENT: 
+      PR_COMMENT:
         value: ${{ jobs.tests-complete.outputs.PR_COMMENT }}
         description: Comment for release PR
 
@@ -53,7 +49,6 @@ jobs:
       CUSTOM_VERSION: ${{inputs.CUSTOM_VERSION}}
     outputs:
       VERSION: ${{ env.VERSION }}
-      TESTMO_RUN_ID: ${{ steps.init-testmo.outputs.testmo-run-id }}
       POOL_NAME: ${{ steps.pool_variables.outputs.POOL_NAME }}
       POOL_INSTANCE: ${{ steps.pool_variables.outputs.POOL_INSTANCE }}
       BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
@@ -65,6 +60,7 @@ jobs:
       FRAMEWORK: ${{ steps.check-framework.outputs.result }}
       IS_OLD_VERSION: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
       ACCOUNTS: ${{ steps.accounts.outputs.ACCOUNTS }}
+      SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
     steps:
       - uses: actions/checkout@v4
 
@@ -93,13 +89,14 @@ jobs:
         env:
           VERSION: "${{inputs.VERSION}}"
         with:
+          result-encoding: string
           script: |
             const { VERSION } = process.env
             const versionWithoutDot = VERSION.replaceAll(/\./g, "")
             if(versionWithoutDot >= 319){
-              return "playwright"
+              return "Playwright-tests"
             }else{
-              return "cypress"
+              return "Cypress-tests"
             }
 
       - name: Create check if release PR exists
@@ -131,25 +128,16 @@ jobs:
           POOL_NAME: ${{ steps.cloud_variables.outputs.POOL_NAME }}
           POOL_INSTANCE: ${{ steps.cloud_variables.outputs.POOL_INSTANCE }}
           BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+          SALEOR_CLOUD_SERVICE: ${{ steps.cloud_variables.outputs.SALEOR_CLOUD_SERVICE }}
 
-      - uses: ./.github/actions/testmo/testmo-init
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunName: "${{ steps.check-framework.outputs.result }} run ${{ env.CUSTOM_VERSION }}"
-        id: init-testmo
-
-      - name: get environment variables
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+      - name: Get environment variables
+        uses: ./.github/actions/get-env-vars
         id: get-environment-variables
-        run: |
-          node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
-            --version $CUSTOM_VERSION \
-            --token "$TOKEN" \
-            --repo_token "$REPO_TOKEN" \
-            --project "$PROJECT"
+        with:
+          version: ${{ env.CUSTOM_VERSION }}
+          token: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          project: ${{ env.PROJECT }}
 
       - name: Prepare accounts
         id: accounts
@@ -163,7 +151,7 @@ jobs:
           E2E_PERMISSIONS_USERS_PASSWORD: ${{ secrets.E2E_PERMISSIONS_USERS_PASSWORD }}
 
   run-cy-tests:
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
     needs: add-check-and-prepare-instance
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -216,18 +204,11 @@ jobs:
           install: false
           browser: "electron"
 
-      - name: Testmo threads submit
-        uses: ./.github/actions/testmo/testmo-threads-submit
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-
   run-pw-tests:
     runs-on: ubuntu-22.04
     needs: "add-check-and-prepare-instance"
     timeout-minutes: 30
-    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
+    if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Playwright-tests'
     strategy:
       fail-fast: false
       matrix:
@@ -253,14 +234,9 @@ jobs:
           PW_WORKERS: ${{ vars.PW_WORKERS }}
           PW_RETRIES: ${{ vars.PW_RETRIES }}
           PROJECT: "e2e apps-e2e"
-
-      - name: submit-results-to-testmo
-        if: always()
-        uses: ./.github/actions/testmo/testmo-threads-submit-playwright
-        with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+          DASHBOARD_VERSION: ${{inputs.CUSTOM_VERSION}}
+          BRANCH_NAME: ${{ github.ref}}
+          SALEOR_CLOUD_SERVICE: ${{ needs.initialize-cloud.outputs.SALEOR_CLOUD_SERVICE }}
 
   tests-complete:
     if: |
@@ -283,40 +259,25 @@ jobs:
         run: npm ci
 
       - name: Merge playwright reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"playwright"'
+        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Playwright-tests'
         uses: ./.github/actions/merge-pw-reports
+        with:
+          PASSWORD_FOR_DECODING_ARTIFACT: ${{ secrets.TESTS_RESULT_PASSWORD }}
 
       - name: Merge cypress reports
-        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == '"cypress"'
+        if: needs.add-check-and-prepare-instance.outputs.FRAMEWORK == 'Cypress-tests'
         uses: ./.github/actions/combineReportsFromE2E
 
-      - name: complete testmo report
-        uses: ./.github/actions/testmo/testmo-finish
+      - name: Create flaky report
+        uses: ./.github/actions/flaky-tests-report
         with:
-          testmoUrl: ${{ secrets.TESTMO_URL }}
-          testmoToken: ${{ secrets.TESTMO_TOKEN }}
-          testmoRunId: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: send message on slack
-        working-directory: ".github"
-        id: send-slack-message
-        env:
-          RUN_ID: ${{ needs.add-check-and-prepare-instance.outputs.TESTMO_RUN_ID }}
-          URL_TO_ACTION: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          ENVIRONMENT: ${{ needs.add-check-and-prepare-instance.outputs.BASE_URL }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_QA_STATUSES_WEBHOOK_URL }}
-          REF_NAME: ${{github.ref_name}}
-          ADDITIONAL_TITLE: "${{inputs.ADDITIONAL_TITLE}} ${{inputs.CUSTOM_VERSION}}"
-        run: |
-          node workflows/postTestsResults.js \
-          --run_id "$RUN_ID" \
-          --testmo_token "$TESTMO_TOKEN" \
-          --slack_webhook_url "$SLACK_WEBHOOK_URL" \
-          --environment "$ENVIRONMENT" \
-          --url_to_action "$URL_TO_ACTION" \
-          --ref_name "$REF_NAME" \
-          --additional_title "$ADDITIONAL_TITLE"
+      - name: Push flaky report
+        uses: ./.github/actions/push-flaky-test-report
+        with:
+          VAULT_URL: ${{ secrets.VAULT_URL }}
+          VAULT_JWT: ${{ secrets.VAULT_JWT }}
 
       - id: update-check
         if: always() && ${{ needs.add-check-and-prepare-instance.outputs.CHECK_ID }}
@@ -336,7 +297,7 @@ jobs:
     if: |
       always() &&
       (needs.tests-complete != 'success' && cancelled()) &&
-      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == '"playwright"'
+      needs.add-check-and-prepare-instance.outputs.FRAMEWORK   == 'Playwright-tests'
 
     steps:
       - uses: actions/checkout@v4

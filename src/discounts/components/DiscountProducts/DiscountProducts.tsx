@@ -1,5 +1,4 @@
 // @ts-strict-ignore
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@dashboard/components/Checkbox";
@@ -9,12 +8,11 @@ import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
+import { SearchProductFragment } from "@dashboard/graphql";
 import { productUrl } from "@dashboard/products/urls";
-import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,7 +22,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
-  discount: SaleDetailsFragment | VoucherDetailsFragment;
+  products: SearchProductFragment[];
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -32,7 +30,7 @@ export interface SaleProductsProps extends ListProps, ListActions {
 const numberOfColumns = 5;
 const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const {
-    discount,
+    products,
     disabled,
     onProductAssign,
     onProductUnassign,
@@ -45,8 +43,6 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const productsList = mapEdgesToItems(discount?.products);
-
   return (
     <DashboardCard data-test-id="assign-product-section">
       <DashboardCard.Header>
@@ -54,7 +50,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           {intl.formatMessage(messages.discountProductsHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onProductAssign} data-test-id="assign-products">
+          <Button onClick={onProductAssign} data-test-id="assign-products" variant="secondary">
             <FormattedMessage {...messages.discountProductsButton} />
           </Button>
         </DashboardCard.Toolbar>
@@ -72,12 +68,12 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={productsList}
+          items={products}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            <span className={productsList?.length > 0 && classes.colNameLabel}>
+            <span className={products?.length > 0 && classes.colNameLabel}>
               <FormattedMessage {...messages.discountProductsTableProductHeader} />
             </span>
           </TableCell>
@@ -96,7 +92,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
-            getLoadableList(discount?.products),
+            products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
 
@@ -119,7 +115,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    thumbnail={maybe(() => product.thumbnail.url)}
+                    thumbnail={maybe(() => product.thumbnail?.url)}
                   >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>

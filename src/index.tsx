@@ -4,10 +4,11 @@ import "./index.css";
 import { ApolloProvider } from "@apollo/client";
 import DemoBanner from "@dashboard/components/DemoBanner";
 import { history, Route, Router } from "@dashboard/components/Router";
-import { useFlag } from "@dashboard/featureFlags";
+import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
+import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
 import React from "react";
@@ -18,7 +19,6 @@ import { useIntl } from "react-intl";
 import { Switch } from "react-router-dom";
 
 import { AppsSectionRoot } from "./apps";
-import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -53,16 +53,16 @@ import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import { ExtensionsSection } from "./extensions";
+import { ExternalAppProvider } from "./extensions/components/ExternalAppContext";
 import { FeatureFlagsProviderWithUser } from "./featureFlags/FeatureFlagsProvider";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
-import OldHomePage from "./home";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
-import { HomePage } from "./newHome";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
@@ -80,6 +80,7 @@ import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
+import { WelcomePage } from "./welcomePage";
 
 if (GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -117,23 +118,25 @@ const App: React.FC = () => (
                   <BackgroundTasksProvider>
                     <AppStateProvider>
                       <AuthProvider>
-                        <ShopProvider>
-                          <AppChannelProvider>
-                            <ExitFormDialogProvider>
-                              <DevModeProvider>
-                                <NavigatorSearchProvider>
-                                  <ProductAnalytics>
+                        <ProductAnalytics>
+                          <ShopProvider>
+                            <AppChannelProvider>
+                              <ExitFormDialogProvider>
+                                <DevModeProvider>
+                                  <NavigatorSearchProvider>
                                     <SavebarRefProvider>
                                       <FeatureFlagsProviderWithUser>
-                                        <Routes />
+                                        <OnboardingProvider>
+                                          <Routes />
+                                        </OnboardingProvider>
                                       </FeatureFlagsProviderWithUser>
                                     </SavebarRefProvider>
-                                  </ProductAnalytics>
-                                </NavigatorSearchProvider>
-                              </DevModeProvider>
-                            </ExitFormDialogProvider>
-                          </AppChannelProvider>
-                        </ShopProvider>
+                                  </NavigatorSearchProvider>
+                                </DevModeProvider>
+                              </ExitFormDialogProvider>
+                            </AppChannelProvider>
+                          </ShopProvider>
+                        </ProductAnalytics>
                       </AuthProvider>
                     </AppStateProvider>
                   </BackgroundTasksProvider>
@@ -155,8 +158,6 @@ const Routes: React.FC = () => {
   const homePageLoaded = channelLoaded && authenticated;
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
   const { isAppPath } = useLocationState();
-  const { enabled: isNewHomePageEnabled } = useFlag("new_home_page");
-  const HomePageComponent = isNewHomePageEnabled ? HomePage : OldHomePage;
 
   return (
     <>
@@ -182,7 +183,7 @@ const Routes: React.FC = () => {
               )}
             >
               <Switch>
-                <SectionRoute exact path="/" component={HomePageComponent} />
+                <SectionRoute exact path="/" component={WelcomePage} />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   path="/categories"
@@ -282,6 +283,11 @@ const Routes: React.FC = () => {
                   permissions={[]}
                   path={AppSections.appsSection}
                   component={AppsSectionRoot}
+                />
+                <SectionRoute
+                  permissions={[]}
+                  path={extensionsSection}
+                  component={ExtensionsSection}
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}

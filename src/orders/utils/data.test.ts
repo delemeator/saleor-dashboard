@@ -5,6 +5,7 @@ import {
   OrderDetailsWithMetadataFragment,
   OrderDiscountFragment,
   OrderDiscountType,
+  OrderFulfillLineFragment,
   OrderLineWithMetadataFragment,
   OrderRefundDataQuery,
   OrderStatus,
@@ -17,6 +18,7 @@ import { LineItemData } from "../components/OrderReturnPage/form";
 import { OrderRefundSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
+  getAttributesCaption,
   getDiscountTypeLabel,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
@@ -511,6 +513,8 @@ describe("Get the total value of all replaced products", () => {
         id: "1",
         isShippingRequired: false,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -624,7 +628,8 @@ describe("Get the total value of all replaced products", () => {
         id: "2",
         isShippingRequired: false,
         isGift: false,
-
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -738,7 +743,8 @@ describe("Get the total value of all replaced products", () => {
         id: "3",
         isShippingRequired: true,
         isGift: false,
-
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -857,7 +863,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
-
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -976,6 +983,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1094,6 +1103,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1212,6 +1223,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1330,6 +1343,8 @@ describe("Get the total value of all replaced products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -1577,6 +1592,8 @@ describe("Get the total value of all selected products", () => {
         id: "1",
         isShippingRequired: false,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1690,6 +1707,8 @@ describe("Get the total value of all selected products", () => {
         id: "2",
         isShippingRequired: false,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1803,6 +1822,8 @@ describe("Get the total value of all selected products", () => {
         id: "3",
         isShippingRequired: true,
         isGift: false,
+        metadata: [],
+        privateMetadata: [],
         allocations: [
           {
             id: "allocation_test_id",
@@ -1921,6 +1942,8 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2039,6 +2062,8 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2157,6 +2182,8 @@ describe("Get the total value of all selected products", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2397,6 +2424,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2515,6 +2544,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ1",
           isShippingRequired: false,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2633,6 +2664,8 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           id: "T3JkZXJMaW5lOjQ3",
           isShippingRequired: true,
           isGift: false,
+          metadata: [],
+          privateMetadata: [],
           allocations: [
             {
               id: "allocation_test_id",
@@ -2823,5 +2856,92 @@ describe("Get discount type label", () => {
 
     // Assert
     expect(result).toBe("Promotion");
+  });
+});
+describe("getAttributesCaption", () => {
+  it("should join multiple attributes with separator", () => {
+    // Arrange
+    const attributes: OrderFulfillLineFragment["variant"]["attributes"] = [
+      {
+        values: [{ name: "Red", __typename: "AttributeValue", id: "1" }],
+        __typename: "SelectedAttribute",
+      },
+      {
+        values: [{ name: "Large", __typename: "AttributeValue", id: "2" }],
+        __typename: "SelectedAttribute",
+      },
+    ];
+
+    // Act
+    const result = getAttributesCaption(attributes);
+
+    // Assert
+    expect(result).toBe(" / Red / Large");
+  });
+
+  it("should handle attributes with multiple values", () => {
+    // Arrange
+    const attributes: OrderFulfillLineFragment["variant"]["attributes"] = [
+      {
+        values: [
+          { name: "Red", __typename: "AttributeValue", id: "1" },
+          { name: "Blue", __typename: "AttributeValue", id: "2" },
+        ],
+        __typename: "SelectedAttribute",
+      },
+      {
+        values: [{ name: "Cotton", __typename: "AttributeValue", id: "3" }],
+        __typename: "SelectedAttribute",
+      },
+    ];
+
+    // Act
+    const result = getAttributesCaption(attributes);
+
+    // Assert
+    expect(result).toBe(" / Red, Blue / Cotton");
+  });
+
+  it("should handle empty attributes", () => {
+    // Arrange
+    const attributes: OrderFulfillLineFragment["variant"]["attributes"] = [
+      {
+        values: [
+          { name: "Red", __typename: "AttributeValue", id: "1" },
+          { name: "Blue", __typename: "AttributeValue", id: "2" },
+        ],
+        __typename: "SelectedAttribute",
+      },
+      {
+        values: [],
+        __typename: "SelectedAttribute",
+      },
+    ];
+
+    // Act
+    const result = getAttributesCaption(attributes);
+
+    // Assert
+    expect(result).toBe(" / Red, Blue");
+  });
+
+  it("should handle no attributes", () => {
+    // Arrange
+    const attributes: OrderFulfillLineFragment["variant"]["attributes"] = [
+      {
+        values: [],
+        __typename: "SelectedAttribute",
+      },
+      {
+        values: [],
+        __typename: "SelectedAttribute",
+      },
+    ];
+
+    // Act
+    const result = getAttributesCaption(attributes);
+
+    // Assert
+    expect(result).toBe("");
   });
 });

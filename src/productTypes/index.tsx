@@ -1,3 +1,4 @@
+import { ConditionalProductTypesFilterProvider } from "@dashboard/components/ConditionalFilter";
 import { Route } from "@dashboard/components/Router";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
@@ -21,10 +22,20 @@ import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
 const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1)) as any;
+  const qs = parseQs(location.search, {
+    ignoreQueryPrefix: true,
+    // As a product types list still keeps ids to remove in query params,
+    // we need to increase the array limit to 100, default 20,
+    // because qs library return object instead of an array when limit is exceeded
+    arrayLimit: 100,
+  }) as any;
   const params: ProductTypeListUrlQueryParams = asSortParams(qs, ProductTypeListUrlSortField);
 
-  return <ProductTypeListComponent params={params} />;
+  return (
+    <ConditionalProductTypesFilterProvider locationSearch={location.search}>
+      <ProductTypeListComponent params={params} />
+    </ConditionalProductTypesFilterProvider>
+  );
 };
 
 interface ProductTypeCreateRouteParams {

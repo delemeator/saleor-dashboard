@@ -32,8 +32,8 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         <DashboardCard.Title>
           <Box display="flex" justifyContent="space-between">
             {intl.formatMessage({
-              id: "dEUZg2",
-              defaultMessage: "Menu Items",
+              id: "TD/GhR",
+              defaultMessage: "Structure Items",
               description: "header",
             })}
           </Box>
@@ -61,9 +61,9 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
 
         <Button onClick={onItemAdd} variant="secondary" data-test-id="create-new-menu-item">
           <FormattedMessage
-            id="Uf3oHA"
+            id="XvbjyW"
             defaultMessage="Create new item"
-            description="add new menu item"
+            description="add new structure"
           />
         </Button>
       </DashboardCard.Content>

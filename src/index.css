@@ -74,3 +74,21 @@ body {
 .noBorder {
   border: none;
 }
+
+.conditional-metadata label {
+  border: none;
+}
+
+.scrollArea {
+  max-height: calc(100vh - 400px);
+}
+
+@media (min-height: 900px) {
+  .scrollArea {
+    max-height: 600px;
+  }
+}
+
+.simple-radio-group > *:first-child {
+  margin-top: 4px !important;
+}

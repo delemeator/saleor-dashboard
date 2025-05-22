@@ -4,6 +4,7 @@ import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { useFlag } from "@dashboard/featureFlags";
 import { getPrevLocationState } from "@dashboard/hooks/useBackLinkWithState";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
@@ -71,10 +72,11 @@ const PageListPage: React.FC<PageListPageProps> = ({
   const navigate = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = React.useState(false);
+  const { enabled: isPageFiltersEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.content)} isAlignToRight={false} withoutBorder>
+      <TopNav title={intl.formatMessage(sectionNames.models)} isAlignToRight={false} withoutBorder>
         <Box __flex={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box display="flex">
             <Box marginX={5} display="flex" alignItems="center">
@@ -92,42 +94,66 @@ const PageListPage: React.FC<PageListPageProps> = ({
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "hJrzlT",
-                defaultMessage: "All content",
+                id: "UgCuqX",
+                defaultMessage: "All models",
                 description: "tab name",
               })}
             />
           </Box>
           <Box display="flex" alignItems="center" gap={2}>
             <Button onClick={onPageCreate} variant="primary" data-test-id="create-page">
-              <FormattedMessage id="DOVEZF" defaultMessage="Create content" description="button" />
+              <FormattedMessage id="pyiyxe" defaultMessage="Create model" description="button" />
             </Button>
           </Box>
         </Box>
       </TopNav>
       <DashboardCard>
-        <ListFilters
-          filterStructure={structure}
-          initialSearch={initialSearch}
-          searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          actions={
-            selectedPageIds.length > 0 && (
-              <Box display="flex" gap={4}>
-                <Button variant="secondary" onClick={onPagesUnpublish}>
-                  <FormattedMessage {...messages.unpublish} />
-                </Button>
-                <Button variant="secondary" onClick={onPagesPublish}>
-                  <FormattedMessage {...messages.publish} />
-                </Button>
-                <BulkDeleteButton onClick={onPagesDelete}>
-                  <FormattedMessage {...messages.delete} />
-                </BulkDeleteButton>
-              </Box>
-            )
-          }
-        />
+        {isPageFiltersEnabled ? (
+          <ListFilters
+            type="expression-filter"
+            initialSearch={initialSearch}
+            searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
+            onSearchChange={onSearchChange}
+            actions={
+              selectedPageIds.length > 0 && (
+                <Box display="flex" gap={4}>
+                  <Button variant="secondary" onClick={onPagesUnpublish}>
+                    <FormattedMessage {...messages.unpublish} />
+                  </Button>
+                  <Button variant="secondary" onClick={onPagesPublish}>
+                    <FormattedMessage {...messages.publish} />
+                  </Button>
+                  <BulkDeleteButton onClick={onPagesDelete}>
+                    <FormattedMessage {...messages.delete} />
+                  </BulkDeleteButton>
+                </Box>
+              )
+            }
+          />
+        ) : (
+          <ListFilters
+            filterStructure={structure}
+            initialSearch={initialSearch}
+            searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
+            onFilterChange={onFilterChange}
+            onSearchChange={onSearchChange}
+            actions={
+              selectedPageIds.length > 0 && (
+                <Box display="flex" gap={4}>
+                  <Button variant="secondary" onClick={onPagesUnpublish}>
+                    <FormattedMessage {...messages.unpublish} />
+                  </Button>
+                  <Button variant="secondary" onClick={onPagesPublish}>
+                    <FormattedMessage {...messages.publish} />
+                  </Button>
+                  <BulkDeleteButton onClick={onPagesDelete}>
+                    <FormattedMessage {...messages.delete} />
+                  </BulkDeleteButton>
+                </Box>
+              )
+            }
+          />
+        )}
         <PageListDatagrid
           {...listProps}
           hasRowHover={!isFilterPresetOpen}

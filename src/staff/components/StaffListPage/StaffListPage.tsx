@@ -1,3 +1,4 @@
+import { useContextualLink } from "@dashboard/components/AppLayout/ContextualLinks/useContextualLink";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
@@ -5,6 +6,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration";
+import { useFlag } from "@dashboard/featureFlags";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { StaffMembers } from "@dashboard/staff/types";
@@ -45,16 +47,19 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   onFilterPresetsAll,
   ...listProps
 }) => {
+  const subtitle = useContextualLink("staff_members");
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const structure = createFilterStructure(intl, filterOpts);
   const reachedLimit = isLimitReached(limits, "staffUsers");
+  const { enabled: isStaffMembersFilteringEnabled } = useFlag("new_filters");
 
   return (
     <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
+        subtitle={subtitle}
         isAlignToRight={false}
         withoutBorder
       >
@@ -128,17 +133,29 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         </LimitReachedAlert>
       )}
       <DashboardCard>
-        <ListFilters<StaffFilterKeys>
-          currencySymbol={currencySymbol}
-          initialSearch={initialSearch}
-          onFilterChange={onFilterChange}
-          onSearchChange={onSearchChange}
-          filterStructure={structure}
-          searchPlaceholder={intl.formatMessage({
-            id: "o68j+t",
-            defaultMessage: "Search staff members...",
-          })}
-        />
+        {isStaffMembersFilteringEnabled ? (
+          <ListFilters<StaffFilterKeys>
+            type="expression-filter"
+            initialSearch={initialSearch}
+            onSearchChange={onSearchChange}
+            searchPlaceholder={intl.formatMessage({
+              id: "o68j+t",
+              defaultMessage: "Search staff members...",
+            })}
+          />
+        ) : (
+          <ListFilters<StaffFilterKeys>
+            currencySymbol={currencySymbol}
+            initialSearch={initialSearch}
+            onFilterChange={onFilterChange}
+            onSearchChange={onSearchChange}
+            filterStructure={structure}
+            searchPlaceholder={intl.formatMessage({
+              id: "o68j+t",
+              defaultMessage: "Search staff members...",
+            })}
+          />
+        )}
 
         <StaffListDatagrid {...listProps} />
       </DashboardCard>

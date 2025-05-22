@@ -42,6 +42,9 @@ outputs:
   SALEOR_CLOUD_SERVICE:
     description: "Which saleor cloud service will be used"
     value: ${{ steps.api.outputs.SALEOR_CLOUD_SERVICE }}
+  RUN_SLUG:
+    description: "Dashboard version or PR number or branch name to determine on which version tests mere run"
+    value: ${{ steps.api.outputs.RUN_SLUG }}
 
 runs:
   using: "composite"
@@ -80,3 +83,4 @@ runs:
         echo "::notice title=BACKUP_NAMESPACE::${BACKUP_NAMESPACE}"
         echo "::notice title=SNAPSHOT::backup_id=${BACKUP_ID}, version=${BACKUP_VER}, name=${BACKUP_NAME}"
         echo "::notice title=SALEOR_CLOUD_SERVICE::${SALEOR_CLOUD_SERVICE}"
+

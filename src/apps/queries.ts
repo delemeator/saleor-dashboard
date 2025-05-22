@@ -8,6 +8,7 @@ export const appsList = gql`
     $last: Int
     $sort: AppSortingInput
     $filter: AppFilterInput
+    $canFetchAppEvents: Boolean!
   ) {
     apps(
       before: $before
@@ -41,6 +42,7 @@ export const appsInProgressList = gql`
   }
 `;
 
+/** @deprecated use src/extensions/queries */
 export const appDetails = gql`
   query App($id: ID!, $hasManagedAppsPermission: Boolean!) {
     app(id: $id) {
@@ -62,6 +64,7 @@ export const appDetails = gql`
   }
 `;
 
+/** @deprecated use src/extensions/queries */
 export const extensionList = gql`
   query ExtensionList($filter: AppExtensionFilterInput!) {
     appExtensions(filter: $filter, first: 100) {
@@ -88,6 +91,7 @@ export const extensionList = gql`
 
 export const EXTENSION_LIST_QUERY = "ExtensionList";
 
+/** @deprecated use src/extensions/queries */
 export const appWebhookDeliveries = gql`
   query AppWebhookDeliveries($appId: ID!) {
     app(id: $appId) {
@@ -101,14 +105,14 @@ export const appWebhookDeliveries = gql`
         asyncEvents {
           name
         }
-        eventDeliveries(first: 10) {
+        eventDeliveries(first: 10, sortBy: { field: CREATED_AT, direction: DESC }) {
           edges {
             node {
               id
               createdAt
               status
               eventType
-              attempts(first: 10) {
+              attempts(first: 10, sortBy: { field: CREATED_AT, direction: DESC }) {
                 edges {
                   node {
                     ...EventDeliveryAttempt

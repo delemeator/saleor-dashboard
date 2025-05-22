@@ -28,6 +28,9 @@ export const fragmentOrderEvent = gql`
       id
       number
     }
+    related {
+      id
+    }
     message
     quantity
     transactionReference
@@ -148,9 +151,14 @@ export const fragmentOrderLine = gql`
   }
 `;
 
-export const fragmentOrderLineWithMetadata = gql`
-  fragment OrderLineWithMetadata on OrderLine {
-    ...OrderLine
+export const fragmentOrderLineMetadata = gql`
+  fragment OrderLineMetadata on OrderLine {
+    metadata {
+      ...MetadataItem
+    }
+    privateMetadata {
+      ...MetadataItem
+    }
     variant {
       metadata {
         ...MetadataItem
@@ -159,6 +167,30 @@ export const fragmentOrderLineWithMetadata = gql`
         ...MetadataItem
       }
     }
+  }
+`;
+
+export const fragmentOrderLineMetadataDetails = gql`
+  fragment OrderLineMetadataDetails on OrderLine {
+    id
+    productName
+    productSku
+    quantity
+    thumbnail {
+      url
+    }
+    variant {
+      id
+      name
+    }
+    ...OrderLineMetadata
+  }
+`;
+
+export const fragmentOrderLineWithMetadata = gql`
+  fragment OrderLineWithMetadata on OrderLine {
+    ...OrderLine
+    ...OrderLineMetadata
   }
 `;
 
@@ -237,8 +269,6 @@ export const orderDiscount = gql`
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
-    # TODO: remove me
-    token
     ...Metadata
     billingAddress {
       ...Address
@@ -396,6 +426,7 @@ export const fragmentOrderDetails = gql`
       }
     }
     isPaid
+    chargeStatus
   }
 `;
 
@@ -406,7 +437,7 @@ export const fragmentOrderDetailsWithMetadata = gql`
       ...FulfillmentWithMetadata
     }
     lines {
-      ...OrderLineWithMetadata
+      ...OrderLine
     }
   }
 `;
@@ -730,6 +761,19 @@ export const fragmentOrderDetailsGrantRefund = gql`
     }
     transactions {
       ...TransactionItem
+    }
+  }
+`;
+
+export const fragmentActivities = gql`
+  fragment Activities on OrderEvent {
+    date
+    email
+    message
+    orderNumber
+    type
+    user {
+      email
     }
   }
 `;

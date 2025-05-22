@@ -22,9 +22,6 @@ inputs:
   MAILPITURL:
     description: "mailpit uri"
     required: true
-  URL_TO_RUN:
-    description: "Url which will be passed to testmo where can be found artifacts of the run"
-    required: false
   PW_WORKERS:
     description: "Playwright workers"
     required: true
@@ -41,6 +38,15 @@ inputs:
   E2E_ENCODE_PASS:
     description: "Password for encoding credentials"
     required: true
+  BRANCH_NAME:
+    description: "Branch name"
+    required: true
+  SALEOR_CLOUD_SERVICE:
+    description: "Saleor Cloud service"
+    required: true
+  DASHBOARD_VERSION:
+    description: "Dashboard version"
+    required: false
 
 runs:
   using: "composite"
@@ -82,18 +88,32 @@ runs:
         WORKERS: ${{ inputs.PW_WORKERS }}
         RETRIES: ${{ inputs.PW_RETRIES }}
         PROJECT: ${{ inputs.PROJECT }}
+        BRANCH_NAME: ${{ inputs.BRANCH_NAME }}
+        SALEOR_CLOUD_SERVICE: ${{ inputs.SALEOR_CLOUD_SERVICE }}
+        DASHBOARD_VERSION: ${{ inputs.DASHBOARD_VERSION }}
+
       run: |
         PROJECTS=($PROJECT)
         PROJECT_PARAMS=""
         for PROJECT in "${PROJECTS[@]}"; do
           PROJECT_PARAMS+="--project=${PROJECT} "
         done
-        npx playwright test --grep @e2e $PROJECT_PARAMS --shard "$SHARD_NUMBER"
+        echo "reportName=all-blob-reports-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        echo "ctrfReport=ctrf-report-${SHARD_NUMBER%%/*}" >> $GITHUB_ENV
+        npx playwright test --grep "#e2e" $PROJECT_PARAMS --shard "$SHARD_NUMBER"
 
     - name: Upload blob report to GitHub Actions Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: all-blob-reports
+        name: ${{ env.reportName }}
         path: blob-report
+        retention-days: 1
+
+    - name: Upload ctrf report to GitHub Actions Artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: ${{ env.ctrfReport }}
+        path: ctrf/ctrf-report-*.json
         retention-days: 1

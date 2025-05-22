@@ -30,12 +30,13 @@ export class GiftCardsPage extends BasePage {
     readonly resendCodeButton = page.getByTestId("resend-code"),
     readonly deactivateButton = page.getByTestId("enable-button"),
     readonly saveButton = page.getByTestId("button-bar-confirm"),
+    readonly giftCardsCanvas = page.locator('[data-testid="data-grid-canvas"]'),
     readonly cardExpiresCheckboxOnModal = page
       .getByTestId("expiry-section")
       .locator('button[role="checkbox"]'),
     readonly giftCardExpiresCheckbox = page
       .getByTestId("gift-card-expire-section")
-      .locator("input"),
+      .locator("button"),
     readonly exportCardCodesButton = page.getByTestId("exportCodesMenuItem"),
     readonly setBalanceButton = page.getByTestId("set-balance-button"),
     readonly showMoreMenuButton = page.getByTestId("show-more-button"),
@@ -57,7 +58,8 @@ export class GiftCardsPage extends BasePage {
   }
 
   async clickIssueCardButton() {
-    await this.waitForNetworkIdleAfterAction(async () => await this.issueCardButton.click());
+    await this.issueCardButton.waitFor({ state: "visible" });
+    await this.issueCardButton.click();
     await this.giftCardDialog.waitFor({ state: "visible" });
     await this.cardExpiresCheckboxOnModal.waitFor({ state: "visible" });
     await expect(this.cardExpiresCheckboxOnModal).toBeEnabled();
@@ -112,10 +114,8 @@ export class GiftCardsPage extends BasePage {
   }
 
   async gotoGiftCardsListView() {
-    await this.waitForNetworkIdleAfterAction(async () => {
-      await this.page.goto(URL_LIST.giftCards);
-    });
-    await this.waitForDOMToFullyLoad();
+    await this.page.goto(URL_LIST.giftCards);
+    await this.giftCardsCanvas.waitFor({ state: "visible" });
   }
 
   async gotoExistingGiftCardView(giftCardId: string) {

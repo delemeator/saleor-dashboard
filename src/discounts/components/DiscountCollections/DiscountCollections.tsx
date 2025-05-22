@@ -1,6 +1,5 @@
 // @ts-strict-ignore
 import { collectionUrl } from "@dashboard/collections/urls";
-import { Button } from "@dashboard/components/Button";
 import { DashboardCard } from "@dashboard/components/Card";
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -8,11 +7,10 @@ import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/Tab
 import TableHead from "@dashboard/components/TableHead";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
-import { getLoadableList, mapEdgesToItems } from "@dashboard/utils/maps";
+import { CollectionWithTotalProductsFragment } from "@dashboard/graphql";
 import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import { Skeleton } from "@saleor/macaw-ui-next";
+import { Button, Skeleton } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -22,7 +20,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface DiscountCollectionsProps extends ListProps, ListActions {
-  discount: SaleDetailsFragment | VoucherDetailsFragment;
+  collections: CollectionWithTotalProductsFragment[];
   onCollectionAssign: () => void;
   onCollectionUnassign: (id: string) => void;
 }
@@ -30,7 +28,7 @@ export interface DiscountCollectionsProps extends ListProps, ListActions {
 const numberOfColumns = 4;
 const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
   const {
-    discount: sale,
+    collections,
     disabled,
     onCollectionAssign,
     onCollectionUnassign,
@@ -50,7 +48,11 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           {intl.formatMessage(messages.discountCollectionsHeader)}
         </DashboardCard.Title>
         <DashboardCard.Toolbar>
-          <Button onClick={onCollectionAssign} data-test-id="assign-collection-button">
+          <Button
+            onClick={onCollectionAssign}
+            data-test-id="assign-collection-button"
+            variant="secondary"
+          >
             <FormattedMessage {...messages.discountCollectionsButton} />
           </Button>
         </DashboardCard.Toolbar>
@@ -66,7 +68,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(sale?.collections)}
+          items={collections}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -85,7 +87,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
         </TableFooter>
         <TableBody data-test-id="assigned-specific-products-table">
           {renderCollection(
-            getLoadableList(sale?.collections),
+            collections,
             collection => {
               const isSelected = collection ? isChecked(collection.id) : false;
 
@@ -110,7 +112,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                     {collection ? collection.name : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colProducts}>
-                    {collection ? collection.products.totalCount : <Skeleton />}
+                    {collection ? collection?.products.totalCount : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <TableButtonWrapper>

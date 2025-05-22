@@ -1,18 +1,18 @@
 import { APPS } from "@data/e2eTestData";
 import { AppInstallationPage } from "@pages/appInstallationPage";
 import { AppPage } from "@pages/appPageThirdparty";
-import { AppsPage } from "@pages/appsPage";
+import { ExtensionsPage } from "@pages/extensionsPage";
 import { expect } from "@playwright/test";
 import { test } from "utils/testWithPermission";
 
 test.use({ permissionName: "admin" });
 
-let appsPage: AppsPage;
+let appsPage: ExtensionsPage;
 let installationPage: AppInstallationPage;
 let appPage: AppPage;
 
 test.beforeEach(({ page }) => {
-  appsPage = new AppsPage(page);
+  appsPage = new ExtensionsPage(page);
   installationPage = new AppInstallationPage(page);
   appPage = new AppPage(page);
 });
@@ -21,10 +21,10 @@ const PRE_INSTALLATION_TIMEOUT = 20 * 1000;
 const INSTALLATION_PENDING_TIMEOUT = 50 * 1000;
 const APP_EXPECT_UI_TIMEOUT = 15 * 1000;
 
-test("TC: SALEOR_119 User should be able to install and configure app from manifest @e2e", async ({
+test("TC: SALEOR_119 User should be able to install and configure app from manifest #e2e", async ({
   page,
 }) => {
-  await appsPage.gotoAppsList();
+  await appsPage.gotoInstalledExtensionsList();
   await appsPage.installExternalAppButton.click();
   await appsPage.typeManifestUrl("https://klaviyo.saleor.app/api/manifest");
   await appsPage.installAppFromManifestButton.click();
@@ -38,13 +38,15 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   );
   await installationPage.installAppButton.click();
 
-  await expect(appsPage.successBanner).toBeVisible({ timeout: INSTALLATION_PENDING_TIMEOUT });
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
+  await appsPage.expectSuccessBanner({ timeout: INSTALLATION_PENDING_TIMEOUT });
+  await expect(appsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(appsPage.installationPendingLabel).not.toBeVisible();
 
-  await expect(appsPage.appKlaviyo).toContainText("Klaviyo");
-  await expect(appsPage.installedAppRow.filter({ hasText: "Klaviyo" }).first()).toBeVisible();
-  await appsPage.appKlaviyo.click();
+  await expect(appsPage.appKlaviyoViewDetailsButton).toContainText("View details");
+  await expect(
+    appsPage.installedExtensionsRow.filter({ hasText: "Klaviyo" }).first(),
+  ).toBeVisible();
+  await appsPage.appKlaviyoViewDetailsButton.click();
 
   const iframeLocator = page.frameLocator("iframe");
 
@@ -54,9 +56,9 @@ test("TC: SALEOR_119 User should be able to install and configure app from manif
   });
   await iframeLocator.getByLabel("PUBLIC_TOKEN").fill("test_token");
   await iframeLocator.getByText("Save").click();
-  await appsPage.expectSuccessBanner();
+  await appsPage.expectSuccessBanner({ timeout: INSTALLATION_PENDING_TIMEOUT });
 });
-test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async () => {
+test("TC: SALEOR_120 User should be able to delete thirdparty app #e2e", async () => {
   await appPage.waitForNetworkIdleAfterAction(() =>
     appPage.goToExistingAppPage(APPS.appToBeDeleted.id),
   );
@@ -66,6 +68,6 @@ test("TC: SALEOR_120 User should be able to delete thirdparty app @e2e", async (
   await appPage.deleteAppDialog.clickDeleteButton();
   await appsPage.expectSuccessBanner();
   await appsPage.waitForDOMToFullyLoad();
-  await expect(appsPage.installedAppRow.first()).toBeVisible();
+  await expect(appsPage.installedExtensionsRow.first()).toBeVisible();
   await expect(appsPage.appQA).not.toBeVisible();
 });

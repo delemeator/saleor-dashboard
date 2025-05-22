@@ -226,6 +226,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "Loading...",
     id: "gjBiyj",
   },
+  orderLine: {
+    defaultMessage: "Order line",
+    id: "BalldE",
+  },
 });
 
 export const errorMessages = defineMessages({
@@ -421,6 +425,26 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
+  catalog: {
+    id: "P5HhQl",
+    defaultMessage: "Catalog",
+    description: "catalog section name",
+  },
+  modeling: {
+    id: "NVp0fa",
+    defaultMessage: "Modeling",
+    description: "modeling section name",
+  },
+  models: {
+    id: "GFioCC",
+    defaultMessage: "Models",
+    description: "models section name",
+  },
+  structures: {
+    id: "21cJ+Z",
+    defaultMessage: "Structures",
+    description: "structures section name",
+  },
   apps: {
     id: "9q562c",
     defaultMessage: "Apps",
@@ -462,8 +486,8 @@ export const sectionNames = defineMessages({
     description: "customers section name",
   },
   draftOrders: {
-    id: "YMBn8d",
-    defaultMessage: "Draft Orders",
+    id: "ytKTTO",
+    defaultMessage: "Drafts",
     description: "draft orders section name",
   },
   exchangeRates: {
@@ -491,15 +515,15 @@ export const sectionNames = defineMessages({
     defaultMessage: "Orders",
     description: "orders section name",
   },
-  pageTypes: {
-    id: "a9S9Je",
-    defaultMessage: "Page Types",
-    description: "page types section name",
+  fulfillment: {
+    id: "9XYfOt",
+    defaultMessage: "Fulfillment",
+    description: "fulfillment section name",
   },
-  pages: {
-    id: "H6NsC1",
-    defaultMessage: "Pages",
-    description: "pages section name",
+  modelTypes: {
+    id: "Gbhrqd",
+    defaultMessage: "Model Types",
+    description: "model types section name",
   },
   content: {
     id: "NelCIl",
@@ -576,6 +600,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Vouchers",
     description: "vouchers section name",
   },
+  promotions: {
+    id: "bHG5/d",
+    defaultMessage: "Promotions",
+    description: "promotions section name",
+  },
   warehouses: {
     id: "ycMLN9",
     defaultMessage: "Warehouses",
@@ -585,6 +614,21 @@ export const sectionNames = defineMessages({
     id: "BFR6CF",
     defaultMessage: "Webhooks & Events",
     description: "webhooks and events section name",
+  },
+  extensions: {
+    id: "fkoxZY",
+    defaultMessage: "Extensions",
+    description: "extensions section name",
+  },
+  exploreExtensions: {
+    id: "033/zW",
+    defaultMessage: "Explore",
+    description: "explore extensions section name",
+  },
+  installedExtensions: {
+    id: "RiQ0v1",
+    defaultMessage: "Installed",
+    description: "installed extensions section name",
   },
 });
 

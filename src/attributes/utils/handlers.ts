@@ -17,6 +17,7 @@ import {
   FormsetChange,
   FormsetData,
   FormsetMetadataChange,
+  UseFormsetOutput,
 } from "@dashboard/hooks/useFormset";
 import { AttributeValuesMetadata } from "@dashboard/products/utils/data";
 import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
@@ -27,12 +28,22 @@ import uniqBy from "lodash/uniqBy";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
-  changeAttributeData: FormsetChange<string[]>,
+  attributesFormData: UseFormsetOutput<AttributeInputData>,
   triggerChange: () => void,
-): FormsetChange<string | null | undefined> {
-  return (attributeId: string, value: string | null | undefined) => {
+): FormsetChange<boolean | string | null | undefined> {
+  return (attributeId: string, value: boolean | string | null | undefined) => {
     triggerChange();
-    changeAttributeData(attributeId, !value ? [] : [value]);
+
+    const isBoolean =
+      attributesFormData.get(attributeId)?.data.inputType === AttributeInputTypeEnum.BOOLEAN;
+
+    if (isBoolean) {
+      attributesFormData.change(attributeId, [value]);
+
+      return;
+    }
+
+    attributesFormData.change(attributeId, !value ? [] : [value]);
   };
 }
 
@@ -330,6 +341,15 @@ export const prepareAttributesInput = ({
       return attrInput;
     }
 
+    if (inputType === AttributeInputTypeEnum.DROPDOWN) {
+      attrInput.push({
+        id: attr.id,
+        values: attr.value.filter(value => value !== null),
+      });
+
+      return attrInput;
+    }
+
     attrInput.push({
       id: attr.id,
       values: attr.value,
@@ -353,16 +373,22 @@ export const handleUploadMultipleFiles = async (
 
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
-  attributes: Array<
-    | PageSelectedAttributeFragment
-    | ProductFragment["attributes"][0]
-    | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
-  >,
+  attributes:
+    | Array<
+        | PageSelectedAttributeFragment
+        | ProductFragment["attributes"][0]
+        | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
+      >
+    | undefined,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,
   ) => Promise<FetchResult<AttributeValueDeleteMutation>>,
-) =>
-  Promise.all(
+) => {
+  if (!attributes) {
+    return [];
+  }
+
+  return Promise.all(
     attributes.map(existingAttribute => {
       const fileValueUnused = isFileValueUnused(attributesWithNewFileValue, existingAttribute);
 
@@ -376,3 +402,4 @@ export const handleDeleteMultipleAttributeValues = async (
       return undefined;
     }),
   );
+};
