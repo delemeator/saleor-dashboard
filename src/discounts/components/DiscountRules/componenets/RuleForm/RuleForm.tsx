@@ -74,7 +74,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
     if (!currencySymbol) {
       setValue("rewardValueType", RewardValueTypeEnum.PERCENTAGE);
     }
-  }, [currencySymbol]);
+  }, [currencySymbol, setValue]);
 
   const handleChannelsChange = (values: Option[]) => {
     setValue("channels", values, { shouldValidate: true });
