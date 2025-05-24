@@ -107,8 +107,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
             <Multiselect
               {...channelfield}
               onChange={handleChannelsChange}
-              size="small"
-              data-test-id="channel-dropdown"
+              value={channelfield.value as Option[]}
               label={intl.formatMessage(commonMessages.channel)}
               options={channelOptions}
               error={!!formState.errors?.channels?.message}
@@ -120,10 +119,12 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
             <ComboMultiselect
               {...groupfield}
               label={"Grupy klientów"}
-              options={groupOptions}
-              value={groupOptions?.filter(choice =>
-                selectedGroups?.map(group => group.value).includes(choice.value),
-              )}
+              options={groupOptions as Option[]}
+              value={
+                groupOptions?.filter(choice =>
+                  selectedGroups?.map(group => group.value).includes(choice.value),
+                ) as Option[]
+              }
               fetchOptions={searchCustomerGroups}
             />
           </RuleInputWrapper>

@@ -13,7 +13,7 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
   return {
     name: data.name,
     description: data.description ? JSON.parse(data.description) : null,
-    channels: data?.channels.map(channel => channel.value) || [],
+    channels: data?.channels?.map(channel => channel.value) || [],
     customerGroups: data?.customerGroups?.map(group => group.value) || [],
     rewardType: data.rewardType,
     rewardValue: data.rewardValue,

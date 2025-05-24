@@ -88,9 +88,9 @@ export const getValidationSchema = (intl: IntlShape) => {
   ]);
 
   return z.intersection(schemaCond, getDefaultSchema(intl)).refine(
-    ({ rewardValue, rewardValueType, channel }) => {
+    ({ rewardValue, rewardValueType, channels }) => {
       if (
-        channel &&
+        channels &&
         rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
         Number(rewardValue) > 100
       ) {

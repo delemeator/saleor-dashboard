@@ -3,13 +3,13 @@ import { Chip } from "@saleor/macaw-ui-next";
 import React from "react";
 
 interface RuleChannelChipsProps {
-  channel: NonNullable<Rule["channel"]>;
+  channels: NonNullable<Rule["channels"]>;
 }
 
-export const RuleChannelChips = ({ channel }: RuleChannelChipsProps) => {
+export const RuleChannelChips = ({ channels }: RuleChannelChipsProps) => {
   return (
     <Chip marginRight={1.5} backgroundColor="accent1Pressed" borderColor="accent1" color="default1">
-      {channel.label}
+      {channels.map(c => c.label).join(", ")}
     </Chip>
   );
 };
