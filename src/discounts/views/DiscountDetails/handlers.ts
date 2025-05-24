@@ -64,8 +64,9 @@ export const createRuleUpdateHandler = (
 
     const ruleData = promotionData?.rules?.find(rule => rule.id === data.id);
     const ruleChannels: string[] = ruleData?.channels?.map(channel => channel.id) ?? [];
+    const ruleCustomerGroups: string[] = ruleData?.customerGroups?.map(group => group.id) ?? [];
     const ruleGifts: string[] = ruleData?.giftIds ?? [];
-    const { channels, gifts, ...input } = toAPI(promotionData?.type)(data);
+    const { channels, gifts, customerGroups, ...input } = toAPI(promotionData?.type)(data);
     const response = await updateRule({
       id: data.id!,
       input: {
@@ -74,6 +75,8 @@ export const createRuleUpdateHandler = (
         removeChannels: difference(ruleChannels, channels ?? []),
         addGifts: difference(gifts, ruleGifts),
         removeGifts: difference(ruleGifts, gifts ?? []),
+        addCustomerGroups: difference(customerGroups, ruleCustomerGroups),
+        removeCustomerGroups: difference(ruleCustomerGroups, customerGroups ?? []),
       },
     });
     const errors = getMutationErrors(response);

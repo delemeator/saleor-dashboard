@@ -3,6 +3,7 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import { Rule } from "@dashboard/discounts/models";
 import { useLabelMapsContext } from "@dashboard/discounts/views/DiscountDetails/context/context";
 import { ChannelFragment, PromotionTypeEnum } from "@dashboard/graphql";
+import useCustomerGroupSearch from "@dashboard/searches/useCustomerGroupSearch";
 import { CommonError } from "@dashboard/utils/errors/common";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

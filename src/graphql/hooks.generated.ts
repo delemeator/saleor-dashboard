@@ -799,6 +799,12 @@ export const PromotionRuleChannelFragmentDoc = gql`
   }
 }
     `;
+export const CustomerGroupFragmentDoc = gql`
+    fragment CustomerGroup on CustomerGroup {
+  id
+  name
+}
+    `;
 export const PromotionRuleDetailsFragmentDoc = gql`
     fragment PromotionRuleDetails on PromotionRule {
   id
@@ -807,6 +813,9 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   channels {
     ...PromotionRuleChannel
   }
+  customerGroups {
+    ...CustomerGroup
+  }
   giftIds
   rewardType
   rewardValueType
@@ -814,7 +823,8 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   cataloguePredicate
   orderPredicate
 }
-    ${PromotionRuleChannelFragmentDoc}`;
+    ${PromotionRuleChannelFragmentDoc}
+${CustomerGroupFragmentDoc}`;
 export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id
@@ -7987,13 +7997,13 @@ export const CustomerDetailsDocument = gql`
       }
     }
     customerGroups {
-      id
-      name
+      ...CustomerGroup
     }
   }
 }
     ${CustomerDetailsFragmentDoc}
-${MetadataItemFragmentDoc}`;
+${MetadataItemFragmentDoc}
+${CustomerGroupFragmentDoc}`;
 
 /**
  * __useCustomerDetailsQuery__

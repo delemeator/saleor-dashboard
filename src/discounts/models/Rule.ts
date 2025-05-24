@@ -7,7 +7,8 @@ export interface Rule {
   id: string;
   name: string;
   description: string | null;
-  channel: Option | null;
+  channels: Option[] | null;
+  customerGroups: Option[] | null;
   rewardType: RewardTypeEnum | null;
   rewardValue: number | null;
   rewardValueType: RewardValueTypeEnum;
@@ -20,7 +21,8 @@ export const createEmptyRule = (): Rule => ({
   id: "",
   name: "",
   description: "",
-  channel: null,
+  channels: null,
+  customerGroups: null,
   rewardType: null,
   rewardValue: 0,
   rewardGifts: [],
