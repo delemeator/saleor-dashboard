@@ -6,8 +6,10 @@ import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButto
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Savebar } from "@dashboard/components/Savebar";
+import AppHeaderOptions from "@dashboard/extensions/components/AppHeaderOptions";
 import { appMessages } from "@dashboard/extensions/messages";
 import { ExtensionsUrls } from "@dashboard/extensions/urls";
+import { getAppInstallErrorMessage } from "@dashboard/extensions/utils";
 import {
   AppErrorFragment,
   AppUpdateMutation,
@@ -17,8 +19,7 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getFormErrors } from "@dashboard/utils/errors";
-import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Button, Tooltip } from "@saleor/macaw-ui-next";
+import { Tooltip } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,7 +27,6 @@ import CustomExtensionDefaultToken from "../CustomExtensionDefaultToken";
 import CustomExtensionInformation from "../CustomExtensionInformation";
 import CustomExtensionTokens from "../CustomExtensionTokens";
 import { WebhooksList } from "../WebhooksList";
-import { useStyles } from "./styles";
 
 export interface CustomExtensionDetailsPageFormData {
   hasFullAccess: boolean;
@@ -35,7 +35,6 @@ export interface CustomExtensionDetailsPageFormData {
   permissions: PermissionEnum[];
 }
 export interface CustomExtensionDetailsPageProps {
-  apiUrl: string;
   disabled: boolean;
   errors: AppErrorFragment[];
   permissions: ShopInfoQuery["shop"]["permissions"] | null | undefined;
@@ -43,7 +42,7 @@ export interface CustomExtensionDetailsPageProps {
   app: AppUpdateMutation["appUpdate"]["app"] | null | undefined;
   token: string;
   hasManagedAppsPermission: boolean;
-  onApiUrlClick: () => void;
+  isLoading: boolean;
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
@@ -52,11 +51,11 @@ export interface CustomExtensionDetailsPageProps {
   onWebhookRemove: (id: string) => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
+  onAppDeleteOpen: () => void;
 }
 
 const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = props => {
   const {
-    apiUrl,
     disabled,
     errors,
     permissions,
@@ -64,7 +63,6 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     app,
     token,
     hasManagedAppsPermission,
-    onApiUrlClick,
     onTokenClose,
     onTokenCreate,
     onTokenDelete,
@@ -73,13 +71,14 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     onWebhookRemove,
     onAppActivateOpen,
     onAppDeactivateOpen,
+    onAppDeleteOpen,
+    isLoading,
   } = props;
   const intl = useIntl();
-  const classes = useStyles();
   const navigate = useNavigator();
   const webhooks = app?.webhooks || [];
   const formErrors = getFormErrors(["permissions"], errors || []);
-  const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
+  const permissionsError = getAppInstallErrorMessage(formErrors.permissions, intl);
 
   // Ensure all values have safe fallbacks
   const initialForm: CustomExtensionDetailsPageFormData = {
@@ -97,39 +96,21 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, submit, isSaveDisabled }) => (
         <DetailPageLayout>
-          <TopNav href={ExtensionsUrls.resolveInstalledExtensionsUrl()} title={app?.name || ""}>
-            {hasManagedAppsPermission && (
-              <Tooltip>
-                <Tooltip.Trigger>
-                  <Button
-                    variant="secondary"
-                    className={classes.activateButton}
-                    onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
-                    disabled={disabled}
-                  >
-                    {data?.isActive ? (
-                      <FormattedMessage
-                        id="whTEcF"
-                        defaultMessage="Deactivate"
-                        description="link"
-                      />
-                    ) : (
-                      <FormattedMessage id="P5twxk" defaultMessage="Activate" description="link" />
-                    )}
-                  </Button>
-                </Tooltip.Trigger>
-              </Tooltip>
-            )}
-          </TopNav>
+          <TopNav
+            href={ExtensionsUrls.resolveInstalledExtensionsUrl()}
+            title={app?.name || ""}
+          ></TopNav>
           <DetailPageLayout.Content>
+            <AppHeaderOptions
+              isActive={data?.isActive}
+              onAppActivateOpen={onAppActivateOpen}
+              onAppDeactivateOpen={onAppDeactivateOpen}
+              onAppDeleteOpen={onAppDeleteOpen}
+            />
+
             {token && (
               <>
-                <CustomExtensionDefaultToken
-                  apiUrl={apiUrl}
-                  token={token}
-                  onApiUrlClick={onApiUrlClick}
-                  onTokenClose={onTokenClose}
-                />
+                <CustomExtensionDefaultToken token={token} onTokenClose={onTokenClose} />
                 <CardSpacer />
               </>
             )}
@@ -142,7 +123,8 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
             <CardSpacer />
 
             <CustomExtensionTokens
-              tokens={app?.tokens || []}
+              tokens={app?.tokens}
+              isLoading={isLoading}
               onCreate={onTokenCreate}
               onDelete={onTokenDelete}
               hasManagedAppsPermission={hasManagedAppsPermission}
@@ -158,37 +140,31 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
             <CardSpacer />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            <Tooltip>
-              <Tooltip.Trigger>
-                <div>
-                  <AccountPermissions
-                    data={data}
-                    errorMessage={permissionsError}
-                    disabled={disabled || !hasManagedAppsPermission}
-                    permissions={permissions || []}
-                    permissionsExceeded={false}
-                    onChange={change}
-                    fullAccessLabel={intl.formatMessage({
-                      id: "D4nzdD",
-                      defaultMessage: "Grant this app full access to the store",
-                      description: "checkbox label",
-                    })}
-                    description={intl.formatMessage({
-                      id: "flP8Hj",
-                      defaultMessage:
-                        "Expand or restrict app permissions to access certain part of Saleor system.",
-                      description: "card description",
-                    })}
-                  />
-                </div>
-              </Tooltip.Trigger>
-              {!hasManagedAppsPermission && (
-                <Tooltip.Content>
-                  <Tooltip.Arrow />
-                  {appMessages.missingManageAppsPermission}
-                </Tooltip.Content>
-              )}
-            </Tooltip>
+            <AccountPermissions
+              data={data}
+              errorMessage={permissionsError}
+              disabled={disabled || !hasManagedAppsPermission}
+              permissions={permissions || []}
+              // TODO: Disable permissions when user has insufficient
+              // or show message
+              permissionsExceeded={false}
+              disabledPermissionsTooltip={
+                !hasManagedAppsPermission &&
+                intl.formatMessage(appMessages.missingManageAppsPermission)
+              }
+              onChange={change}
+              fullAccessLabel={intl.formatMessage({
+                id: "5hFkdO",
+                defaultMessage: "Grant this extension full access to the store",
+                description: "checkbox label",
+              })}
+              description={intl.formatMessage({
+                id: "GuYTfQ",
+                defaultMessage:
+                  "Expand or restrict extension permissions to access certain part of Saleor system.",
+                description: "card description",
+              })}
+            />
           </DetailPageLayout.RightSidebar>
           <Savebar>
             <Savebar.Spacer />
@@ -208,7 +184,7 @@ const CustomExtensionDetailsPage: React.FC<CustomExtensionDetailsPageProps> = pr
               {!hasManagedAppsPermission && (
                 <Tooltip.Content>
                   <Tooltip.Arrow />
-                  {appMessages.missingManageAppsPermission}
+                  <FormattedMessage {...appMessages.missingManageAppsPermission} />
                 </Tooltip.Content>
               )}
             </Tooltip>
