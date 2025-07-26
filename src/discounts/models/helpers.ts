@@ -41,7 +41,7 @@ export const createBaseRuleInputFromAPI = (
       ? data.customerGroups.map(group => {
           return { label: group.name, value: group.id };
         })
-      : null,
+      : [],
     rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
     rewardGifts:
