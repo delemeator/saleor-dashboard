@@ -1,5 +1,42 @@
 # Changelog
 
+## 3.21.5
+
+### Patch Changes
+
+- 2c55166: Fixed bulk gift card issue modal re-rendering issues. After this change modal shouldn't rerender itself.
+
+## 3.21.4
+
+### Patch Changes
+
+- 64f07a9: Now you can perform the global search by using dedicated page.
+- 63e5b4e: Fix horizontal overscroll when using datagrids
+- 7d432b5: Now you can trigger actions from CMD+K menu
+- d71b5b9: Improved UI for translations. Now pickers are refreshed and languages are cached locally, so recent languages are on top of the picker. Additionally translatable entities like products or categories have contextual link/button that redirects to translations
+- 1dd9497: Fix voucher details page flickering state when saving.
+  Now form toggles will no longer change state for a brief moment, but will stay consistent.
+
+## 3.21.3
+
+### Patch Changes
+
+- c0f9beb: Update Saleor GraphQL schema to support XK (Kosovo).
+
+## 3.21.2
+
+### Patch Changes
+
+- ddf8023: Fixed navigation in Saleor Apps causing polluted browser's window history, now navigating to another page adds a single entry in history stack.
+- ac3db84: When creating new channels, Transaction flow will be selected as default for "mark as paid" strategy.
+- d47fb4e: Change how dashboard fetches GraphQL schema. After this change GraphQL schema is fetched from Saleor repository instead of Saleor API. If you wants the old behavior use `npm run fetch-local-schema`.
+- 05a0f6f: Fixed exception that happened when voucher details page was opened / refreshed with modal open for selecting collections and variants. Now page loads correctly.
+- ddf8023: Added Back button when viewing Extension (App) details page.
+- a374233: Renamed modeling related pages:
+  - `/pages` -> `/models`
+  - `/page-types` -> `/model-types`
+  - `/navigation` -> `/structures`
+
 ## 3.21.1
 
 ### Patch Changes

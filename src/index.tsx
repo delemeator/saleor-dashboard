@@ -7,6 +7,9 @@ import { history, Route, Router } from "@dashboard/components/Router";
 import { extensionsSection } from "@dashboard/extensions/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import useAppState from "@dashboard/hooks/useAppState";
+import { pageListPath } from "@dashboard/modeling/urls";
+import { modelTypesPath } from "@dashboard/modelTypes/urls";
+import { structuresListPath } from "@dashboard/structures/urls";
 import { ThemeProvider } from "@dashboard/theme";
 import { OnboardingProvider } from "@dashboard/welcomePage/WelcomePageOnboarding/onboardingContext";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
@@ -37,6 +40,7 @@ import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
+import { legacyRedirects } from "./components/LegacyRedirects";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { NavigatorSearchProvider } from "./components/NavigatorSearch/NavigatorSearchProvider";
@@ -61,20 +65,20 @@ import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import NavigationSection from "./navigation";
-import { navigationSection } from "./navigation/urls";
+import PageSection from "./modeling";
+import PageTypesSection from "./modelTypes";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
-import PageSection from "./pages";
-import PageTypesSection from "./pageTypes";
 import PermissionGroupSection from "./permissionGroups";
 import PluginsSection from "./plugins";
 import ProductSection from "./products";
 import ProductTypesSection from "./productTypes";
+import SearchSection from "./search";
 import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
+import NavigationSection from "./structures";
 import TaxesSection from "./taxes";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
@@ -183,7 +187,19 @@ const Routes: React.FC = () => {
               )}
             >
               <Switch>
+                {legacyRedirects}
                 <SectionRoute exact path="/" component={WelcomePage} />
+                <SectionRoute
+                  permissions={[
+                    PermissionEnum.MANAGE_PRODUCTS,
+                    PermissionEnum.MANAGE_ORDERS,
+                    PermissionEnum.MANAGE_PAGES,
+                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                  ]}
+                  matchPermission="any"
+                  path="/search"
+                  component={SearchSection}
+                />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   path="/categories"
@@ -211,7 +227,7 @@ const Routes: React.FC = () => {
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_PAGES]}
-                  path="/pages"
+                  path={pageListPath}
                   component={PageSection}
                 />
                 <SectionRoute
@@ -219,7 +235,7 @@ const Routes: React.FC = () => {
                     PermissionEnum.MANAGE_PAGES,
                     PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
                   ]}
-                  path="/page-types"
+                  path={modelTypesPath}
                   component={PageTypesSection}
                   matchPermission="any"
                 />
@@ -267,7 +283,7 @@ const Routes: React.FC = () => {
                 />
                 <SectionRoute
                   permissions={[PermissionEnum.MANAGE_MENUS]}
-                  path={navigationSection}
+                  path={structuresListPath}
                   component={NavigationSection}
                 />
                 <SectionRoute

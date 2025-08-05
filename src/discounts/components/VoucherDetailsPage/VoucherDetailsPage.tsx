@@ -1,4 +1,6 @@
 // @ts-strict-ignore
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -30,9 +32,12 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { UseListSettings } from "@dashboard/hooks/useListSettings";
 import { LocalPagination } from "@dashboard/hooks/useLocalPaginator";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { TranslationsIcon } from "@dashboard/icons/Translations";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { useCachedLocales } from "@dashboard/translations/useCachedLocales";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Text } from "@saleor/macaw-ui-next";
+import { Button, Text } from "@saleor/macaw-ui-next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -175,7 +180,10 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   voucherCodesSettings,
 }) => {
   const intl = useIntl();
+  const { lastUsedLocaleOrFallback } = useCachedLocales();
   const navigate = useNavigator();
+  const { user } = useUser();
+  const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const channel = voucher?.channelListings?.find(
@@ -197,29 +205,42 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
       : voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
-  const initialForm: VoucherDetailsPageFormData = {
-    applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
-    applyOncePerOrder: voucher?.applyOncePerOrder || false,
-    onlyForStaff: voucher?.onlyForStaff || false,
-    channelListings,
-    name: voucher?.name || "",
-    discountType,
-    codes: addedVoucherCodes,
-    endDate: splitDateTime(voucher?.endDate ?? "").date,
-    endTime: splitDateTime(voucher?.endDate ?? "").time,
-    hasEndDate: !!voucher?.endDate,
-    hasUsageLimit: !!voucher?.usageLimit,
-    minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
-    requirementsPicker: requirementsPickerInitValue,
-    startDate: splitDateTime(voucher?.startDate ?? "").date,
-    startTime: splitDateTime(voucher?.startDate ?? "").time,
-    type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: voucher?.usageLimit ?? 1,
-    used: voucher?.used ?? 0,
-    singleUse: voucher?.singleUse ?? false,
-    metadata: voucher?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
-  };
+
+  // Use ref to store initial form data and only update it when viewing different voucher
+  // This prevents form reset during tab navigation (assign tabs) and flickers when saving form
+  const initialFormRef = React.useRef<VoucherDetailsPageFormData | null>(null);
+
+  if (
+    !initialFormRef.current ||
+    initialFormRef.current?.name !== voucher?.name ||
+    initialFormRef.current?.channelListings.length !== channelListings.length
+  ) {
+    initialFormRef.current = {
+      applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
+      applyOncePerOrder: voucher?.applyOncePerOrder || false,
+      onlyForStaff: voucher?.onlyForStaff || false,
+      channelListings,
+      name: voucher?.name || "",
+      discountType,
+      codes: addedVoucherCodes,
+      endDate: splitDateTime(voucher?.endDate ?? "").date,
+      endTime: splitDateTime(voucher?.endDate ?? "").time,
+      hasEndDate: !!voucher?.endDate,
+      hasUsageLimit: !!voucher?.usageLimit,
+      minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
+      requirementsPicker: requirementsPickerInitValue,
+      startDate: splitDateTime(voucher?.startDate ?? "").date,
+      startTime: splitDateTime(voucher?.startDate ?? "").time,
+      type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+      usageLimit: voucher?.usageLimit ?? 1,
+      used: voucher?.used ?? 0,
+      singleUse: voucher?.singleUse ?? false,
+      metadata: voucher?.metadata?.map(mapMetadataItemToInput) || [],
+      privateMetadata: voucher?.privateMetadata?.map(mapMetadataItemToInput) || [],
+    };
+  }
+
+  const initialForm = initialFormRef.current;
 
   const voucherListBackLink = useBackLinkWithState({
     path: voucherListPath,
@@ -240,7 +261,23 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
         return (
           <DetailPageLayout>
-            <TopNav href={voucherListBackLink} title={voucher?.name} />
+            <TopNav href={voucherListBackLink} title={voucher?.name}>
+              {canTranslate && (
+                <Button
+                  variant="secondary"
+                  icon={<TranslationsIcon />}
+                  onClick={() =>
+                    navigate(
+                      languageEntityUrl(
+                        lastUsedLocaleOrFallback,
+                        TranslatableEntities.vouchers,
+                        voucher?.id,
+                      ),
+                    )
+                  }
+                />
+              )}
+            </TopNav>
             <DetailPageLayout.Content>
               <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <VoucherCodes
