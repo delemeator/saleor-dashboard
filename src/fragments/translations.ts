@@ -37,6 +37,7 @@ export const categoryTranslationFragment = gql`
       name
       seoDescription
       seoTitle
+      slug
     }
     category {
       id
@@ -44,6 +45,7 @@ export const categoryTranslationFragment = gql`
       description
       seoDescription
       seoTitle
+      slug
     }
   }
 `;
@@ -55,6 +57,7 @@ export const collectionTranslationFragment = gql`
       description
       seoDescription
       seoTitle
+      slug
     }
     translation(languageCode: $language) {
       id
@@ -65,6 +68,7 @@ export const collectionTranslationFragment = gql`
       name
       seoDescription
       seoTitle
+      slug
     }
   }
 `;
@@ -74,6 +78,7 @@ export const productTranslationFragment = gql`
     product {
       id
       name
+      slug
       description
       seoDescription
       seoTitle
@@ -83,6 +88,7 @@ export const productTranslationFragment = gql`
       seoTitle
       seoDescription
       name
+      slug
       description
       language {
         code
@@ -176,6 +182,7 @@ export const pageTranslationFragment = gql`
       seoDescription
       seoTitle
       title
+      slug
     }
     translation(languageCode: $language) {
       id
@@ -183,6 +190,7 @@ export const pageTranslationFragment = gql`
       seoDescription
       seoTitle
       title
+      slug
       language {
         code
         language
@@ -200,12 +208,14 @@ export const pageTranslatableFragment = gql`
     seoDescription
     seoTitle
     title
+    slug
     translation(languageCode: $language) {
       id
       content
       seoDescription
       seoTitle
       title
+      slug
       language {
         code
         language

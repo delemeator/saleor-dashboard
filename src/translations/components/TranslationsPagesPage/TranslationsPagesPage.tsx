@@ -135,6 +135,16 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               type: "long",
               value: data?.page?.seoDescription,
             },
+            {
+              displayName: intl.formatMessage({
+                id: "IoDlcd",
+                defaultMessage: "Slug",
+              }),
+              name: PageTranslationInputFieldName.slug,
+              translation: data?.translation?.slug || null,
+              type: "short",
+              value: data?.page?.slug,
+            },
           ]}
           saveButtonState={saveButtonState}
           richTextResetKey={languageCode}

@@ -153,6 +153,16 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               type: "long",
               value: data?.product?.seoDescription,
             },
+            {
+              displayName: intl.formatMessage({
+                id: "IoDlcd",
+                defaultMessage: "Slug",
+              }),
+              name: TranslationInputFieldName.slug,
+              translation: data?.translation?.slug || null,
+              type: "short",
+              value: data?.product?.slug,
+            },
           ]}
           saveButtonState={saveButtonState}
           richTextResetKey={languageCode}

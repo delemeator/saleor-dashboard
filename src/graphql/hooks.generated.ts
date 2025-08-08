@@ -3360,6 +3360,7 @@ export const CategoryTranslationFragmentDoc = gql`
     name
     seoDescription
     seoTitle
+    slug
   }
   category {
     id
@@ -3367,6 +3368,7 @@ export const CategoryTranslationFragmentDoc = gql`
     description
     seoDescription
     seoTitle
+    slug
   }
 }
     `;
@@ -3378,6 +3380,7 @@ export const CollectionTranslationFragmentDoc = gql`
     description
     seoDescription
     seoTitle
+    slug
   }
   translation(languageCode: $language) {
     id
@@ -3388,6 +3391,7 @@ export const CollectionTranslationFragmentDoc = gql`
     name
     seoDescription
     seoTitle
+    slug
   }
 }
     `;
@@ -3421,6 +3425,7 @@ export const ProductTranslationFragmentDoc = gql`
   product {
     id
     name
+    slug
     description
     seoDescription
     seoTitle
@@ -3430,6 +3435,7 @@ export const ProductTranslationFragmentDoc = gql`
     seoTitle
     seoDescription
     name
+    slug
     description
     language {
       code
@@ -3520,6 +3526,7 @@ export const PageTranslationFragmentDoc = gql`
     seoDescription
     seoTitle
     title
+    slug
   }
   translation(languageCode: $language) {
     id
@@ -3527,6 +3534,7 @@ export const PageTranslationFragmentDoc = gql`
     seoDescription
     seoTitle
     title
+    slug
     language {
       code
       language
@@ -3544,12 +3552,14 @@ export const PageTranslatableFragmentDoc = gql`
   seoDescription
   seoTitle
   title
+  slug
   translation(languageCode: $language) {
     id
     content
     seoDescription
     seoTitle
     title
+    slug
     language {
       code
       language
@@ -19261,6 +19271,7 @@ export const UpdateProductTranslationsDocument = gql`
       id
       name
       description
+      slug
       seoDescription
       seoTitle
       translation(languageCode: $language) {
@@ -19271,6 +19282,7 @@ export const UpdateProductTranslationsDocument = gql`
           language
         }
         name
+        slug
         seoDescription
         seoTitle
       }

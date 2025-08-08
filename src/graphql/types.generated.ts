@@ -401,7 +401,10 @@ export type AttributeChoicesSortingInput = {
  * NOTE: Deprecated fields `filterableInStorefront`, `storefrontSearchPosition` and `availableInGrid` are not supported in bulk mutations: `attributeBulkCreate`, `attributeBulkUpdate`.
  */
 export type AttributeCreateInput = {
-  /** Whether the attribute can be displayed in the admin product list. */
+  /**
+   * Whether the attribute can be displayed in the admin product list.
+   * @deprecated Field no longer supported
+   */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /** The entity type which can be used as a reference. */
   entityType?: InputMaybe<AttributeEntityTypeEnum>;
@@ -409,7 +412,10 @@ export type AttributeCreateInput = {
   externalReference?: InputMaybe<Scalars['String']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  /** Whether the attribute can be filtered in storefront. */
+  /**
+   * Whether the attribute can be filtered in storefront.
+   * @deprecated Field no longer supported
+   */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** The input type to use for entering attribute values in the dashboard. */
   inputType?: InputMaybe<AttributeInputTypeEnum>;
@@ -419,7 +425,10 @@ export type AttributeCreateInput = {
   name: Scalars['String'];
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']>;
-  /** The position of the attribute in the storefront navigation (0 by default). */
+  /**
+   * The position of the attribute in the storefront navigation (0 by default).
+   * @deprecated Field no longer supported
+   */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** The attribute type. */
   type: AttributeTypeEnum;
@@ -457,7 +466,10 @@ export enum AttributeErrorCode {
 
 export type AttributeFilterInput = {
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
-  /** Specifies the channel by which the data should be filtered. */
+  /**
+   * Specifies the channel by which the data should be filtered.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
@@ -564,13 +576,19 @@ export type AttributeTypeEnumFilterInput = {
 export type AttributeUpdateInput = {
   /** New values to be created for this attribute. */
   addValues?: InputMaybe<Array<AttributeValueUpdateInput>>;
-  /** Whether the attribute can be displayed in the admin product list. */
+  /**
+   * Whether the attribute can be displayed in the admin product list.
+   * @deprecated Field no longer supported
+   */
   availableInGrid?: InputMaybe<Scalars['Boolean']>;
   /** External ID of this product. */
   externalReference?: InputMaybe<Scalars['String']>;
   /** Whether the attribute can be filtered in dashboard. */
   filterableInDashboard?: InputMaybe<Scalars['Boolean']>;
-  /** Whether the attribute can be filtered in storefront. */
+  /**
+   * Whether the attribute can be filtered in storefront.
+   * @deprecated Field no longer supported
+   */
   filterableInStorefront?: InputMaybe<Scalars['Boolean']>;
   /** Whether the attribute is for variants only. */
   isVariantOnly?: InputMaybe<Scalars['Boolean']>;
@@ -580,7 +598,10 @@ export type AttributeUpdateInput = {
   removeValues?: InputMaybe<Array<Scalars['ID']>>;
   /** Internal representation of an attribute name. */
   slug?: InputMaybe<Scalars['String']>;
-  /** The position of the attribute in the storefront navigation (0 by default). */
+  /**
+   * The position of the attribute in the storefront navigation (0 by default).
+   * @deprecated Field no longer supported
+   */
   storefrontSearchPosition?: InputMaybe<Scalars['Int']>;
   /** The unit of attribute values. */
   unit?: InputMaybe<MeasurementUnitsEnum>;
@@ -610,12 +631,16 @@ export type AttributeValueCreateInput = {
   fileUrl?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name: Scalars['String'];
-  /** Represents the text of the attribute value, plain text without formatting. */
+  /**
+   * Represents the text of the attribute value, plain text without formatting.
+   * @deprecated The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   */
   plainText?: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
+   * @deprecated The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -657,7 +682,10 @@ export type AttributeValueInput = {
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Attribute value ID or external reference. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
+  /**
+   * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+   * @deprecated Field no longer supported
+   */
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -705,12 +733,16 @@ export type AttributeValueUpdateInput = {
   fileUrl?: InputMaybe<Scalars['String']>;
   /** Name of a value displayed in the interface. */
   name?: InputMaybe<Scalars['String']>;
-  /** Represents the text of the attribute value, plain text without formatting. */
+  /**
+   * Represents the text of the attribute value, plain text without formatting.
+   * @deprecated The plain text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
+   */
   plainText?: InputMaybe<Scalars['String']>;
   /**
    * Represents the text of the attribute value, includes formatting.
    *
    * Rich text format. For reference see https://editorjs.io/
+   * @deprecated The rich text attribute hasn't got predefined value, so can be specified only from instance that supports the given attribute.
    */
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Represent value of the attribute value (e.g. color values for swatch attributes). */
@@ -768,7 +800,10 @@ export type BulkAttributeValueInput = {
   richText?: InputMaybe<Scalars['JSONString']>;
   /** Attribute value ID. */
   swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
-  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
+  /**
+   * The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+   * @deprecated Field no longer supported
+   */
   values?: InputMaybe<Array<Scalars['String']>>;
 };
 
@@ -857,7 +892,10 @@ export enum CategorySortField {
 }
 
 export type CategorySortingInput = {
-  /** Specifies the channel in which to sort the data. */
+  /**
+   * Specifies the channel in which to sort the data.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort categories. */
   direction: OrderDirection;
@@ -1174,7 +1212,10 @@ export type CheckoutLineUpdateInput = {
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /** The number of items purchased. Optional for apps, required for any other users. */
   quantity?: InputMaybe<Scalars['Int']>;
-  /** ID of the product variant. */
+  /**
+   * ID of the product variant.
+   * @deprecated Use `lineId` instead.
+   */
   variantId?: InputMaybe<Scalars['ID']>;
 };
 
@@ -1185,7 +1226,10 @@ export type CheckoutSettingsInput = {
    * Added in Saleor 3.20.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
-  /** Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one. */
+  /**
+   * Default `true`. Determines if the checkout mutations should use legacy error flow. In legacy flow, all mutations can raise an exception unrelated to the requested action - (e.g. out-of-stock exception when updating checkoutShippingAddress.) If `false`, the errors will be aggregated in `checkout.problems` field. Some of the `problems` can block the finalizing checkout process. The legacy flow will be removed in Saleor 4.0. The flow with `checkout.problems` will be the default one.
+   * @deprecated Field no longer supported
+   */
   useLegacyErrorFlow?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1258,7 +1302,10 @@ export type CollectionCreateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of products to be added to the collection. */
   products?: InputMaybe<Array<Scalars['ID']>>;
-  /** Publication date. ISO 8601 standard. */
+  /**
+   * Publication date. ISO 8601 standard.
+   * @deprecated Field no longer supported
+   */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -1277,7 +1324,10 @@ export enum CollectionErrorCode {
 }
 
 export type CollectionFilterInput = {
-  /** Specifies the channel by which the data should be filtered. */
+  /**
+   * Specifies the channel by which the data should be filtered.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   ids?: InputMaybe<Array<Scalars['ID']>>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
@@ -1313,7 +1363,10 @@ export type CollectionInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Publication date. ISO 8601 standard. */
+  /**
+   * Publication date. ISO 8601 standard.
+   * @deprecated Field no longer supported
+   */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Search engine optimization fields. */
   seo?: InputMaybe<SeoInput>;
@@ -1352,7 +1405,10 @@ export enum CollectionSortField {
 }
 
 export type CollectionSortingInput = {
-  /** Specifies the channel in which to sort the data. */
+  /**
+   * Specifies the channel in which to sort the data.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort collections. */
   direction: OrderDirection;
@@ -1920,7 +1976,10 @@ export type DraftOrderCreateInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: InputMaybe<Scalars['String']>;
-  /** Discount amount for the order. */
+  /**
+   * Discount amount for the order.
+   * @deprecated Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
+   */
   discount?: InputMaybe<Scalars['PositiveDecimal']>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
@@ -1987,7 +2046,10 @@ export type DraftOrderInput = {
   channelId?: InputMaybe<Scalars['ID']>;
   /** A note from a customer. Visible by customers in the order summary. */
   customerNote?: InputMaybe<Scalars['String']>;
-  /** Discount amount for the order. */
+  /**
+   * Discount amount for the order.
+   * @deprecated Providing a value for the field has no effect. Use `orderDiscountAdd` mutation instead.
+   */
   discount?: InputMaybe<Scalars['PositiveDecimal']>;
   /** External ID of this order. */
   externalReference?: InputMaybe<Scalars['String']>;
@@ -2248,9 +2310,15 @@ export type GiftCardCreateInput = {
   balance: PriceInput;
   /** Slug of a channel from which the email should be sent. */
   channel?: InputMaybe<Scalars['String']>;
-  /** Code to use the gift card. */
+  /**
+   * Code to use the gift card.
+   * @deprecated The code is now auto generated.
+   */
   code?: InputMaybe<Scalars['String']>;
-  /** End date of the gift card in ISO 8601 format. */
+  /**
+   * End date of the gift card in ISO 8601 format.
+   * @deprecated Use `expiryDate` from `expirySettings` instead.
+   */
   endDate?: InputMaybe<Scalars['Date']>;
   /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']>;
@@ -2274,7 +2342,10 @@ export type GiftCardCreateInput = {
    * Warning: never store sensitive information, including financial data such as credit card details.
    */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Start date of the gift card in ISO 8601 format. */
+  /**
+   * Start date of the gift card in ISO 8601 format.
+   * @deprecated Field no longer supported
+   */
   startDate?: InputMaybe<Scalars['Date']>;
   /** Email of the customer to whom gift card will be sent. */
   userEmail?: InputMaybe<Scalars['String']>;
@@ -2379,7 +2450,10 @@ export type GiftCardUpdateInput = {
   addTags?: InputMaybe<Array<Scalars['String']>>;
   /** The gift card balance amount. */
   balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
-  /** End date of the gift card in ISO 8601 format. */
+  /**
+   * End date of the gift card in ISO 8601 format.
+   * @deprecated Use `expiryDate` from `expirySettings` instead.
+   */
   endDate?: InputMaybe<Scalars['Date']>;
   /** The gift card expiry date. */
   expiryDate?: InputMaybe<Scalars['Date']>;
@@ -2401,7 +2475,10 @@ export type GiftCardUpdateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** The gift card tags to remove. */
   removeTags?: InputMaybe<Array<Scalars['String']>>;
-  /** Start date of the gift card in ISO 8601 format. */
+  /**
+   * Start date of the gift card in ISO 8601 format.
+   * @deprecated Field no longer supported
+   */
   startDate?: InputMaybe<Scalars['Date']>;
 };
 
@@ -4372,7 +4449,10 @@ export type PageCreateInput = {
   isPublished?: InputMaybe<Scalars['Boolean']>;
   /** ID of the page type that page belongs to. */
   pageType: Scalars['ID'];
-  /** Publication date. ISO 8601 standard. */
+  /**
+   * Publication date. ISO 8601 standard.
+   * @deprecated Use `publishedAt` field instead.
+   */
   publicationDate?: InputMaybe<Scalars['String']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -4413,7 +4493,10 @@ export type PageInput = {
   content?: InputMaybe<Scalars['JSONString']>;
   /** Determines if page is visible in the storefront. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /** Publication date. ISO 8601 standard. */
+  /**
+   * Publication date. ISO 8601 standard.
+   * @deprecated Use `publishedAt` field instead.
+   */
   publicationDate?: InputMaybe<Scalars['String']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -4854,7 +4937,10 @@ export type ProductBulkCreateInput = {
   category?: InputMaybe<Scalars['ID']>;
   /** List of channels in which the product is available. */
   channelListings?: InputMaybe<Array<ProductChannelListingCreateInput>>;
-  /** Determine if taxes are being charged for the product. */
+  /**
+   * Determine if taxes are being charged for the product.
+   * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -4892,7 +4978,10 @@ export type ProductBulkCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Input list of product variants to create. */
   variants?: InputMaybe<Array<ProductVariantBulkCreateInput>>;
@@ -4916,7 +5005,10 @@ export type ProductChannelListingAddInput = {
   addVariants?: InputMaybe<Array<Scalars['ID']>>;
   /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
   availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
-  /** A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed. */
+  /**
+   * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
+   * @deprecated Use `availableForPurchaseAt` field instead.
+   */
   availableForPurchaseDate?: InputMaybe<Scalars['Date']>;
   /** ID of a channel. */
   channelId: Scalars['ID'];
@@ -4924,7 +5016,10 @@ export type ProductChannelListingAddInput = {
   isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
   /** Determines if object is visible to customers. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /** Publication date. ISO 8601 standard. */
+  /**
+   * Publication date. ISO 8601 standard.
+   * @deprecated Use `publishedAt` field instead.
+   */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -4961,7 +5056,10 @@ export type ProductCreateInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
-  /** Determine if taxes are being charged for the product. */
+  /**
+   * Determine if taxes are being charged for the product.
+   * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -4997,7 +5095,10 @@ export type ProductCreateInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -5046,7 +5147,10 @@ export type ProductFilterInput = {
   /** Filter by the date of availability for purchase. */
   availableFrom?: InputMaybe<Scalars['DateTime']>;
   categories?: InputMaybe<Array<Scalars['ID']>>;
-  /** Specifies the channel by which the data should be filtered. */
+  /**
+   * Specifies the channel by which the data should be filtered.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   collections?: InputMaybe<Array<Scalars['ID']>>;
   /** Filter on whether product is a gift card or not. */
@@ -5080,7 +5184,10 @@ export type ProductInput = {
   attributes?: InputMaybe<Array<AttributeValueInput>>;
   /** ID of the product's category. */
   category?: InputMaybe<Scalars['ID']>;
-  /** Determine if taxes are being charged for the product. */
+  /**
+   * Determine if taxes are being charged for the product.
+   * @deprecated Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   */
   chargeTaxes?: InputMaybe<Scalars['Boolean']>;
   /** List of IDs of collections that the product belongs to. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -5114,7 +5221,10 @@ export type ProductInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   * @deprecated Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Weight of the Product. */
   weight?: InputMaybe<Scalars['WeightScalar']>;
@@ -5147,7 +5257,10 @@ export type ProductOrder = {
    * Note: this doesn't take translations into account yet.
    */
   attributeId?: InputMaybe<Scalars['ID']>;
-  /** Specifies the channel in which to sort the data. */
+  /**
+   * Specifies the channel in which to sort the data.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort products. */
   direction: OrderDirection;
@@ -5259,7 +5372,10 @@ export type ProductTypeInput = {
   slug?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type. */
   taxClass?: InputMaybe<Scalars['ID']>;
-  /** Tax rate for enabled tax gateway. */
+  /**
+   * Tax rate for enabled tax gateway.
+   * @deprecated Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   */
   taxCode?: InputMaybe<Scalars['String']>;
   /** List of attributes used to distinguish between different variants of a product. */
   variantAttributes?: InputMaybe<Array<Scalars['ID']>>;
@@ -5881,7 +5997,10 @@ export type PublishableChannelListingInput = {
   channelId: Scalars['ID'];
   /** Determines if object is visible to customers. */
   isPublished?: InputMaybe<Scalars['Boolean']>;
-  /** Publication date. ISO 8601 standard. */
+  /**
+   * Publication date. ISO 8601 standard.
+   * @deprecated Use `publishedAt` field instead.
+   */
   publicationDate?: InputMaybe<Scalars['Date']>;
   /** Publication date time. ISO 8601 standard. */
   publishedAt?: InputMaybe<Scalars['DateTime']>;
@@ -5974,7 +6093,10 @@ export enum SaleSortField {
 }
 
 export type SaleSortingInput = {
-  /** Specifies the channel in which to sort the data. */
+  /**
+   * Specifies the channel in which to sort the data.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort sales. */
   direction: OrderDirection;
@@ -6138,7 +6260,10 @@ export type ShopSettingsInput = {
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']>;
   /** Enable automatic fulfillment for all digital products. */
   automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']>;
-  /** Charge taxes on shipping. */
+  /**
+   * Charge taxes on shipping.
+   * @deprecated To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.
+   */
   chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']>;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: InputMaybe<Scalars['String']>;
@@ -6154,7 +6279,10 @@ export type ShopSettingsInput = {
   defaultWeightUnit?: InputMaybe<WeightUnitsEnum>;
   /** SEO description. */
   description?: InputMaybe<Scalars['String']>;
-  /** Display prices with tax in store. */
+  /**
+   * Display prices with tax in store.
+   * @deprecated Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   */
   displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
   /** Enable automatic account confirmation by email. */
   enableAccountConfirmationByEmail?: InputMaybe<Scalars['Boolean']>;
@@ -6164,7 +6292,10 @@ export type ShopSettingsInput = {
   fulfillmentAutoApprove?: InputMaybe<Scalars['Boolean']>;
   /** Header text. */
   headerText?: InputMaybe<Scalars['String']>;
-  /** Include taxes in prices. */
+  /**
+   * Include taxes in prices.
+   * @deprecated Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
+   */
   includeTaxesInPrices?: InputMaybe<Scalars['Boolean']>;
   /** Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
@@ -6883,7 +7014,10 @@ export type UserCreateInput = {
   firstName?: InputMaybe<Scalars['String']>;
   /** User account is active. */
   isActive?: InputMaybe<Scalars['Boolean']>;
-  /** User account is confirmed. */
+  /**
+   * User account is confirmed.
+   * @deprecated The user will be always set as unconfirmed. The confirmation will take place when the user sets the password.
+   */
   isConfirmed?: InputMaybe<Scalars['Boolean']>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
@@ -7004,7 +7138,10 @@ export type VoucherInput = {
   applyOncePerOrder?: InputMaybe<Scalars['Boolean']>;
   /** Categories discounted by the voucher. */
   categories?: InputMaybe<Array<Scalars['ID']>>;
-  /** Code to use the voucher. */
+  /**
+   * Code to use the voucher.
+   * @deprecated Use `addCodes` instead.
+   */
   code?: InputMaybe<Scalars['String']>;
   /** Collections discounted by the voucher. */
   collections?: InputMaybe<Array<Scalars['ID']>>;
@@ -7074,7 +7211,10 @@ export enum VoucherSortField {
 }
 
 export type VoucherSortingInput = {
-  /** Specifies the channel in which to sort the data. */
+  /**
+   * Specifies the channel in which to sort the data.
+   * @deprecated Use root-level channel argument instead.
+   */
   channel?: InputMaybe<Scalars['String']>;
   /** Specifies the direction in which to sort vouchers. */
   direction: OrderDirection;
@@ -7103,7 +7243,10 @@ export type WarehouseCreateInput = {
   externalReference?: InputMaybe<Scalars['String']>;
   /** Warehouse name. */
   name: Scalars['String'];
-  /** Shipping zones supported by the warehouse. */
+  /**
+   * Shipping zones supported by the warehouse.
+   * @deprecated Providing the zone ids will raise a ValidationError.
+   */
   shippingZones?: InputMaybe<Array<Scalars['ID']>>;
   /** Warehouse slug. */
   slug?: InputMaybe<Scalars['String']>;
@@ -7164,7 +7307,10 @@ export type WebhookCreateInput = {
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: InputMaybe<Scalars['JSONString']>;
-  /** The events that webhook wants to subscribe. */
+  /**
+   * The events that webhook wants to subscribe.
+   * @deprecated Use `asyncEvents` or `syncEvents` instead.
+   */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -7172,7 +7318,10 @@ export type WebhookCreateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']>;
-  /** The secret key used to create a hash signature with each payload. */
+  /**
+   * The secret key used to create a hash signature with each payload.
+   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
@@ -8039,7 +8188,10 @@ export type WebhookUpdateInput = {
   asyncEvents?: InputMaybe<Array<WebhookEventTypeAsyncEnum>>;
   /** Custom headers, which will be added to HTTP request. There is a limitation of 5 headers per webhook and 998 characters per header.Only `X-*`, `Authorization*`, and `BrokerProperties` keys are allowed. */
   customHeaders?: InputMaybe<Scalars['JSONString']>;
-  /** The events that webhook wants to subscribe. */
+  /**
+   * The events that webhook wants to subscribe.
+   * @deprecated Use `asyncEvents` or `syncEvents` instead.
+   */
   events?: InputMaybe<Array<WebhookEventTypeEnum>>;
   /** Determine if webhook will be set active or not. */
   isActive?: InputMaybe<Scalars['Boolean']>;
@@ -8047,7 +8199,10 @@ export type WebhookUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   /** Subscription query used to define a webhook payload. */
   query?: InputMaybe<Scalars['String']>;
-  /** Use to create a hash signature with each payload. */
+  /**
+   * Use to create a hash signature with each payload.
+   * @deprecated As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+   */
   secretKey?: InputMaybe<Scalars['String']>;
   /** The synchronous events that webhook wants to subscribe. */
   syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
@@ -9724,11 +9879,11 @@ export type TimePeriodFragment = { __typename: 'TimePeriod', amount: number, typ
 
 export type AttributeValueTranslatableFragment = { __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type CategoryTranslationFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null };
+export type CategoryTranslationFragment = { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, slug: string } | null };
 
-export type CollectionTranslationFragment = { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null };
+export type CollectionTranslationFragment = { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, slug: string } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null };
 
-export type ProductTranslationFragment = { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
+export type ProductTranslationFragment = { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, slug: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
 export type ProductVariantTranslationFragment = { __typename: 'ProductVariantTranslatableContent', name: string, productVariant: { __typename: 'ProductVariant', id: string } | null, translation: { __typename: 'ProductVariantTranslation', id: string, name: string, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
@@ -9738,9 +9893,9 @@ export type VoucherTranslationFragment = { __typename: 'VoucherTranslatableConte
 
 export type ShippingMethodTranslationFragment = { __typename: 'ShippingMethodTranslatableContent', id: string, name: string, description: any | null, shippingMethod: { __typename: 'ShippingMethodType', id: string } | null, translation: { __typename: 'ShippingMethodTranslation', id: string, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
-export type PageTranslationFragment = { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
+export type PageTranslationFragment = { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, slug: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> };
 
-export type PageTranslatableFragment = { __typename: 'PageTranslatableContent', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
+export type PageTranslatableFragment = { __typename: 'PageTranslatableContent', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, slug: string | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null };
 
 export type AttributeChoicesTranslationFragment = { __typename: 'AttributeValueCountableConnection', pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null }, edges: Array<{ __typename: 'AttributeValueCountableEdge', cursor: string, node: { __typename: 'AttributeValue', id: string, name: string | null, plainText: string | null, richText: any | null, inputType: AttributeInputTypeEnum | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null } | null } }> };
 
@@ -11572,7 +11727,7 @@ export type UpdateProductTranslationsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProductTranslationsMutation = { __typename: 'Mutation', productTranslate: { __typename: 'ProductTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, translation: { __typename: 'ProductTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
+export type UpdateProductTranslationsMutation = { __typename: 'Mutation', productTranslate: { __typename: 'ProductTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, product: { __typename: 'Product', id: string, name: string, description: any | null, slug: string, seoDescription: string | null, seoTitle: string | null, translation: { __typename: 'ProductTranslation', id: string, description: any | null, name: string | null, slug: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null } | null };
 
 export type UpdateProductVariantTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -11608,7 +11763,7 @@ export type UpdatePageTranslationsMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePageTranslationsMutation = { __typename: 'Mutation', pageTranslate: { __typename: 'PageTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, page: { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | null } | null };
+export type UpdatePageTranslationsMutation = { __typename: 'Mutation', pageTranslate: { __typename: 'PageTranslate', errors: Array<{ __typename: 'TranslationError', code: TranslationErrorCode, field: string | null, message: string | null }>, page: { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, slug: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | null } | null };
 
 export type UpdateVoucherTranslationsMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -11673,7 +11828,7 @@ export type CategoryTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type CategoryTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type CategoryTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, slug: string } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type CollectionTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -11684,7 +11839,7 @@ export type CollectionTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type CollectionTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type CollectionTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, slug: string } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type ProductTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -11695,7 +11850,7 @@ export type ProductTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type ProductTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type ProductTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, slug: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type PageTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -11706,7 +11861,7 @@ export type PageTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type PageTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
+export type PageTranslationsQuery = { __typename: 'Query', translations: { __typename: 'TranslatableItemConnection', edges: Array<{ __typename: 'TranslatableItemEdge', node: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, slug: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null };
 
 export type VoucherTranslationsQueryVariables = Exact<{
   language: LanguageCodeEnum;
@@ -11769,7 +11924,7 @@ export type ProductTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type ProductTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type ProductTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent', product: { __typename: 'Product', id: string, name: string, slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'ProductTranslation', id: string, seoTitle: string | null, seoDescription: string | null, name: string | null, slug: string | null, description: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type ProductVariantListQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11792,7 +11947,7 @@ export type CategoryTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CategoryTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type CategoryTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent', translation: { __typename: 'CategoryTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null, category: { __typename: 'Category', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, slug: string } | null } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type CollectionTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11800,7 +11955,7 @@ export type CollectionTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type CollectionTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type CollectionTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent', collection: { __typename: 'Collection', id: string, name: string, description: any | null, seoDescription: string | null, seoTitle: string | null, slug: string } | null, translation: { __typename: 'CollectionTranslation', id: string, description: any | null, name: string | null, seoDescription: string | null, seoTitle: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', language: string } } | null } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent' } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type PageTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11808,7 +11963,7 @@ export type PageTranslationDetailsQueryVariables = Exact<{
 }>;
 
 
-export type PageTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
+export type PageTranslationDetailsQuery = { __typename: 'Query', translation: { __typename: 'AttributeTranslatableContent' } | { __typename: 'AttributeValueTranslatableContent' } | { __typename: 'CategoryTranslatableContent' } | { __typename: 'CollectionTranslatableContent' } | { __typename: 'MenuItemTranslatableContent' } | { __typename: 'PageTranslatableContent', page: { __typename: 'Page', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string, slug: string } | null, translation: { __typename: 'PageTranslation', id: string, content: any | null, seoDescription: string | null, seoTitle: string | null, title: string | null, slug: string | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null, attributeValues: Array<{ __typename: 'AttributeValueTranslatableContent', id: string, name: string, plainText: string | null, richText: any | null, attributeValue: { __typename: 'AttributeValue', id: string } | null, attribute: { __typename: 'AttributeTranslatableContent', id: string, name: string } | null, translation: { __typename: 'AttributeValueTranslation', id: string, name: string, plainText: string | null, richText: any | null, language: { __typename: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null }> } | { __typename: 'ProductTranslatableContent' } | { __typename: 'ProductVariantTranslatableContent' } | { __typename: 'PromotionRuleTranslatableContent' } | { __typename: 'PromotionTranslatableContent' } | { __typename: 'SaleTranslatableContent' } | { __typename: 'ShippingMethodTranslatableContent' } | { __typename: 'VoucherTranslatableContent' } | null };
 
 export type SaleTranslationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];

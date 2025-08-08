@@ -14,6 +14,7 @@ export const updateProductTranslations = gql`
         id
         name
         description
+        slug
         seoDescription
         seoTitle
         translation(languageCode: $language) {
@@ -24,6 +25,7 @@ export const updateProductTranslations = gql`
             language
           }
           name
+          slug
           seoDescription
           seoTitle
         }
