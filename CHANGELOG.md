@@ -1,5 +1,50 @@
 # Changelog
 
+## 3.21.10
+
+### Patch Changes
+
+- b162492: Fixed product stocks section for variant details:
+
+  - After this change searching for warehouses to assign won't trigger re-rendering of stocks section.
+  - Added empty state message if there is no warehouses left to choose.
+  - Assign warehouse button is now hidden if product stocks section is rendered in product variant create page.
+
+## 3.21.9
+
+### Patch Changes
+
+- a2d0602: Voucher detail page: fixed how we calculate minimal requirements state. After this change we won't take selected channel into consideration for checking if requirement is `minimal order value` - instead we will use channel listing `minSpent` amount. Thanks to that UI should now properly display requirement.
+- 8a5e677: Unify Category organization options for product create and update. After this change all comboboxes will use the same `parent / children` pattern of displaying options
+
+## 3.21.8
+
+### Patch Changes
+
+- 2b64706: Improved stock section when editing product variant. After this change `Assign Warehouse` button will open modal with warehouse select instead of opening dropdown with the list.
+- c3c1b01: Improved order fulfillment cancel dialog: in case the fulfillment is in waiting for approval state, providing a warehouse will be no longer required.
+
+## 3.21.7
+
+### Patch Changes
+
+- 57b1f9a: Improve order refund UI for orders that uses Payments API. After this change `Automatic Refund` will be avaiable when `Refund products` option is selected. Miscellaneous refund will require providing `Manual Amount` as this is what Saleor API requires.
+- fb923e9: Fixed duplicated Language Switcher in Product Variants Translate Page
+- bcfd2cb: Hide voucher usage limit and usage count on voucher details page when voucher doesn't have limit set.
+- 69c3d41: Enhancement: Added new Command Menu actions:
+  - Vouchers: Go to / Create
+  - Promotions: Go to / Create
+  - Customers: Go to / Create
+  - Users & Staff: Go to / Invite
+  - Extensions: Install from manifest, Go to installed, Explore marketplace
+  - Webhooks: Create manually
+
+## 3.21.6
+
+### Patch Changes
+
+- d787131: Revert storing intial form data for voucher details page. After this change voucher values (fixed amount / precentage) should editable.
+
 ## 3.21.5
 
 ### Patch Changes

@@ -134,6 +134,7 @@ const CategoriesTab = Tab(VoucherDetailsPageTab.categories);
 const CollectionsTab = Tab(VoucherDetailsPageTab.collections);
 const ProductsTab = Tab(VoucherDetailsPageTab.products);
 const VariantsTab = Tab(VoucherDetailsPageTab.variants);
+
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   activeTab,
   tabItemsCount = {},
@@ -186,14 +187,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-  const channel = voucher?.channelListings?.find(
-    listing => listing.channel.id === selectedChannelId,
+  const hasMinimalOrderValueRequirement = voucher?.channelListings?.some(
+    listing => listing.minSpent?.amount > 0,
   );
+
   let requirementsPickerInitValue;
 
   if (voucher?.minCheckoutItemsQuantity > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
-  } else if (channel?.minSpent?.amount > 0) {
+  } else if (hasMinimalOrderValueRequirement) {
     requirementsPickerInitValue = RequirementsPicker.ORDER;
   } else {
     requirementsPickerInitValue = RequirementsPicker.NONE;
@@ -206,41 +208,29 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
         ? DiscountTypeEnum.VALUE_PERCENTAGE
         : DiscountTypeEnum.VALUE_FIXED;
 
-  // Use ref to store initial form data and only update it when viewing different voucher
-  // This prevents form reset during tab navigation (assign tabs) and flickers when saving form
-  const initialFormRef = React.useRef<VoucherDetailsPageFormData | null>(null);
-
-  if (
-    !initialFormRef.current ||
-    initialFormRef.current?.name !== voucher?.name ||
-    initialFormRef.current?.channelListings.length !== channelListings.length
-  ) {
-    initialFormRef.current = {
-      applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
-      applyOncePerOrder: voucher?.applyOncePerOrder || false,
-      onlyForStaff: voucher?.onlyForStaff || false,
-      channelListings,
-      name: voucher?.name || "",
-      discountType,
-      codes: addedVoucherCodes,
-      endDate: splitDateTime(voucher?.endDate ?? "").date,
-      endTime: splitDateTime(voucher?.endDate ?? "").time,
-      hasEndDate: !!voucher?.endDate,
-      hasUsageLimit: !!voucher?.usageLimit,
-      minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
-      requirementsPicker: requirementsPickerInitValue,
-      startDate: splitDateTime(voucher?.startDate ?? "").date,
-      startTime: splitDateTime(voucher?.startDate ?? "").time,
-      type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-      usageLimit: voucher?.usageLimit ?? 1,
-      used: voucher?.used ?? 0,
-      singleUse: voucher?.singleUse ?? false,
-      metadata: voucher?.metadata?.map(mapMetadataItemToInput) || [],
-      privateMetadata: voucher?.privateMetadata?.map(mapMetadataItemToInput) || [],
-    };
-  }
-
-  const initialForm = initialFormRef.current;
+  const initialForm: VoucherDetailsPageFormData = {
+    applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
+    applyOncePerOrder: voucher?.applyOncePerOrder || false,
+    onlyForStaff: voucher?.onlyForStaff || false,
+    channelListings,
+    name: voucher?.name || "",
+    discountType,
+    codes: addedVoucherCodes,
+    endDate: splitDateTime(voucher?.endDate ?? "").date,
+    endTime: splitDateTime(voucher?.endDate ?? "").time,
+    hasEndDate: !!voucher?.endDate,
+    hasUsageLimit: !!voucher?.usageLimit,
+    minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
+    requirementsPicker: requirementsPickerInitValue,
+    startDate: splitDateTime(voucher?.startDate ?? "").date,
+    startTime: splitDateTime(voucher?.startDate ?? "").time,
+    type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
+    usageLimit: voucher?.usageLimit ?? 1,
+    used: voucher?.used ?? 0,
+    singleUse: voucher?.singleUse ?? false,
+    metadata: voucher?.metadata.map(mapMetadataItemToInput),
+    privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput),
+  };
 
   const voucherListBackLink = useBackLinkWithState({
     path: voucherListPath,
