@@ -12,11 +12,32 @@ export const MountingPoint = () => {
   const shop = useShop();
 
   return (
-    <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
-      <Avatar.Store src={logo} scheme="accent1" size="small" />
-      <Text size={3} fontWeight="bold">
-        {shop?.name || ""}
-      </Text>
-    </Box>
+    <>
+      <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
+        <Avatar.Store src={logo} scheme="accent1" size="small" />
+        <Text size={3} fontWeight="bold">
+          {shop?.name || ""}
+        </Text>
+      </Box>
+      {shop?.name.includes("PROD") && (
+        <Box paddingX={4} paddingY={5}>
+          {!shop?.name.toLowerCase().includes("ambition") && (
+            <a href="https://dashboard.ambitionhome.com" target="_blank" rel="noreferrer">
+              Dashboard Ambition
+            </a>
+          )}
+          {!shop?.name.toLowerCase().includes("b2b") && (
+            <a href="https://dashboard.dajarb2b.pl" target="_blank" rel="noreferrer">
+              Dashboard B2B
+            </a>
+          )}
+          {!shop?.name.toLowerCase().includes("patio") && (
+            <a href="https://dashboard.patio.garden" target="_blank" rel="noreferrer">
+              Dashboard Patio
+            </a>
+          )}
+        </Box>
+      )}
+    </>
   );
 };
