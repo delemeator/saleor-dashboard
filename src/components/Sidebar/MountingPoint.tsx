@@ -14,7 +14,7 @@ export const MountingPoint = () => {
   return (
     <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
       <Avatar.Store src={logo} scheme="accent1" size="small" />
-      <Box display="flex" flexDirection="row" gap={1}>
+      <Box display="flex" flexDirection="column" gap={1}>
         <Text size={3} fontWeight="bold">
           {shop?.name || ""}
         </Text>
