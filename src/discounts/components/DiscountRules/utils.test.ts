@@ -12,7 +12,7 @@ describe("DiscountRules utils", () => {
         { id: "2", currencyCode: "EUR" },
       ] as ChannelFragment[];
       // Act
-      const result = getCurencySymbol(selectedChannel, channels);
+      const result = getCurencySymbol([selectedChannel], channels);
 
       // Assert
       expect(result).toBe("USD");
@@ -25,7 +25,7 @@ describe("DiscountRules utils", () => {
         { id: "2", currencyCode: "EUR" },
       ] as ChannelFragment[];
       // Act
-      const result = getCurencySymbol(selectedChannel, channels);
+      const result = getCurencySymbol([selectedChannel], channels);
 
       // Assert
       expect(result).toBe("");

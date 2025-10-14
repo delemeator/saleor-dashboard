@@ -102,7 +102,7 @@ const IframePost = ({
         as="iframe"
         borderWidth={0}
         __height={defaultIframeSize}
-        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads"
+        sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups"
         name={`ext-frame-${extensionId}`}
         width={"100%"}
       />

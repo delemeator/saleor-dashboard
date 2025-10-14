@@ -772,6 +772,12 @@ export const PromotionRuleChannelFragmentDoc = gql`
   }
 }
     `;
+export const CustomerGroupFragmentDoc = gql`
+    fragment CustomerGroup on CustomerGroup {
+  id
+  name
+}
+    `;
 export const PromotionRuleDetailsFragmentDoc = gql`
     fragment PromotionRuleDetails on PromotionRule {
   id
@@ -780,6 +786,9 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   channels {
     ...PromotionRuleChannel
   }
+  customerGroups {
+    ...CustomerGroup
+  }
   giftIds
   rewardType
   rewardValueType
@@ -787,7 +796,8 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   cataloguePredicate
   orderPredicate
 }
-    ${PromotionRuleChannelFragmentDoc}`;
+    ${PromotionRuleChannelFragmentDoc}
+${CustomerGroupFragmentDoc}`;
 export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id
@@ -3369,6 +3379,7 @@ export const CategoryTranslationFragmentDoc = gql`
     name
     seoDescription
     seoTitle
+    slug
   }
   category {
     id
@@ -3376,6 +3387,7 @@ export const CategoryTranslationFragmentDoc = gql`
     description
     seoDescription
     seoTitle
+    slug
   }
 }
     `;
@@ -3387,6 +3399,7 @@ export const CollectionTranslationFragmentDoc = gql`
     description
     seoDescription
     seoTitle
+    slug
   }
   translation(languageCode: $language) {
     id
@@ -3397,6 +3410,7 @@ export const CollectionTranslationFragmentDoc = gql`
     name
     seoDescription
     seoTitle
+    slug
   }
 }
     `;
@@ -3430,6 +3444,7 @@ export const ProductTranslationFragmentDoc = gql`
   product {
     id
     name
+    slug
     description
     seoDescription
     seoTitle
@@ -3439,6 +3454,7 @@ export const ProductTranslationFragmentDoc = gql`
     seoTitle
     seoDescription
     name
+    slug
     description
     language {
       code
@@ -3529,6 +3545,7 @@ export const PageTranslationFragmentDoc = gql`
     seoDescription
     seoTitle
     title
+    slug
   }
   translation(languageCode: $language) {
     id
@@ -3536,6 +3553,7 @@ export const PageTranslationFragmentDoc = gql`
     seoDescription
     seoTitle
     title
+    slug
     language {
       code
       language
@@ -3553,12 +3571,14 @@ export const PageTranslatableFragmentDoc = gql`
   seoDescription
   seoTitle
   title
+  slug
   translation(languageCode: $language) {
     id
     content
     seoDescription
     seoTitle
     title
+    slug
     language {
       code
       language
@@ -8085,10 +8105,14 @@ export const CustomerDetailsDocument = gql`
         }
       }
     }
+    customerGroups {
+      ...CustomerGroup
+    }
   }
 }
     ${CustomerDetailsFragmentDoc}
-${MetadataItemFragmentDoc}`;
+${MetadataItemFragmentDoc}
+${CustomerGroupFragmentDoc}`;
 
 /**
  * __useCustomerDetailsQuery__
@@ -16995,6 +17019,54 @@ export function useSearchCollectionsWithTotalProductsLazyQuery(baseOptions?: Apo
 export type SearchCollectionsWithTotalProductsQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsQuery>;
 export type SearchCollectionsWithTotalProductsLazyQueryHookResult = ReturnType<typeof useSearchCollectionsWithTotalProductsLazyQuery>;
 export type SearchCollectionsWithTotalProductsQueryResult = Apollo.QueryResult<Types.SearchCollectionsWithTotalProductsQuery, Types.SearchCollectionsWithTotalProductsQueryVariables>;
+export const CustomerGroupsSearchDocument = gql`
+    query CustomerGroupsSearch($query: String!, $first: Int!, $after: String) {
+  search: customerGroups(first: $first, filter: {search: $query}, after: $after) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+    `;
+
+/**
+ * __useCustomerGroupsSearchQuery__
+ *
+ * To run a query within a React component, call `useCustomerGroupsSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCustomerGroupsSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCustomerGroupsSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *   },
+ * });
+ */
+export function useCustomerGroupsSearchQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>(CustomerGroupsSearchDocument, options);
+      }
+export function useCustomerGroupsSearchLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>(CustomerGroupsSearchDocument, options);
+        }
+export type CustomerGroupsSearchQueryHookResult = ReturnType<typeof useCustomerGroupsSearchQuery>;
+export type CustomerGroupsSearchLazyQueryHookResult = ReturnType<typeof useCustomerGroupsSearchLazyQuery>;
+export type CustomerGroupsSearchQueryResult = Apollo.QueryResult<Types.CustomerGroupsSearchQuery, Types.CustomerGroupsSearchQueryVariables>;
 export const SearchCustomersDocument = gql`
     query SearchCustomers($after: String, $first: Int!, $query: String!) {
   search: customers(after: $after, first: $first, filter: {search: $query}) {
@@ -19721,6 +19793,7 @@ export const UpdateProductTranslationsDocument = gql`
       id
       name
       description
+      slug
       seoDescription
       seoTitle
       translation(languageCode: $language) {
@@ -19731,6 +19804,7 @@ export const UpdateProductTranslationsDocument = gql`
           language
         }
         name
+        slug
         seoDescription
         seoTitle
       }

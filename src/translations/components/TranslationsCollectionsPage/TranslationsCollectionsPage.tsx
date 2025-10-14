@@ -126,6 +126,16 @@ const TranslationsCollectionsPage = ({
               type: "long" as const,
               value: data?.collection?.seoDescription,
             },
+            {
+              displayName: intl.formatMessage({
+                id: "IoDlcd",
+                defaultMessage: "Slug",
+              }),
+              name: TranslationInputFieldName.slug,
+              translation: data?.translation?.slug || null,
+              type: "short",
+              value: data?.collection?.slug,
+            },
           ]}
           saveButtonState={saveButtonState}
           richTextResetKey={languageCode}

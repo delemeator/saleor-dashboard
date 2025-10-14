@@ -2,6 +2,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useRemoveCustomerMutation,
   useUpdateCustomerMutation,
@@ -12,7 +13,9 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import useCustomerGroupsSearchQuery from "@dashboard/searches/useCustomerGroupSearch";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerDetailsPage, {
@@ -35,6 +38,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   const customerDetails = useCustomerDetails();
   const user = customerDetails?.customer?.user;
   const customerDetailsLoading = customerDetails?.loading;
+  const currentCustomerGroupIds = user?.customerGroups.map(group => group.id) || [];
 
   const [removeCustomer, removeCustomerOpts] = useRemoveCustomerMutation({
     onCompleted: data => {
@@ -65,6 +69,14 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
+  const {
+    loadMore: loadMoreCustomerGroups,
+    search: searchCustomerGroups,
+    result: searchCustomerGroupsOpts,
+  } = useCustomerGroupsSearchQuery({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
+
   if (user === null) {
     return <NotFoundPage backHref={customerListUrl()} />;
   }
@@ -80,6 +92,12 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             isActive: data.isActive,
             lastName: data.lastName,
             note: data.note,
+            addCustomerGroups: data.customerGroups
+              .map(group => group.value)
+              .filter(groupId => !currentCustomerGroupIds.includes(groupId)),
+            removeCustomerGroups: currentCustomerGroupIds.filter(
+              groupId => !data.customerGroups.map(group => group.value).includes(groupId),
+            ),
           },
         },
       }),
@@ -125,6 +143,13 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             },
           })
         }
+        availableCustomerGroups={mapEdgesToItems(searchCustomerGroupsOpts.data?.search)}
+        fetchMoreCustomerGroups={{
+          hasMore: searchCustomerGroupsOpts.data?.search?.pageInfo.hasNextPage,
+          loading: searchCustomerGroupsOpts.loading,
+          onFetchMore: loadMoreCustomerGroups,
+        }}
+        onCustomerGroupsSearchChange={searchCustomerGroups}
         title={intl.formatMessage({
           id: "ey0lZj",
           defaultMessage: "Delete Customer",

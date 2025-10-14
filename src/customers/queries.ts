@@ -75,7 +75,17 @@ export const customerDetails = gql`
           }
         }
       }
+      customerGroups {
+        ...CustomerGroup
+      }
     }
+  }
+`;
+
+export const customerGroupFragment = gql`
+  fragment CustomerGroup on CustomerGroup {
+    id
+    name
   }
 `;
 

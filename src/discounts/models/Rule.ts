@@ -7,7 +7,8 @@ export interface Rule {
   id: string;
   name: string;
   description: string | null;
-  channel: Option | null;
+  channels: Option[] | null;
+  customerGroups: Option[] | null;
   rewardType: RewardTypeEnum | null;
   rewardValue: number | null;
   rewardValueType: RewardValueTypeEnum;

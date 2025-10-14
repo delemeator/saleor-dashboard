@@ -289,6 +289,9 @@ export const promotionRuleDetailsFragment = gql`
     channels {
       ...PromotionRuleChannel
     }
+    customerGroups {
+      ...CustomerGroup
+    }
     giftIds
     rewardType
     rewardValueType

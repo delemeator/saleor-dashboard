@@ -6,6 +6,7 @@ import { OutputData } from "@editorjs/editorjs";
 export enum TranslationInputFieldName {
   description = "description",
   name = "name",
+  slug = "slug",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",
   richText = "richText",
@@ -16,6 +17,7 @@ export enum PageTranslationInputFieldName {
   title = "title",
   seoDescription = "seoDescription",
   seoTitle = "seoTitle",
+  slug = "slug",
   richText = "richText",
 }
 

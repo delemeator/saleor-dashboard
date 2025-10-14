@@ -13,7 +13,8 @@ export const createBaseAPIInput = (data: Rule): PromotionRuleInput => {
   return {
     name: data.name,
     description: data.description ? JSON.parse(data.description) : null,
-    channels: data?.channel ? [data.channel.value] : [],
+    channels: data?.channels?.map(channel => channel.value) || [],
+    customerGroups: data?.customerGroups?.map(group => group.value) || [],
     rewardType: data.rewardType,
     rewardValue: data.rewardValue,
     rewardValueType: data.rewardValueType,
@@ -31,9 +32,16 @@ export const createBaseRuleInputFromAPI = (
     // For now Dashboard supports only one channel per rule
     // due to API product variant filtering limitations
     // TODO: Add support for multiple channels
-    channel: data?.channels?.length
-      ? { label: data?.channels[0].name, value: data?.channels[0].id }
+    channels: data?.channels?.length
+      ? data?.channels.map(channel => {
+          return { label: channel.name, value: channel.id };
+        })
       : null,
+    customerGroups: data?.customerGroups?.length
+      ? data.customerGroups.map(group => {
+          return { label: group.name, value: group.id };
+        })
+      : [],
     rewardType: data?.rewardType ?? null,
     rewardValue: data.rewardValue ?? null,
     rewardGifts:

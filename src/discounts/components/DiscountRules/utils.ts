@@ -1,12 +1,16 @@
 import { ChannelFragment } from "@dashboard/graphql";
 import { Option } from "@saleor/macaw-ui-next";
 
-export const getCurencySymbol = (selectedChannel: Option | null, channels: ChannelFragment[]) => {
-  const selectedChannelId = selectedChannel?.value;
-  const channel = channels.find(channel => channel.id === selectedChannelId);
+export const getCurencySymbol = (
+  selectedChannels: Option[] | null,
+  channels: ChannelFragment[],
+) => {
+  const selectedChannelIds = selectedChannels?.map(channel => channel.value) ?? [];
+  const selectedChannelsData = channels.filter(channel => selectedChannelIds.includes(channel.id));
+  const currencies = new Set(selectedChannelsData?.map(channel => channel.currencyCode));
 
-  if (channel) {
-    return channel.currencyCode;
+  if (currencies.size === 1) {
+    return [...currencies][0];
   }
 
   return "";

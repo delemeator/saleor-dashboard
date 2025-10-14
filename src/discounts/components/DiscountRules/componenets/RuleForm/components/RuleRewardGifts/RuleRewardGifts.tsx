@@ -14,8 +14,8 @@ export const RuleRewardGifts = () => {
   const intl = useIntl();
   const { disabled, channels } = useDiscountRulesContext();
   const { watch, formState } = useFormContext<Rule>();
-  const channel = watch("channel");
-  const channelSlug = channels?.find(chan => chan.id === channel?.value)?.slug ?? "";
+  const channel = watch("channels");
+  const channelSlug = channels?.find(chan => chan.id === channels?.[0].id)?.slug ?? "";
   const ruleRewardGiftsFieldName = `rewardGifts` as const;
   const { field: rewardGiftsField } = useController<Rule, typeof ruleRewardGiftsFieldName>({
     name: ruleRewardGiftsFieldName,

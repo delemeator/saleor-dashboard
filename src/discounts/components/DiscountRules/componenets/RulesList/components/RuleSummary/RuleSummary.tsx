@@ -15,7 +15,7 @@ interface RuleSummaryProps {
 }
 
 export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
-  if (!rule.channel || (!rule.rewardValue && rule.rewardType === null)) {
+  if (!rule.channels || (!rule.rewardValue && rule.rewardType === null)) {
     return null;
   }
 
@@ -27,7 +27,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
           values={{
             value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
             unknown: <RuleUnknownChips />,
-            channel: <RuleChannelChips channel={rule.channel} />,
+            channel: <RuleChannelChips channel={rule.channels} />,
           }}
         />
       </Text>
@@ -41,7 +41,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
           {...messages.ruleSummaryWithoutConditions}
           values={{
             value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-            channel: <RuleChannelChips channel={rule.channel} />,
+            channel: <RuleChannelChips channel={rule.channels} />,
           }}
         />
       </Text>
@@ -55,7 +55,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         values={{
           value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
           conditions: <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />,
-          channel: <RuleChannelChips channel={rule.channel} />,
+          channel: <RuleChannelChips channel={rule.channels} />,
         }}
       />
     </Text>

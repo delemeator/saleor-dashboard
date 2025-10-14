@@ -59,7 +59,7 @@ export const DiscountRules = <ErrorCode,>({
 
   const ruleInitialValues = useMemo(() => {
     return ruleEditIndex !== null ? rules[ruleEditIndex] : null;
-  }, [ruleEditIndex]);
+  }, [ruleEditIndex, rules]);
   const handleRuleEdit = (editIndex: number) => {
     setRuleEditIndex(editIndex);
     setIsModalOpen(true);

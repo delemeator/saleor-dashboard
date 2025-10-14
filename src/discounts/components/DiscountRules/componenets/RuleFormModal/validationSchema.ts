@@ -38,13 +38,11 @@ const getDefaultSchema = (intl: IntlShape) =>
     description: z.string().nullable(),
     hasPredicateNestedConditions: z.boolean().optional(),
     name: z.string().min(1, intl.formatMessage(validationMessages.nameRequired)),
-    channel: z.object(
-      { label: z.string(), value: z.string() },
-      {
-        required_error: intl.formatMessage(validationMessages.channelRequired),
-        invalid_type_error: intl.formatMessage(validationMessages.channelRequired),
-      },
-    ),
+    channels: z.array(z.object({ label: z.string(), value: z.string() }), {
+      required_error: intl.formatMessage(validationMessages.channelRequired),
+      invalid_type_error: intl.formatMessage(validationMessages.channelRequired),
+    }),
+    customerGroups: z.array(z.object({ label: z.string(), value: z.string() }), {}),
     conditions: z.array(
       z.object({
         id: z.string().nullable(),
@@ -90,9 +88,9 @@ export const getValidationSchema = (intl: IntlShape) => {
   ]);
 
   return z.intersection(schemaCond, getDefaultSchema(intl)).refine(
-    ({ rewardValue, rewardValueType, channel }) => {
+    ({ rewardValue, rewardValueType, channels }) => {
       if (
-        channel &&
+        channels &&
         rewardValueType === RewardValueTypeEnum.PERCENTAGE &&
         Number(rewardValue) > 100
       ) {

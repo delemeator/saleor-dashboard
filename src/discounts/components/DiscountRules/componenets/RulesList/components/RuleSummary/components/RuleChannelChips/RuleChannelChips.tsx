@@ -2,13 +2,13 @@ import { Rule } from "@dashboard/discounts/models";
 import { Chip } from "@saleor/macaw-ui-next";
 
 interface RuleChannelChipsProps {
-  channel: NonNullable<Rule["channel"]>;
+  channels: NonNullable<Rule["channels"]>;
 }
 
-export const RuleChannelChips = ({ channel }: RuleChannelChipsProps) => {
+export const RuleChannelChips = ({ channels }: RuleChannelChipsProps) => {
   return (
     <Chip marginRight={1.5} backgroundColor="accent1Pressed" borderColor="accent1" color="default1">
-      {channel.label}
+      {channels.labelchannels.map(c => c.label).join(", ")}
     </Chip>
   );
 };

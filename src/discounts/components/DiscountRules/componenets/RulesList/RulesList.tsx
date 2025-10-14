@@ -62,7 +62,7 @@ export const RulesList = <ErrorCode,>({
                   onEdit={() => onRuleEdit(index)}
                 />
               </Box>
-              <RuleSummary rule={rule} currencySymbol={getCurencySymbol(rule.channel, channels)} />
+              <RuleSummary rule={rule} currencySymbol={getCurencySymbol(rule.channels, channels)} />
               {hasError && <Text color="critical1">{intl.formatMessage(messages.ruleError)}</Text>}
             </Box>
           </RuleWrapper>
