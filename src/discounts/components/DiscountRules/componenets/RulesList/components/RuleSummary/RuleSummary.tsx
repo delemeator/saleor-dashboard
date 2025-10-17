@@ -27,7 +27,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
           values={{
             value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
             unknown: <RuleUnknownChips />,
-            channel: <RuleChannelChips channel={rule.channels} />,
+            channel: <RuleChannelChips channels={rule.channels} />,
           }}
         />
       </Text>
@@ -41,7 +41,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
           {...messages.ruleSummaryWithoutConditions}
           values={{
             value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
-            channel: <RuleChannelChips channel={rule.channels} />,
+            channel: <RuleChannelChips channels={rule.channels} />,
           }}
         />
       </Text>
@@ -55,7 +55,7 @@ export const RuleSummary = ({ rule, currencySymbol }: RuleSummaryProps) => {
         values={{
           value: <RuleValueChips rule={rule} currencySymbol={currencySymbol} />,
           conditions: <RuleConditionsChips rule={rule} currencySymbol={currencySymbol} />,
-          channel: <RuleChannelChips channel={rule.channels} />,
+          channel: <RuleChannelChips channels={rule.channels} />,
         }}
       />
     </Text>
