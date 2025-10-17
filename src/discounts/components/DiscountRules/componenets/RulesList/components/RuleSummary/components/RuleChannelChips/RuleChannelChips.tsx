@@ -8,7 +8,7 @@ interface RuleChannelChipsProps {
 export const RuleChannelChips = ({ channels }: RuleChannelChipsProps) => {
   return (
     <Chip marginRight={1.5} backgroundColor="accent1Pressed" borderColor="accent1" color="default1">
-      {channels.labelchannels.map(c => c.label).join(", ")}
+      {channels.map(c => c.label).join(", ")}
     </Chip>
   );
 };
