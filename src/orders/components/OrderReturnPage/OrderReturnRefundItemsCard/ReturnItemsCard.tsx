@@ -145,6 +145,7 @@ const ItemsCard = ({
                 thumbnail,
                 unitPrice,
                 productName,
+                productSku,
                 variant,
               } = line;
               const isValueError = false;
@@ -163,7 +164,7 @@ const ItemsCard = ({
                     thumbnail={thumbnail?.url}
                     style={{ width: productNameCellWidth }}
                   >
-                    {productName || <Skeleton />}
+                    {productName ? `${productName} [${productSku}]` : <Skeleton />}
                   </TableCellAvatar>
                   <ProductErrorCell hasVariant={isReturnable} />
                   <TableCell align="right">
