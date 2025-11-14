@@ -10,6 +10,9 @@ interface OrderAddTransactionProps {
 }
 
 const OrderAddTransaction = ({ order, onAddTransaction }: OrderAddTransactionProps) => {
+
+  return null;
+
   if (!order) {
     return (
       <Box display="flex" justifyContent="flex-end" marginTop={2} marginBottom={2} paddingRight={4}>
