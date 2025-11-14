@@ -426,7 +426,6 @@ export const fragmentOrderDetails = gql`
         markAsPaidStrategy
       }
     }
-    isPaid
     chargeStatus
   }
 `;
@@ -683,6 +682,11 @@ export const fragmentOrderGrantedRefunds = gql`
     app {
       id
       name
+      brand {
+        logo {
+          default(format: WEBP, size: 64)
+        }
+      }
     }
     lines {
       id
@@ -704,7 +708,6 @@ export const orderLineGrantRefund = gql`
     quantity
     quantityToFulfill
     variantName
-    productName
     unitPrice {
       gross {
         ...Money

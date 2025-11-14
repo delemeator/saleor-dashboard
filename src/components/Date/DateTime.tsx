@@ -36,9 +36,12 @@ export const DateTime = ({ date, plain }: DateTimeProps) => {
                   <Tooltip>
                     <Tooltip.Trigger>
                       <div>
-                        <ReactMoment from={currentDate} locale={locale} tz={tz}>
-                          {date}
-                        </ReactMoment>
+                        {getTitle(date, locale, tz)}{" "}
+                        (<span>
+                          <ReactMoment from={currentDate} locale={locale} tz={tz}>
+                            {date}
+                          </ReactMoment>
+                        </span>)
                       </div>
                     </Tooltip.Trigger>
                     <Tooltip.Content side="bottom">

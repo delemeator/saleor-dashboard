@@ -1,5 +1,94 @@
 # Changelog
 
+## 3.22.11
+
+### Patch Changes
+
+- [#6048](https://github.com/saleor/saleor-dashboard/pull/6048) [`6f099dd`](https://github.com/saleor/saleor-dashboard/commit/6f099ddc52c600a98fa6fbef55ff7691b3fbf1f1) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fixed broken sidebar app alert url to installed extension page
+
+- [#6033](https://github.com/saleor/saleor-dashboard/pull/6033) [`b1a048a`](https://github.com/saleor/saleor-dashboard/commit/b1a048ab34fbae0b907dc8e86f82fac30c88017a) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Dropped support for node 18. Migrated npm to pnpm
+
+## 3.22.10
+
+### Patch Changes
+
+- [#5992](https://github.com/saleor/saleor-dashboard/pull/5992) [`7465a3a`](https://github.com/saleor/saleor-dashboard/commit/7465a3a707f5100c4133b498913ab8f81fc7369d) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added a new extension mount point: TRANSLATIONS_MORE_ACTIONS that will render app extension on translation pages
+
+- [#6032](https://github.com/saleor/saleor-dashboard/pull/6032) [`ccdfdec`](https://github.com/saleor/saleor-dashboard/commit/ccdfdec1973adde8e1e4f7c633efdcbc618cefb4) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Fix warehouse assignment modal: prevent duplicates and enable proper deselection. Previously, when selecting warehouses in the assignment modal, deselecting an option would still add it to the list, resulting in duplicate entries on submit.
+
+- [#5990](https://github.com/saleor/saleor-dashboard/pull/5990) [`db8fc50`](https://github.com/saleor/saleor-dashboard/commit/db8fc508864b13702988dd4e3a209e6dedf57c67) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added new API for communication between App and Dashboard. Now Dashboard will send form state (only Product Update page) to opened app (only POPUP). App will be able to send form fields back to the Dashboard, which will update the form. See docs [todo]
+
+## 3.22.9
+
+### Patch Changes
+
+- [#6016](https://github.com/saleor/saleor-dashboard/pull/6016) [`595e1ee`](https://github.com/saleor/saleor-dashboard/commit/595e1ee42de0ebe71da0bc7a7ab4b47057044269) Thanks [@xseignard](https://github.com/xseignard)! - Add email field on warehouse details page
+
+- [#6015](https://github.com/saleor/saleor-dashboard/pull/6015) [`04b419a`](https://github.com/saleor/saleor-dashboard/commit/04b419af2c19bb50b5a8a25a170519a70d8aa007) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Switched to the new AppExtension fields introduced in 3.22 patch (mount -> mountName, target -> targetName, options -> settings). This does not introduce a functional change, but is a part of the larger extension logic overhaul.
+
+## 3.22.8
+
+### Patch Changes
+
+- [#6019](https://github.com/saleor/saleor-dashboard/pull/6019) [`78c8d64`](https://github.com/saleor/saleor-dashboard/commit/78c8d64f592dcbd9c36788f38febb12c7bbb2550) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fix error with invalid extension manifest validation, cause by invalid permissions schema
+
+## 3.22.7
+
+### Patch Changes
+
+- [#6011](https://github.com/saleor/saleor-dashboard/pull/6011) [`8aca1b7`](https://github.com/saleor/saleor-dashboard/commit/8aca1b775a8365f01c28d92e9a31b27b07940549) Thanks [@lkostrowski](https://github.com/lkostrowski)! - During app installation, Dashboard prevents installation in case errors occur. This mimics the behavior of API-side validation.
+
+- [#6010](https://github.com/saleor/saleor-dashboard/pull/6010) [`73f1ab6`](https://github.com/saleor/saleor-dashboard/commit/73f1ab66e2229c99b366d71b6db104c766be6427) Thanks [@lkostrowski](https://github.com/lkostrowski)! - AppExtension validation on installation page now properly validates relative extension URL.
+
+- [#6007](https://github.com/saleor/saleor-dashboard/pull/6007) [`abb3edc`](https://github.com/saleor/saleor-dashboard/commit/abb3edc8bc6c9b00f2ba54ab7f83f55f8033e351) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Add missing logic for handling product variant metadata when accessed from order line modal (on order details page).
+
+## 3.22.6
+
+### Patch Changes
+
+- [#6002](https://github.com/saleor/saleor-dashboard/pull/6002) [`770e1b1`](https://github.com/saleor/saleor-dashboard/commit/770e1b1a5c621b00e7c8696009dfb6a8d13e6028) Thanks [@lkostrowski](https://github.com/lkostrowski)! - App <iframe>s now enable pop-ups (`"allow-popups"`) which means App can use native links to open new tab, instead using AppBridge action. In the nutshell `<a target="_blank"` is now working. It's still recommended to use `rel="noreferrer"` due to security reasons.
+
+- [#6003](https://github.com/saleor/saleor-dashboard/pull/6003) [`727c049`](https://github.com/saleor/saleor-dashboard/commit/727c049ad39a91a8e1377426f1811ae21bbddefc) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed cmd/ctrl + click on Datagrid rows. Now they will properly open row in the new tab as expected
+
+## 3.22.5
+
+### Patch Changes
+
+- [#5997](https://github.com/saleor/saleor-dashboard/pull/5997) [`0e45316`](https://github.com/saleor/saleor-dashboard/commit/0e453168b70f9c8bbebea8904df53ce9b7484abe) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added local-frontend validation of a subset of App Manifest fields during installation. Installing apps will be now more liberal, some errors initially thrown on the API level will be now warnings that don't block app installation.
+
+- [#5987](https://github.com/saleor/saleor-dashboard/pull/5987) [`457fb84`](https://github.com/saleor/saleor-dashboard/commit/457fb8450daff51e23aff7cc5276f5565e93de18) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed redirection from Apps Widgets (app name) to app page.
+
+- [#5999](https://github.com/saleor/saleor-dashboard/pull/5999) [`a1eec49`](https://github.com/saleor/saleor-dashboard/commit/a1eec4902e1e9849efa76b2a780126761c943e54) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Update Saleor logo on login page
+
+- [#5901](https://github.com/saleor/saleor-dashboard/pull/5901) [`af290ca`](https://github.com/saleor/saleor-dashboard/commit/af290ca104bb65c90207d482e83c500aa72f7d8a) Thanks [@krzysztofzuraw](https://github.com/krzysztofzuraw)! - Improved handling of long reference attribute lists in the Product Create, the Product Edit, and the Page Details views:
+  - Reference attributes (such as product references or page references) with more than 5 items now display a "Show more" button when collapsed and a "Show less" button when expanded
+  - Users can toggle between collapsed view (showing first 5 items) and expanded view (showing all items)
+  - Makes working with products and pages that have many reference attributes more manageable
+
+## 3.22.4
+
+### Patch Changes
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Added another bunch of refactors around apps and extensions. Less code, no functional changes
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove batch of unused graphql operations. This is a cleanup only
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove Content Attributes from `All Products` column picker on product list page. These attributes were never showing values if chosen.
+
+- [#5980](https://github.com/saleor/saleor-dashboard/pull/5980) [`6b4219e`](https://github.com/saleor/saleor-dashboard/commit/6b4219e2706fdadbd674f45000e1929915e37762) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Remove apps/ directory, which ends the refactor that moves apps/ to extensions/. This is not a functional change.
+
+## 3.22.3
+
+### Patch Changes
+
+- [#5969](https://github.com/saleor/saleor-dashboard/pull/5969) [`7adf04b`](https://github.com/saleor/saleor-dashboard/commit/7adf04bcaa5ad193785f19d1637ce7a484231714) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Some dead code from src/apps was removed. This should not introduce any visible change and is only cleanup/refactor
+
+- [#5970](https://github.com/saleor/saleor-dashboard/pull/5970) [`65025c2`](https://github.com/saleor/saleor-dashboard/commit/65025c2add2cab24a2b03b38298eb07d72f6bf99) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Removed another bunch of legacy apps/ code. This is only a refactor with no functional change
+
+- [#5971](https://github.com/saleor/saleor-dashboard/pull/5971) [`6dedfec`](https://github.com/saleor/saleor-dashboard/commit/6dedfec6f55bfc1ba53bc7d8cb07066ed594f02c) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Refactored another batch of apps/ directory - mainly moved components to extensions/. This is non-functional change
+
+- [#5965](https://github.com/saleor/saleor-dashboard/pull/5965) [`f85daef`](https://github.com/saleor/saleor-dashboard/commit/f85daefa4c3218d49ae30dcdb8dde74c7aab71ec) Thanks [@lkostrowski](https://github.com/lkostrowski)! - Fixed copy for Ripples ripple
+
 ## 3.22.2
 
 ### Patch Changes

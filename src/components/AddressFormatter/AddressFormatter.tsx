@@ -44,6 +44,11 @@ const AddressFormatter = ({ address }: AddressFormatterProps) => {
           ? address.countryArea + ", " + address.country.country
           : address.country.country}
       </Text>
+      {address.vatId && (
+        <Text as="p" data-test-id="vat-id">
+          VAT ID: {address.vatId}
+        </Text>
+      )}
     </address>
   );
 };
