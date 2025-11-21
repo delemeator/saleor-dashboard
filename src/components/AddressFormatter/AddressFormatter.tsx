@@ -11,6 +11,8 @@ const AddressFormatter = ({ address }: AddressFormatterProps) => {
     return <Skeleton />;
   }
 
+  const vatId = address.metadata.find(meta => meta.key === "vat_id")?.value;
+
   return (
     <address
       data-test-id="address"
@@ -44,9 +46,9 @@ const AddressFormatter = ({ address }: AddressFormatterProps) => {
           ? address.countryArea + ", " + address.country.country
           : address.country.country}
       </Text>
-      {address.vatId && (
+      {vatId && (
         <Text as="p" data-test-id="vat-id">
-          VAT ID: {address.vatId}
+          VAT ID: {vatId}
         </Text>
       )}
     </address>

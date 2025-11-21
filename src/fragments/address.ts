@@ -18,6 +18,6 @@ export const fragmentAddress = gql`
     postalCode
     streetAddress1
     streetAddress2
-    vatId: metafield(key: "vatId")
+    metadata { key value }
   }
 `;

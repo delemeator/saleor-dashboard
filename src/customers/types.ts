@@ -31,7 +31,7 @@ export interface AddressType {
   postalCode: string;
   streetAddress1: string;
   streetAddress2?: string;
-  vatId?: string | null;
+  metadata: Array<{ key: string; value: string }>;
 }
 
 export type Customers = RelayToFlat<NonNullable<ListCustomersQuery["customers"]>>;
