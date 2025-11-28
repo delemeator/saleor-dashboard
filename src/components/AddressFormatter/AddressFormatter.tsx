@@ -11,7 +11,7 @@ const AddressFormatter = ({ address }: AddressFormatterProps) => {
     return <Skeleton />;
   }
 
-  const vatId = address.metadata.find(meta => meta.key === "vat_id")?.value;
+  const vatId = address.metadata.find(meta => meta.key === "vatId")?.value;
 
   return (
     <address
