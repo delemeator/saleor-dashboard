@@ -132,6 +132,13 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             }),
           )
         }
+        availableCustomerGroups={mapEdgesToItems(searchCustomerGroupsOpts.data?.search)}
+        fetchMoreCustomerGroups={{
+          hasMore: searchCustomerGroupsOpts.data?.search?.pageInfo.hasNextPage,
+          loading: searchCustomerGroupsOpts.loading,
+          onFetchMore: loadMoreCustomerGroups,
+        }}
+        onCustomerGroupsSearchChange={searchCustomerGroups}
       />
       <ActionDialog
         confirmButtonState={removeCustomerOpts.status}
@@ -143,13 +150,6 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
             },
           })
         }
-        availableCustomerGroups={mapEdgesToItems(searchCustomerGroupsOpts.data?.search)}
-        fetchMoreCustomerGroups={{
-          hasMore: searchCustomerGroupsOpts.data?.search?.pageInfo.hasNextPage,
-          loading: searchCustomerGroupsOpts.loading,
-          onFetchMore: loadMoreCustomerGroups,
-        }}
-        onCustomerGroupsSearchChange={searchCustomerGroups}
         title={intl.formatMessage({
           id: "ey0lZj",
           defaultMessage: "Delete Customer",
