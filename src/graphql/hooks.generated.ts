@@ -472,6 +472,10 @@ export const AddressFragmentDoc = gql`
   postalCode
   streetAddress1
   streetAddress2
+  metadata {
+    key
+    value
+  }
 }
     `;
 export const CustomerDetailsFragmentDoc = gql`

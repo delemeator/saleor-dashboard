@@ -5487,6 +5487,12 @@ type CheckoutSettings {
   Added in Saleor 3.20.
   """
   automaticallyCompleteFullyPaidCheckouts: Boolean!
+
+  automaticCompletionDelay: Minute
+
+  automaticCompletionCutOffDate: DateTime
+
+  allowLegacyGiftCardUse: Boolean!
 }
 
 """Represents the channel-specific payment settings."""
