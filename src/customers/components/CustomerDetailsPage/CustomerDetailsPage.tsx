@@ -26,11 +26,9 @@ import { useBackLinkWithState } from "@dashboard/hooks/useBackLinkWithState";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { orderListUrl } from "@dashboard/orders/urls";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { orderListUrlWithCustomerEmail } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { Divider, Option } from "@saleor/macaw-ui-next";
+import { Divider } from "@saleor/macaw-ui-next";
 import { useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
@@ -39,6 +37,7 @@ import CustomerDetails from "../CustomerDetails";
 import CustomerInfo from "../CustomerInfo";
 import CustomerOrders from "../CustomerOrders";
 import CustomerStats from "../CustomerStats";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 
 export interface CustomerDetailsPageFormData extends MetadataFormData {
   firstName: string;
@@ -91,7 +90,6 @@ const CustomerDetailsPage = ({
         return { value: group.id, label: group.name };
       }) || [],
   };
-  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
   const { CUSTOMER_DETAILS_MORE_ACTIONS, CUSTOMER_DETAILS_WIDGETS } = useExtensions(
     extensionMountPoints.CUSTOMER_DETAILS,
   );
@@ -107,8 +105,6 @@ const CustomerDetailsPage = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
-
         return (
           <DetailPageLayout>
             <TopNav href={customerBackLink} title={getUserName(customer, true)}>
@@ -133,13 +129,11 @@ const CustomerDetailsPage = ({
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
                 <CustomerOrders
                   orders={mapEdgesToItems(customer?.orders)}
-                  viewAllHref={orderListUrl({
-                    customer: customer?.email,
-                  })}
+                  viewAllHref={orderListUrlWithCustomerEmail(customer?.email)}
                 />
                 <CardSpacer />
               </RequirePermissions>
-              <Metadata data={data} onChange={changeMetadata} />
+              <Metadata data={data} onChange={change} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <CustomerAddresses

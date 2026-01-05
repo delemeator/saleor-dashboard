@@ -6,15 +6,12 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useRemoveCustomerMutation,
   useUpdateCustomerMutation,
-  useUpdateMetadataMutation,
-  useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import useCustomerGroupsSearchQuery from "@dashboard/searches/useCustomerGroupSearch";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -66,9 +63,6 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
     },
   });
 
-  const [updateMetadata] = useUpdateMetadataMutation({});
-  const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
   const {
     loadMore: loadMoreCustomerGroups,
     search: searchCustomerGroups,
@@ -81,7 +75,7 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
     return <NotFoundPage backHref={customerListUrl()} />;
   }
 
-  const updateData = async (data: CustomerDetailsPageFormData) =>
+  const handleSubmit = async (data: CustomerDetailsPageFormData) =>
     extractMutationErrors(
       updateCustomer({
         variables: {
@@ -102,16 +96,6 @@ const CustomerDetailsViewInner = ({ id, params }: CustomerDetailsViewProps) => {
         },
       }),
     );
-
-  const handleSubmit = createMetadataUpdateHandler(
-    {
-      ...user,
-      privateMetadata: user?.privateMetadata || [],
-    },
-    updateData,
-    variables => updateMetadata({ variables }),
-    variables => updatePrivateMetadata({ variables }),
-  );
 
   return (
     <>

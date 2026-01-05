@@ -1,14 +1,7 @@
+import { iconSize, iconStrokeWidth } from "@dashboard/components/icons";
 import { ExtensionMenuItem } from "@dashboard/extensions/getExtensionsItems";
-import {
-  Box,
-  BoxProps,
-  Button,
-  ButtonProps,
-  ChervonDownIcon,
-  Dropdown,
-  List,
-  Text,
-} from "@saleor/macaw-ui-next";
+import { Box, BoxProps, Button, ButtonProps, Dropdown, List, Text } from "@saleor/macaw-ui-next";
+import { ChevronDown } from "lucide-react";
 import { ReactNode } from "react";
 
 type ExtensionsButtonSelectorProps = {
@@ -30,7 +23,7 @@ interface ButtonGroupWithDropdownProps extends BoxProps {
 
 // TODO: consider moving this to Macaw UI
 // TODO: This is a clone of ButtonGroupWithDropdown component but adjusted for secondary style - for apps. We can unify them (probably in Macaw)
-export const ButtonGroupWithDropdown = ({
+const ButtonGroupWithDropdown = ({
   children,
   options,
   onClick,
@@ -39,6 +32,40 @@ export const ButtonGroupWithDropdown = ({
   variant,
   ...boxProps
 }: ButtonGroupWithDropdownProps) => {
+  const shouldRenderDropdown = options.length > 0;
+
+  if (!shouldRenderDropdown) {
+    return (
+      <Box {...boxProps}>
+        <Button
+          __height="50px"
+          variant={variant}
+          onClick={onClick}
+          data-test-id={testId}
+          __minWidth="80px"
+          disabled={disabled}
+          // TODO: fix this in Macaw UI - allow overriding border radius
+          boxShadow="none"
+          display="flex"
+          justifyContent="start"
+        >
+          <Box
+            justifySelf="start"
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-start"
+            justifyContent="flex-start"
+          >
+            <Text lineHeight={2} color="default2" __fontSize="10px">
+              Apps
+            </Text>
+            {children}
+          </Box>
+        </Button>
+      </Box>
+    );
+  }
+
   return (
     <Dropdown>
       <Box display="flex" {...boxProps}>
@@ -75,7 +102,7 @@ export const ButtonGroupWithDropdown = ({
           <Button
             __height="50px"
             variant={variant}
-            icon={<ChervonDownIcon />}
+            icon={<ChevronDown size={iconSize.medium} strokeWidth={iconStrokeWidth} />}
             disabled={disabled}
             borderColor="default1"
             borderLeftWidth={1}
@@ -112,6 +139,7 @@ export const ButtonGroupWithDropdown = ({
 };
 
 // todo implement "pin" functionality to keep selected extension on first position
+// todo use it instead of "cog"
 export const ExtensionsButtonSelector = ({
   extensions,
   onClick,
