@@ -4,6 +4,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -54,7 +55,10 @@ const TranslationsAttributesPage = ({
   const intl = useIntl();
   const navigate = useNavigator();
   const withChoices = data?.attribute?.withChoices;
-  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const { TRANSLATIONS_MORE_ACTIONS, TRANSLATIONS_DETAILS_WIDGETS } = useExtensions([
+    "TRANSLATIONS_MORE_ACTIONS",
+    "TRANSLATIONS_DETAILS_WIDGETS",
+  ]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "attribute",
     translationLanguage: languageCode,
@@ -144,6 +148,14 @@ const TranslationsAttributesPage = ({
             onSubmit={onSubmit}
           />
         )}
+        <AppWidgets
+          extensions={TRANSLATIONS_DETAILS_WIDGETS}
+          params={{
+            attributeId: data?.attribute?.id,
+            translationContext: "attribute",
+            translationLanguage: languageCode,
+          }}
+        />
       </DetailPageLayout.Content>
     </DetailPageLayout>
   );

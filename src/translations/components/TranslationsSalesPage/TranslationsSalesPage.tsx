@@ -2,6 +2,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -42,7 +43,10 @@ const TranslationsSalesPage = ({
 }: TranslationsSalesPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const { TRANSLATIONS_MORE_ACTIONS, TRANSLATIONS_DETAILS_WIDGETS } = useExtensions([
+    "TRANSLATIONS_MORE_ACTIONS",
+    "TRANSLATIONS_DETAILS_WIDGETS",
+  ]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "sale",
     saleId: data?.sale?.id,
@@ -112,6 +116,14 @@ const TranslationsSalesPage = ({
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
+        />
+        <AppWidgets
+          extensions={TRANSLATIONS_DETAILS_WIDGETS}
+          params={{
+            saleId: data?.sale?.id,
+            translationContext: "sale",
+            translationLanguage: languageCode,
+          }}
         />
       </DetailPageLayout.Content>
     </DetailPageLayout>

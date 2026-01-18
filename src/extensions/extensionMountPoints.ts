@@ -33,5 +33,5 @@ export const extensionMountPoints = {
     "NAVIGATION_PAGES",
     "NAVIGATION_TRANSLATIONS",
   ],
-  TRANSLATION_DETAILS: ["TRANSLATIONS_MORE_ACTIONS"],
+  TRANSLATION_DETAILS: ["TRANSLATIONS_MORE_ACTIONS", "TRANSLATIONS_DETAILS_WIDGETS"],
 } as const satisfies Record<string, Array<AllAppExtensionMounts>>;

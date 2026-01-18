@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -41,7 +42,10 @@ const TranslationsCategoriesPage = ({
   onSubmit,
 }: TranslationsCategoriesPageProps) => {
   const intl = useIntl();
-  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const { TRANSLATIONS_MORE_ACTIONS, TRANSLATIONS_DETAILS_WIDGETS } = useExtensions([
+    "TRANSLATIONS_MORE_ACTIONS",
+    "TRANSLATIONS_DETAILS_WIDGETS",
+  ]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "category",
     categoryId: data?.category?.id,
@@ -166,6 +170,15 @@ const TranslationsCategoriesPage = ({
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
+        />
+        <CardSpacer />
+        <AppWidgets
+          extensions={TRANSLATIONS_DETAILS_WIDGETS}
+          params={{
+            categoryId: data?.category?.id,
+            translationContext: "category",
+            translationLanguage: languageCode,
+          }}
         />
       </DetailPageLayout.Content>
     </DetailPageLayout>

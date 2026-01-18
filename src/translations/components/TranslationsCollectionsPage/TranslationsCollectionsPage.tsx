@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { LanguageSwitchWithCaching } from "@dashboard/components/LanguageSwitch/LanguageSwitch";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidgets";
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
@@ -42,7 +43,10 @@ const TranslationsCollectionsPage = ({
 }: TranslationsCollectionsPageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const { TRANSLATIONS_MORE_ACTIONS } = useExtensions(["TRANSLATIONS_MORE_ACTIONS"]);
+  const { TRANSLATIONS_MORE_ACTIONS, TRANSLATIONS_DETAILS_WIDGETS } = useExtensions([
+    "TRANSLATIONS_MORE_ACTIONS",
+    "TRANSLATIONS_DETAILS_WIDGETS",
+  ]);
   const menuItems = getExtensionsItemsForTranslationDetails(TRANSLATIONS_MORE_ACTIONS, {
     translationContext: "collection",
     collectionId: data?.collection?.id,
@@ -166,6 +170,15 @@ const TranslationsCollectionsPage = ({
           onEdit={onEdit}
           onDiscard={onDiscard}
           onSubmit={onSubmit}
+        />
+        <CardSpacer />
+        <AppWidgets
+          extensions={TRANSLATIONS_DETAILS_WIDGETS}
+          params={{
+            collectionId: data?.collection?.id,
+            translationContext: "collection",
+            translationLanguage: languageCode,
+          }}
         />
       </DetailPageLayout.Content>
     </DetailPageLayout>
