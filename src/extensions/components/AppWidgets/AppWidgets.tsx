@@ -23,7 +23,7 @@ type AppWidgetsProps = {
 const hiddenStyle = { visibility: "hidden" } as const;
 
 // TODO We will add size negotiations after render
-const defaultIframeSize = 200;
+const defaultIframeSize = 500;
 
 /**
  * Renders a form and iframe, the form is automatically submitted with POST action and <iframe> content is replaced

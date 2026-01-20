@@ -1,5 +1,6 @@
 import { OrderDetailsFragment, OrderStatus } from "@dashboard/graphql";
 import { Box, Button } from "@saleor/macaw-ui-next";
+import { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
 import { transactionActionMessages } from "../OrderTransaction/messages";
@@ -26,7 +27,7 @@ export const LegacyPaymentsApiButtons = ({
   onLegacyPaymentsApiCapture,
   onLegacyPaymentsApiRefund,
   onLegacyPaymentsApiVoid,
-}: Props) => {
+}: Props): ReactNode => {
   const intl = useIntl();
 
   const showButtons =
@@ -59,7 +60,7 @@ export const LegacyPaymentsApiButtons = ({
         </Button>
       )}
       {canMarkAsPaid && onMarkAsPaid && (
-        <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="markAsPaidButton">
+        <Button variant="secondary" onClick={onMarkAsPaid} data-test-id="mark-as-paid-button">
           {intl.formatMessage(transactionActionMessages.markAsPaid)}
         </Button>
       )}
