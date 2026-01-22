@@ -1,4 +1,3 @@
-import { Multiselect as ComboMultiselect } from "@dashboard/components/Combobox";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
@@ -59,11 +58,9 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
       })),
     [channels],
   );
-  const { search: searchCustomerGroups, result: searchCustomerGroupsOpts } = useCustomerGroupSearch(
-    {
-      variables: DEFAULT_INITIAL_SEARCH_DATA,
-    },
-  );
+  const { result: searchCustomerGroupsOpts } = useCustomerGroupSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
 
   const groupOptions = mapEdgesToItems(searchCustomerGroupsOpts.data?.search)?.map(group => {
     return { label: group.name, value: group.id };
@@ -117,7 +114,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
             />
           </RuleInputWrapper>
           <RuleInputWrapper>
-            <ComboMultiselect
+            <Multiselect
               {...groupfield}
               label={"Grupy klientów"}
               options={groupOptions || []}
@@ -126,7 +123,6 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
                   selectedGroups?.map(group => group.value).includes(choice.value),
                 ) as Option[]
               }
-              fetchOptions={searchCustomerGroups}
             />
           </RuleInputWrapper>
 
