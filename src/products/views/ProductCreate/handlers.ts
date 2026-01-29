@@ -157,12 +157,11 @@ export function createHandler(
         });
       }
     } else {
-      const result = await updateChannels(
-        getChannelsVariables(productId, formData.channelListings),
-      );
-      const channelErrors = result.data?.productChannelListingUpdate?.errors || [];
-
-      errors = [...errors, ...channelErrors];
+      // const result = await updateChannels(
+      //   getChannelsVariables(productId, formData.channelListings),
+      // );
+      // const channelErrors = result.data?.productChannelListingUpdate?.errors || [];
+      // errors = [...errors, ...channelErrors];
     }
 
     /*
