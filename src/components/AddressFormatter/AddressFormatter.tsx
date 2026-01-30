@@ -13,6 +13,13 @@ const AddressFormatter = ({ address, fontSize }: AddressFormatterProps) => {
   }
 
   const vatId = address.metadata.find(meta => meta.key === "vatId")?.value;
+  const vatGroupSubsidary = address.metadata.find(
+    meta => meta.key === "ksefVatGroupSubsidiaryId",
+  )?.value;
+  const vatJstSubsidiary = address.metadata.find(
+    meta => meta.key === "ksefVatJstSubsidiaryId",
+  )?.value;
+  const idWew = address.metadata.find(meta => meta.key === "ksefIdWew")?.value;
 
   return (
     <address
@@ -47,11 +54,12 @@ const AddressFormatter = ({ address, fontSize }: AddressFormatterProps) => {
           ? address.countryArea + ", " + address.country.country
           : address.country.country}
       </Text>
-      {vatId && (
-        <Text as="p" data-test-id="vat-id">
-          VAT ID: {vatId}
-        </Text>
+      {vatId && <Text as="p">VAT: {vatId}</Text>}
+      {idWew && <Text as="p">IdWew: {idWew}</Text>}
+      {vatJstSubsidiary && (
+        <Text as="p">Jednostka samorządu terytorialnego: {vatJstSubsidiary}</Text>
       )}
+      {vatGroupSubsidary && <Text as="p">Członek grupy VAT: {vatGroupSubsidary}</Text>}
     </address>
   );
 };
