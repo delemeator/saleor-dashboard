@@ -55,7 +55,7 @@ const AddressFormatter = ({ address, fontSize }: AddressFormatterProps) => {
       {vatId && <Text as="p">VAT: {vatId}</Text>}
       {idWew && <Text as="p">IdWew: {idWew}</Text>}
       {vatJstSubsidiary && (
-        <Text as="p">Jednostka samorządu terytorialnego: {vatJstSubsidiary}</Text>
+        <Text as="p">Podjednostka samorządu terytorialnego: {vatJstSubsidiary}</Text>
       )}
       {vatGroupSubsidary && <Text as="p">Członek grupy VAT: {vatGroupSubsidary}</Text>}
     </address>
