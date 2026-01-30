@@ -16,9 +16,7 @@ const AddressFormatter = ({ address, fontSize }: AddressFormatterProps) => {
   const vatGroupSubsidary = address.metadata.find(
     meta => meta.key === "ksefVatGroupSubsidiaryId",
   )?.value;
-  const vatJstSubsidiary = address.metadata.find(
-    meta => meta.key === "ksefVatJstSubsidiaryId",
-  )?.value;
+  const vatJstSubsidiary = address.metadata.find(meta => meta.key === "ksefJstSubsidiaryId")?.value;
   const idWew = address.metadata.find(meta => meta.key === "ksefIdWew")?.value;
 
   return (
