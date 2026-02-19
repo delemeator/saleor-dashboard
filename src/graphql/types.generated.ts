@@ -3709,6 +3709,7 @@ export enum MeasurementUnitsEnum {
   LITER = 'LITER',
   L_H = 'L_H',
   M = 'M',
+  ML = 'ML',
   MM = 'MM',
   OZ = 'OZ',
   PINT = 'PINT',
@@ -7765,6 +7766,7 @@ export enum VolumeUnitsEnum {
   CUBIC_YARD = 'CUBIC_YARD',
   FL_OZ = 'FL_OZ',
   LITER = 'LITER',
+  ML = 'ML',
   PINT = 'PINT',
   QT = 'QT'
 }

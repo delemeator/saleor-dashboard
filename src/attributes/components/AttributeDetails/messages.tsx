@@ -163,7 +163,7 @@ export const unitTypeMessages = defineMessages({
     description: "area units type",
   },
   other: {
-    id: "none",
+    id: "g1bk+A",
     defaultMessage: "Other",
     description: "other units type",
   }
@@ -218,4 +218,9 @@ export const units = {
   squareFt: <>ft&sup2;</>,
   squareYd: <>yd&sup2;</>,
   squareInch: <>in&sup2;</>,
+  ml: "ml",
+  lh: "l/h",
+  w: "W",
+  v: "V",
+  db: "dB",
 };

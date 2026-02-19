@@ -43,6 +43,11 @@ const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.SQ_DM]: M.units.squareDecimeter,
   [MeasurementUnitsEnum.SQ_M]: M.units.squareMeter,
   [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer,
+  [MeasurementUnitsEnum.L_H]: M.units.lh,
+  [MeasurementUnitsEnum.W]: M.units.w,
+  [MeasurementUnitsEnum.V]: M.units.v,
+  [MeasurementUnitsEnum.DB]: M.units.db,
+  [MeasurementUnitsEnum.ML]: M.units.ml,
 };
 
 const getMeasurementUnitMessage = (
@@ -50,6 +55,8 @@ const getMeasurementUnitMessage = (
   formatMessage: IntlShape["formatMessage"],
 ): MessageDescriptor | React.ReactNode => {
   const message = UNIT_MESSAGES_MAPPING[unit];
+
+  console.log(unit, message);
 
   return typeof message === "string" || React.isValidElement(message)
     ? message
@@ -113,6 +120,8 @@ const unitMapping = {
       MeasurementUnitsEnum.CUBIC_DECIMETER,
       MeasurementUnitsEnum.CUBIC_METER,
       MeasurementUnitsEnum.LITER,
+      MeasurementUnitsEnum.ML
+
     ],
     distance: [
       MeasurementUnitsEnum.MM,
@@ -129,6 +138,12 @@ const unitMapping = {
       MeasurementUnitsEnum.SQ_M,
       MeasurementUnitsEnum.SQ_KM,
     ],
+    other: [
+      MeasurementUnitsEnum.L_H,
+      MeasurementUnitsEnum.W,
+      MeasurementUnitsEnum.V,
+      MeasurementUnitsEnum.DB,
+    ]
   },
 };
 
