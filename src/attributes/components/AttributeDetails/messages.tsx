@@ -162,6 +162,11 @@ export const unitTypeMessages = defineMessages({
     defaultMessage: "Area",
     description: "area units type",
   },
+  other: {
+    id: "none",
+    defaultMessage: "Other",
+    description: "other units type",
+  }
 });
 
 const unitMessages = defineMessages({

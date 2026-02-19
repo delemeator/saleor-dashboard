@@ -5489,11 +5489,19 @@ type CheckoutSettings {
   """
   automaticallyCompleteFullyPaidCheckouts: Boolean!
 
+  """
+  The time in minutes to wait after a checkout is fully paid before automatically completing it.
+  
+  Added in Saleor 3.22.
+  """
   automaticCompletionDelay: Minute
 
+  """
+  The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed. 
+  
+  Added in Saleor 3.22.
+  """
   automaticCompletionCutOffDate: DateTime
-
-  allowLegacyGiftCardUse: Boolean!
 }
 
 """Represents the channel-specific payment settings."""
@@ -5842,13 +5850,13 @@ type Product implements Node & ObjectWithMetadata & ObjectWithAttributes @doc(ca
   """Get a single product media by ID."""
   mediaById(
     """ID of a product media."""
-    id: ID
+    id: ID!
   ): ProductMedia
 
   """Get a single product image by ID."""
   imageById(
     """ID of a product image."""
-    id: ID
+    id: ID!
   ): ProductImage @deprecated(reason: "Use the `mediaById` field instead.")
 
   """Get a single variant by SKU or ID."""
@@ -6579,6 +6587,10 @@ enum MeasurementUnitsEnum {
   OZ
   KG
   TONNE
+  W
+  V
+  DB
+  L_H
 }
 
 """
@@ -7158,7 +7170,7 @@ input AttributeInput @doc(category: "Attributes") {
   """
   The range that the returned values should be in. Requires `slug` to be provided.
   """
-  valuesRange: IntRangeInput @deprecated(reason: "Use `value` instead.")
+  valuesRange: DecimalRangeInput @deprecated(reason: "Use `value` instead.")
 
   """
   The date/time range that the returned values should be in. Requires `slug` to be provided.
@@ -7284,14 +7296,6 @@ input ContainsFilterInput {
   containsAll: [String!]
 }
 
-input IntRangeInput {
-  """Value greater than or equal to."""
-  gte: Int
-
-  """Value less than or equal to."""
-  lte: Int
-}
-
 enum StockAvailability @doc(category: "Products") {
   IN_STOCK
   OUT_OF_STOCK
@@ -7300,6 +7304,14 @@ enum StockAvailability @doc(category: "Products") {
 input ProductStockFilterInput @doc(category: "Products") {
   warehouseIds: [ID!]
   quantity: IntRangeInput
+}
+
+input IntRangeInput {
+  """Value greater than or equal to."""
+  gte: Int
+
+  """Value less than or equal to."""
+  lte: Int
 }
 
 input PriceRangeInput {
@@ -7852,6 +7864,9 @@ type VariantPricingInfo @doc(category: "Products") {
   """
   pricePrior: TaxedMoney
 
+  """The promotion rule that was applied to the variant."""
+  appliedRule: PromotionRulePublic
+
   """The discounted price in the local currency."""
   priceLocalCurrency: TaxedMoney @deprecated(reason: "Always returns `null`.")
 }
@@ -7871,6 +7886,126 @@ type TaxedMoney {
 
   """Amount of taxes."""
   tax: Money!
+}
+
+"""Represents publicly available information about the promotion rule."""
+type PromotionRulePublic @doc(category: "Discounts") {
+  id: ID!
+
+  """Promotion to which the rule belongs."""
+  promotion(
+    """Channel slug."""
+    channel: String
+  ): PromotionPublic
+}
+
+"""Represents publicly available information about the promotion"""
+type PromotionPublic @doc(category: "Discounts") {
+  id: ID!
+
+  """Name of the promotion."""
+  name: String!
+
+  """
+  The type of the promotion. Implicate if the discount is applied on catalogue or order level.
+  
+  Added in Saleor 3.19.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  type: PromotionTypeEnum
+
+  """Description of the promotion."""
+  description: JSON
+
+  """Start date of the promotion."""
+  startDate: DateTime!
+
+  """End date of the promotion."""
+  endDate: DateTime
+
+  """Date time of promotion creation."""
+  createdAt: DateTime!
+
+  """Date time of last update of promotion."""
+  updatedAt: DateTime!
+
+  """Returns translated promotion fields for the given language code."""
+  translation(
+    """A language code to return the translation for promotion."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionTranslation
+
+  """Statistics about the rewards defined in this promotion's rules."""
+  rewardStats: PromotionRewardStats
+}
+
+enum PromotionTypeEnum @doc(category: "Discounts") {
+  CATALOGUE
+  ORDER
+}
+
+"""Represents promotion translations."""
+type PromotionTranslation implements Node @doc(category: "Discounts") {
+  """ID of the promotion translation."""
+  id: ID!
+
+  """Translation language."""
+  language: LanguageDisplay!
+
+  """Translated name of the promotion."""
+  name: String
+
+  """
+  Translated description of the promotion.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+
+  """Represents the promotion fields to translate."""
+  translatableContent: PromotionTranslatableContent
+}
+
+"""
+Represents promotion's original translatable fields and related translations.
+"""
+type PromotionTranslatableContent implements Node @doc(category: "Discounts") {
+  """ID of the promotion translatable content."""
+  id: ID!
+
+  """ID of the promotion to translate."""
+  promotionId: ID!
+
+  """Name of the promotion."""
+  name: String!
+
+  """
+  Description of the promotion.
+  
+  Rich text format. For reference see https://editorjs.io/
+  """
+  description: JSONString
+
+  """Returns translated promotion fields for the given language code."""
+  translation(
+    """A language code to return the translation for promotion."""
+    languageCode: LanguageCodeEnum!
+  ): PromotionTranslation
+}
+
+type PromotionRewardStats {
+  """The minimum fixed reward amount defined in this promotion's rules."""
+  fixedMin: Float
+
+  """The maximum fixed reward amount defined in this promotion's rules."""
+  fixedMax: Float
+
+  """The minimum percentage reward defined in this promotion's rules."""
+  percentageMin: Float
+
+  """The maximum percentage reward defined in this promotion's rules."""
+  percentageMax: Float
 }
 
 input AddressInput {
@@ -9552,55 +9687,6 @@ type Menu implements Node & ObjectWithMetadata @doc(category: "Menu") {
 }
 
 """
-Represents promotion's original translatable fields and related translations.
-"""
-type PromotionTranslatableContent implements Node @doc(category: "Discounts") {
-  """ID of the promotion translatable content."""
-  id: ID!
-
-  """ID of the promotion to translate."""
-  promotionId: ID!
-
-  """Name of the promotion."""
-  name: String!
-
-  """
-  Description of the promotion.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  description: JSONString
-
-  """Returns translated promotion fields for the given language code."""
-  translation(
-    """A language code to return the translation for promotion."""
-    languageCode: LanguageCodeEnum!
-  ): PromotionTranslation
-}
-
-"""Represents promotion translations."""
-type PromotionTranslation implements Node @doc(category: "Discounts") {
-  """ID of the promotion translation."""
-  id: ID!
-
-  """Translation language."""
-  language: LanguageDisplay!
-
-  """Translated name of the promotion."""
-  name: String
-
-  """
-  Translated description of the promotion.
-  
-  Rich text format. For reference see https://editorjs.io/
-  """
-  description: JSONString
-
-  """Represents the promotion fields to translate."""
-  translatableContent: PromotionTranslatableContent
-}
-
-"""
 Represents promotion rule's original translatable fields and related translations.
 """
 type PromotionRuleTranslatableContent implements Node @doc(category: "Discounts") {
@@ -10209,6 +10295,13 @@ type Shop implements ObjectWithMetadata {
 
   """Charge taxes on shipping."""
   chargeTaxesOnShipping: Boolean! @deprecated(reason: "Use `ShippingMethodType.taxClass` to determine whether taxes are calculated for shipping methods; if a tax class is set, the taxes will be calculated, otherwise no tax rate will be applied.")
+
+  """
+  Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
+  
+  Added in Saleor 3.22.
+  """
+  useLegacyUpdateWebhookEmission: Boolean @deprecated
 }
 
 """
@@ -10517,6 +10610,12 @@ type User implements Node & ObjectWithMetadata @doc(category: "Users") {
 
   """List of customer groups assigned to the user."""
   customerGroups: [CustomerGroup!]
+
+  """List of promotions assigned to the user."""
+  promotions(
+    """Slug of a channel for which the data should be returned."""
+    channel: String
+  ): [PromotionPublic!]
 }
 
 """Checkout object."""
@@ -14352,11 +14451,6 @@ type Promotion implements Node & ObjectWithMetadata @doc(category: "Discounts") 
   events: [PromotionEvent!]
 }
 
-enum PromotionTypeEnum @doc(category: "Discounts") {
-  CATALOGUE
-  ORDER
-}
-
 """
 Represents the promotion rule that specifies the conditions that must be met to apply the promotion discount.
 """
@@ -14976,8 +15070,25 @@ type AppExtensionCountableEdge @doc(category: "Apps") {
 }
 
 input AppExtensionFilterInput @doc(category: "Apps") {
-  mount: [AppExtensionMountEnum!]
-  target: AppExtensionTargetEnum
+  """DEPRECATED: Use `mountName` instead."""
+  mount: [AppExtensionMountEnum!] @deprecated
+
+  """DEPRECATED: Use `targetName` instead."""
+  target: AppExtensionTargetEnum @deprecated
+
+  """
+  Plain-text mount name (case insensitive)
+  
+  Added in Saleor 3.22.
+  """
+  mountName: [String!]
+
+  """
+  Plain-text target name (case insensitive)
+  
+  Added in Saleor 3.22.
+  """
+  targetName: String
 }
 
 """Represents address validation rules for a country."""
@@ -20882,6 +20993,13 @@ input ShopSettingsInput {
 
   """Charge taxes on shipping."""
   chargeTaxesOnShipping: Boolean @deprecated(reason: "To enable taxes for a shipping method, assign a tax class to the shipping method with `shippingPriceCreate` or `shippingPriceUpdate` mutations.")
+
+  """
+  Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
+  
+  Added in Saleor 3.22.
+  """
+  useLegacyUpdateWebhookEmission: Boolean @deprecated
 }
 
 """
@@ -21467,6 +21585,8 @@ enum ProductErrorCode @doc(category: "Products") {
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL
   UNSUPPORTED_MEDIA_PROVIDER
   PREORDER_VARIANT_CANNOT_BE_DEACTIVATED
+  INVALID_FILE_TYPE
+  UNSUPPORTED_MIME_TYPE
 }
 
 input ProductAttributeAssignInput @doc(category: "Products") {
@@ -28212,6 +28332,8 @@ type UploadError {
 
 enum UploadErrorCode {
   GRAPHQL_ERROR
+  INVALID_FILE_TYPE
+  UNSUPPORTED_MIME_TYPE
 }
 
 """
@@ -29006,11 +29128,35 @@ input CheckoutSettingsInput @doc(category: "Checkout") {
   useLegacyErrorFlow: Boolean @deprecated
 
   """
-  Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+  Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
   
   Added in Saleor 3.20.
   """
-  automaticallyCompleteFullyPaidCheckouts: Boolean
+  automaticallyCompleteFullyPaidCheckouts: Boolean @deprecated(reason: "Use `automatic_completion` instead.")
+
+  """
+  Settings for automatic completion of fully paid checkouts.
+  
+  Added in Saleor 3.22.
+  """
+  automaticCompletion: CheckoutAutoCompleteInput
+}
+
+input CheckoutAutoCompleteInput @doc(category: "Checkout") {
+  """
+  Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+  """
+  enabled: Boolean!
+
+  """
+  The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion.
+  """
+  delay: Minute
+
+  """
+  Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time.
+  """
+  cutOffDate: DateTime
 }
 
 input PaymentSettingsInput @doc(category: "Payments") {
@@ -29507,7 +29653,7 @@ type AttributeBulkUpdateError @doc(category: "Attributes") {
   code: AttributeBulkUpdateErrorCode!
 }
 
-enum AttributeBulkUpdateErrorCode {
+enum AttributeBulkUpdateErrorCode @doc(category: "Attributes") {
   ALREADY_EXISTS
   BLANK
   GRAPHQL_ERROR
@@ -32021,6 +32167,13 @@ enum VolumeUnitsEnum {
   FL_OZ
   ACRE_IN
   ACRE_FT
+}
+
+enum OtherUnitsEnum {
+  W
+  V
+  DB
+  L_H
 }
 
 """

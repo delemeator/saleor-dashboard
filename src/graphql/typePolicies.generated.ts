@@ -1448,9 +1448,8 @@ export type CheckoutRemovePromoCodeFieldPolicy = {
 	checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CheckoutSettingsKeySpecifier = ('allowLegacyGiftCardUse' | 'automaticCompletionCutOffDate' | 'automaticCompletionDelay' | 'automaticallyCompleteFullyPaidCheckouts' | 'useLegacyErrorFlow' | CheckoutSettingsKeySpecifier)[];
+export type CheckoutSettingsKeySpecifier = ('automaticCompletionCutOffDate' | 'automaticCompletionDelay' | 'automaticallyCompleteFullyPaidCheckouts' | 'useLegacyErrorFlow' | CheckoutSettingsKeySpecifier)[];
 export type CheckoutSettingsFieldPolicy = {
-	allowLegacyGiftCardUse?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticCompletionCutOffDate?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticCompletionDelay?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticallyCompleteFullyPaidCheckouts?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5220,6 +5219,26 @@ export type PromotionEventInterfaceFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PromotionPublicKeySpecifier = ('createdAt' | 'description' | 'endDate' | 'id' | 'name' | 'rewardStats' | 'startDate' | 'translation' | 'type' | 'updatedAt' | PromotionPublicKeySpecifier)[];
+export type PromotionPublicFieldPolicy = {
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	endDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	rewardStats?: FieldPolicy<any> | FieldReadFunction<any>,
+	startDate?: FieldPolicy<any> | FieldReadFunction<any>,
+	translation?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PromotionRewardStatsKeySpecifier = ('fixedMax' | 'fixedMin' | 'percentageMax' | 'percentageMin' | PromotionRewardStatsKeySpecifier)[];
+export type PromotionRewardStatsFieldPolicy = {
+	fixedMax?: FieldPolicy<any> | FieldReadFunction<any>,
+	fixedMin?: FieldPolicy<any> | FieldReadFunction<any>,
+	percentageMax?: FieldPolicy<any> | FieldReadFunction<any>,
+	percentageMin?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type PromotionRuleKeySpecifier = ('cataloguePredicate' | 'channels' | 'customerGroups' | 'description' | 'giftIds' | 'giftsLimit' | 'id' | 'name' | 'orderPredicate' | 'predicateType' | 'promotion' | 'rewardType' | 'rewardValue' | 'rewardValueType' | 'translation' | PromotionRuleKeySpecifier)[];
 export type PromotionRuleFieldPolicy = {
 	cataloguePredicate?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5299,6 +5318,11 @@ export type PromotionRuleDeletedEventFieldPolicy = {
 export type PromotionRuleEventInterfaceKeySpecifier = ('ruleId' | PromotionRuleEventInterfaceKeySpecifier)[];
 export type PromotionRuleEventInterfaceFieldPolicy = {
 	ruleId?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type PromotionRulePublicKeySpecifier = ('id' | 'promotion' | PromotionRulePublicKeySpecifier)[];
+export type PromotionRulePublicFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	promotion?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PromotionRuleTranslatableContentKeySpecifier = ('description' | 'id' | 'name' | 'promotionRuleId' | 'translation' | PromotionRuleTranslatableContentKeySpecifier)[];
 export type PromotionRuleTranslatableContentFieldPolicy = {
@@ -5982,7 +6006,7 @@ export type ShippingZoneUpdatedFieldPolicy = {
 	shippingZone?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ShopKeySpecifier = ('allowLoginWithoutConfirmation' | 'automaticFulfillmentDigitalProducts' | 'availableExternalAuthentications' | 'availablePaymentGateways' | 'availableShippingMethods' | 'availableTaxApps' | 'channelCurrencies' | 'chargeTaxesOnShipping' | 'companyAddress' | 'countries' | 'customerSetPasswordUrl' | 'defaultCountry' | 'defaultDigitalMaxDownloads' | 'defaultDigitalUrlValidDays' | 'defaultMailSenderAddress' | 'defaultMailSenderName' | 'defaultWeightUnit' | 'description' | 'displayGrossPrices' | 'domain' | 'enableAccountConfirmationByEmail' | 'fulfillmentAllowUnpaid' | 'fulfillmentAutoApprove' | 'headerText' | 'id' | 'includeTaxesInPrices' | 'languages' | 'limitQuantityPerCheckout' | 'limits' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'permissions' | 'phonePrefixes' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'reserveStockDurationAnonymousUser' | 'reserveStockDurationAuthenticatedUser' | 'schemaVersion' | 'staffNotificationRecipients' | 'trackInventoryByDefault' | 'translation' | 'version' | ShopKeySpecifier)[];
+export type ShopKeySpecifier = ('allowLoginWithoutConfirmation' | 'automaticFulfillmentDigitalProducts' | 'availableExternalAuthentications' | 'availablePaymentGateways' | 'availableShippingMethods' | 'availableTaxApps' | 'channelCurrencies' | 'chargeTaxesOnShipping' | 'companyAddress' | 'countries' | 'customerSetPasswordUrl' | 'defaultCountry' | 'defaultDigitalMaxDownloads' | 'defaultDigitalUrlValidDays' | 'defaultMailSenderAddress' | 'defaultMailSenderName' | 'defaultWeightUnit' | 'description' | 'displayGrossPrices' | 'domain' | 'enableAccountConfirmationByEmail' | 'fulfillmentAllowUnpaid' | 'fulfillmentAutoApprove' | 'headerText' | 'id' | 'includeTaxesInPrices' | 'languages' | 'limitQuantityPerCheckout' | 'limits' | 'metadata' | 'metafield' | 'metafields' | 'name' | 'permissions' | 'phonePrefixes' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'reserveStockDurationAnonymousUser' | 'reserveStockDurationAuthenticatedUser' | 'schemaVersion' | 'staffNotificationRecipients' | 'trackInventoryByDefault' | 'translation' | 'useLegacyUpdateWebhookEmission' | 'version' | ShopKeySpecifier)[];
 export type ShopFieldPolicy = {
 	allowLoginWithoutConfirmation?: FieldPolicy<any> | FieldReadFunction<any>,
 	automaticFulfillmentDigitalProducts?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6028,6 +6052,7 @@ export type ShopFieldPolicy = {
 	staffNotificationRecipients?: FieldPolicy<any> | FieldReadFunction<any>,
 	trackInventoryByDefault?: FieldPolicy<any> | FieldReadFunction<any>,
 	translation?: FieldPolicy<any> | FieldReadFunction<any>,
+	useLegacyUpdateWebhookEmission?: FieldPolicy<any> | FieldReadFunction<any>,
 	version?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ShopAddressUpdateKeySpecifier = ('errors' | 'shop' | 'shopErrors' | ShopAddressUpdateKeySpecifier)[];
@@ -6754,7 +6779,7 @@ export type UploadErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserKeySpecifier = ('accessibleChannels' | 'addresses' | 'avatar' | 'checkout' | 'checkoutIds' | 'checkoutTokens' | 'checkouts' | 'customerGroups' | 'dateJoined' | 'defaultBillingAddress' | 'defaultShippingAddress' | 'editableGroups' | 'email' | 'events' | 'externalReference' | 'firstName' | 'giftCards' | 'id' | 'isActive' | 'isConfirmed' | 'isStaff' | 'languageCode' | 'lastLogin' | 'lastName' | 'metadata' | 'metafield' | 'metafields' | 'note' | 'orders' | 'permissionGroups' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'restrictedAccessToChannels' | 'storedPaymentMethods' | 'storedPaymentSources' | 'updatedAt' | 'userPermissions' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('accessibleChannels' | 'addresses' | 'avatar' | 'checkout' | 'checkoutIds' | 'checkoutTokens' | 'checkouts' | 'customerGroups' | 'dateJoined' | 'defaultBillingAddress' | 'defaultShippingAddress' | 'editableGroups' | 'email' | 'events' | 'externalReference' | 'firstName' | 'giftCards' | 'id' | 'isActive' | 'isConfirmed' | 'isStaff' | 'languageCode' | 'lastLogin' | 'lastName' | 'metadata' | 'metafield' | 'metafields' | 'note' | 'orders' | 'permissionGroups' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'promotions' | 'restrictedAccessToChannels' | 'storedPaymentMethods' | 'storedPaymentSources' | 'updatedAt' | 'userPermissions' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	accessibleChannels?: FieldPolicy<any> | FieldReadFunction<any>,
 	addresses?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6789,6 +6814,7 @@ export type UserFieldPolicy = {
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>,
+	promotions?: FieldPolicy<any> | FieldReadFunction<any>,
 	restrictedAccessToChannels?: FieldPolicy<any> | FieldReadFunction<any>,
 	storedPaymentMethods?: FieldPolicy<any> | FieldReadFunction<any>,
 	storedPaymentSources?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -6850,8 +6876,9 @@ export type VariantMediaUnassignFieldPolicy = {
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	productVariant?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type VariantPricingInfoKeySpecifier = ('discount' | 'discountLocalCurrency' | 'discountPrior' | 'onSale' | 'price' | 'priceLocalCurrency' | 'pricePrior' | 'priceUndiscounted' | VariantPricingInfoKeySpecifier)[];
+export type VariantPricingInfoKeySpecifier = ('appliedRule' | 'discount' | 'discountLocalCurrency' | 'discountPrior' | 'onSale' | 'price' | 'priceLocalCurrency' | 'pricePrior' | 'priceUndiscounted' | VariantPricingInfoKeySpecifier)[];
 export type VariantPricingInfoFieldPolicy = {
+	appliedRule?: FieldPolicy<any> | FieldReadFunction<any>,
 	discount?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountLocalCurrency?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountPrior?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -9782,6 +9809,14 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | PromotionEventInterfaceKeySpecifier | (() => undefined | PromotionEventInterfaceKeySpecifier),
 		fields?: PromotionEventInterfaceFieldPolicy,
 	},
+	PromotionPublic?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PromotionPublicKeySpecifier | (() => undefined | PromotionPublicKeySpecifier),
+		fields?: PromotionPublicFieldPolicy,
+	},
+	PromotionRewardStats?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PromotionRewardStatsKeySpecifier | (() => undefined | PromotionRewardStatsKeySpecifier),
+		fields?: PromotionRewardStatsFieldPolicy,
+	},
 	PromotionRule?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PromotionRuleKeySpecifier | (() => undefined | PromotionRuleKeySpecifier),
 		fields?: PromotionRuleFieldPolicy,
@@ -9821,6 +9856,10 @@ export type StrictTypedTypePolicies = {
 	PromotionRuleEventInterface?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PromotionRuleEventInterfaceKeySpecifier | (() => undefined | PromotionRuleEventInterfaceKeySpecifier),
 		fields?: PromotionRuleEventInterfaceFieldPolicy,
+	},
+	PromotionRulePublic?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | PromotionRulePublicKeySpecifier | (() => undefined | PromotionRulePublicKeySpecifier),
+		fields?: PromotionRulePublicFieldPolicy,
 	},
 	PromotionRuleTranslatableContent?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PromotionRuleTranslatableContentKeySpecifier | (() => undefined | PromotionRuleTranslatableContentKeySpecifier),

@@ -84,6 +84,10 @@ export const unitTypeChoices = [
     label: M.unitTypeMessages.area,
     value: "area",
   },
+  {
+    label: M.unitTypeMessages.other,
+    value: "other",
+  }
 ];
 
 const unitMapping = {

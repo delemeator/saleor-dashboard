@@ -244,8 +244,28 @@ export enum AppErrorCode {
 }
 
 export type AppExtensionFilterInput = {
+  /**
+   * DEPRECATED: Use `mountName` instead.
+   * @deprecated Field no longer supported
+   */
   mount?: InputMaybe<Array<AppExtensionMountEnum>>;
+  /**
+   * Plain-text mount name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  mountName?: InputMaybe<Array<Scalars['String']>>;
+  /**
+   * DEPRECATED: Use `targetName` instead.
+   * @deprecated Field no longer supported
+   */
   target?: InputMaybe<AppExtensionTargetEnum>;
+  /**
+   * Plain-text target name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName?: InputMaybe<Scalars['String']>;
 };
 
 /** All places where app extension can be mounted. */
@@ -612,7 +632,7 @@ export type AttributeInput = {
    * The range that the returned values should be in. Requires `slug` to be provided.
    * @deprecated Use `value` instead.
    */
-  valuesRange?: InputMaybe<IntRangeInput>;
+  valuesRange?: InputMaybe<DecimalRangeInput>;
 };
 
 export enum AttributeInputTypeEnum {
@@ -1209,6 +1229,15 @@ export enum CheckoutAuthorizeStatusEnum {
   PARTIAL = 'PARTIAL'
 }
 
+export type CheckoutAutoCompleteInput = {
+  /** Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time. */
+  cutOffDate?: InputMaybe<Scalars['DateTime']>;
+  /** The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion. */
+  delay?: InputMaybe<Scalars['Minute']>;
+  /** Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount. */
+  enabled: Scalars['Boolean'];
+};
+
 /**
  * Determine the current charge status for the checkout.
  *
@@ -1383,9 +1412,16 @@ export type CheckoutLineUpdateInput = {
 
 export type CheckoutSettingsInput = {
   /**
-   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+   * Settings for automatic completion of fully paid checkouts.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
+  /**
+   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
+   * @deprecated Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']>;
   /**
@@ -3661,6 +3697,7 @@ export enum MeasurementUnitsEnum {
   CUBIC_METER = 'CUBIC_METER',
   CUBIC_MILLIMETER = 'CUBIC_MILLIMETER',
   CUBIC_YARD = 'CUBIC_YARD',
+  DB = 'DB',
   DM = 'DM',
   FL_OZ = 'FL_OZ',
   FT = 'FT',
@@ -3670,6 +3707,7 @@ export enum MeasurementUnitsEnum {
   KM = 'KM',
   LB = 'LB',
   LITER = 'LITER',
+  L_H = 'L_H',
   M = 'M',
   MM = 'MM',
   OZ = 'OZ',
@@ -3684,6 +3722,8 @@ export enum MeasurementUnitsEnum {
   SQ_MM = 'SQ_MM',
   SQ_YD = 'SQ_YD',
   TONNE = 'TONNE',
+  V = 'V',
+  W = 'W',
   YD = 'YD'
 }
 
@@ -4910,6 +4950,13 @@ export type OtherPaymentMethodDetailsInput = {
   name: Scalars['String'];
 };
 
+export enum OtherUnitsEnum {
+  DB = 'DB',
+  L_H = 'L_H',
+  V = 'V',
+  W = 'W'
+}
+
 export type PageCreateInput = {
   /** List of attributes. */
   attributes?: InputMaybe<Array<AttributeValueInput>>;
@@ -5678,6 +5725,7 @@ export enum ProductErrorCode {
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   INVALID = 'INVALID',
+  INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
   INVALID_PRICE = 'INVALID_PRICE',
   MEDIA_ALREADY_ASSIGNED = 'MEDIA_ALREADY_ASSIGNED',
   NOT_FOUND = 'NOT_FOUND',
@@ -5689,6 +5737,7 @@ export enum ProductErrorCode {
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE',
   UNSUPPORTED_MEDIA_PROVIDER = 'UNSUPPORTED_MEDIA_PROVIDER',
+  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE',
   VARIANT_NO_DIGITAL_CONTENT = 'VARIANT_NO_DIGITAL_CONTENT'
 }
 
@@ -6914,6 +6963,13 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
+   *
+   * Added in Saleor 3.22.
+   * @deprecated Field no longer supported
+   */
+  useLegacyUpdateWebhookEmission?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type ShopSettingsTranslationInput = {
@@ -7622,7 +7678,9 @@ export type UpdateInvoiceInput = {
 };
 
 export enum UploadErrorCode {
-  GRAPHQL_ERROR = 'GRAPHQL_ERROR'
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
+  UNSUPPORTED_MIME_TYPE = 'UNSUPPORTED_MIME_TYPE'
 }
 
 export type UserCreateInput = {
