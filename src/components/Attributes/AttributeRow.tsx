@@ -78,7 +78,11 @@ const AttributeRow = ({
       );
     case AttributeInputTypeEnum.FILE:
       return (
-        <BasicAttributeRow label={attribute.label}>
+        <BasicAttributeRow
+          label={
+            attribute.data.unit ? `${attribute.label} [${attribute.data.unit}]` : attribute.label
+          }
+        >
           <FileUploadField
             disabled={disabled}
             loading={loading}
