@@ -4,6 +4,12 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import * as ApolloReactHooks from '@dashboard/hooks/graphql';
 const defaultOptions = {} as const;
+export const CustomerGroupFragmentDoc = gql`
+    fragment CustomerGroup on CustomerGroup {
+  id
+  name
+}
+    `;
 export const AppManifestFragmentDoc = gql`
     fragment AppManifest on Manifest {
   identifier
@@ -789,12 +795,6 @@ export const PromotionRuleChannelFragmentDoc = gql`
   }
 }
     `;
-export const CustomerGroupFragmentDoc = gql`
-    fragment CustomerGroup on CustomerGroup {
-  id
-  name
-}
-    `;
 export const PromotionRuleDetailsFragmentDoc = gql`
     fragment PromotionRuleDetails on PromotionRule {
   id
@@ -803,9 +803,6 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   channels {
     ...PromotionRuleChannel
   }
-  customerGroups {
-    ...CustomerGroup
-  }
   giftIds
   rewardType
   rewardValueType
@@ -813,8 +810,7 @@ export const PromotionRuleDetailsFragmentDoc = gql`
   cataloguePredicate
   orderPredicate
 }
-    ${PromotionRuleChannelFragmentDoc}
-${CustomerGroupFragmentDoc}`;
+    ${PromotionRuleChannelFragmentDoc}`;
 export const PromotionDetailsFragmentDoc = gql`
     fragment PromotionDetails on Promotion {
   id

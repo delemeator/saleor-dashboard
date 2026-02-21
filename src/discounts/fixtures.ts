@@ -709,7 +709,7 @@ export const discount: PromotionDetailsFragment = {
       __typename: "PromotionRule",
       id: "1",
       channels: [channelsList[0]],
-      customerGroups: [],
+      // customerGroups: [],
       description:
         '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
       name: "Rule 1",
@@ -749,7 +749,7 @@ export const orderDiscount: PromotionDetailsFragment = {
       __typename: "PromotionRule",
       id: "1",
       channels: [channelsList[0]],
-      customerGroups: [],
+      // customerGroups: [],
       description:
         '{"time":1700126384046,"blocks":[{"id":"Sj7p30CLFo","type":"header","data":{"text":"Example title","level":1}}],"version":"2.24.3"}',
       name: "Rule 1",

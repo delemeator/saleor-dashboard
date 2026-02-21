@@ -42,7 +42,7 @@ const getDefaultSchema = (intl: IntlShape) =>
       required_error: intl.formatMessage(validationMessages.channelRequired),
       invalid_type_error: intl.formatMessage(validationMessages.channelRequired),
     }),
-    customerGroups: z.array(z.object({ label: z.string(), value: z.string() }), {}),
+    // customerGroups: z.array(z.object({ label: z.string(), value: z.string() }), {}),
     conditions: z.array(
       z.object({
         id: z.string().nullable(),

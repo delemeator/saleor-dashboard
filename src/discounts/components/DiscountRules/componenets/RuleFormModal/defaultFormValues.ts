@@ -6,7 +6,7 @@ const defaultFormValues: Rule = {
   name: "",
   description: "",
   channels: null,
-  customerGroups: [],
+  // customerGroups: [],
   rewardType: null,
   rewardGifts: [],
   rewardValue: 0,

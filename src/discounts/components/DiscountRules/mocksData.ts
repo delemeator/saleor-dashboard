@@ -44,7 +44,7 @@ export const catalogRules = [
     name: "Catalog rule 2",
     description: "",
     channels: [{ label: "Test", value: "Q2hhbm5lcDoy" }],
-    customerGroups: null,
+    // customerGroups: null,
     conditions: [
       {
         id: "category",
@@ -95,7 +95,7 @@ export const orderRules = [
     name: "Order rule 1",
     description: "",
     channels: [{ label: "Test", value: "Q2hhbm5lcDoy" }],
-    customerGroups: null,
+    // customerGroups: null,
     conditions: [
       {
         id: "baseSubtotalPrice",
@@ -118,7 +118,7 @@ export const orderRules = [
     name: "order rule 2",
     description: "",
     channels: [{ label: "Test", value: "Q2hhbm5lcDoy" }],
-    customerGroups: null,
+    // customerGroups: null,
     conditions: [
       {
         id: "baseSubtotalPrice",
