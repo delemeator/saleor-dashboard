@@ -1,11 +1,11 @@
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+// import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import useCustomerGroupSearch from "@dashboard/searches/useCustomerGroupSearch";
+// import useCustomerGroupSearch from "@dashboard/searches/useCustomerGroupSearch";
 import { getFormErrors } from "@dashboard/utils/errors";
 import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+// import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { Box, Input, Multiselect, Option } from "@saleor/macaw-ui-next";
@@ -37,11 +37,11 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
   const { field: channelfield } = useController<Rule, "channels">({
     name: "channels",
   });
-  const { field: groupfield } = useController<Rule, "customerGroups">({
-    name: "customerGroups",
-  });
+  // const { field: groupfield } = useController<Rule, "customerGroups">({
+  //   name: "customerGroups",
+  // });
   const selectedChannels = watch("channels");
-  const selectedGroups = watch("customerGroups");
+  // const selectedGroups = watch("customerGroups");
   const conditions = watch("conditions");
   const hasSelectedChannel = !!selectedChannels?.length;
   const currencySymbol = getCurencySymbol(selectedChannels, channels);
@@ -58,13 +58,13 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
       })),
     [channels],
   );
-  const { result: searchCustomerGroupsOpts } = useCustomerGroupSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA,
-  });
+  // const { result: searchCustomerGroupsOpts } = useCustomerGroupSearch({
+  //   variables: DEFAULT_INITIAL_SEARCH_DATA,
+  // });
 
-  const groupOptions = mapEdgesToItems(searchCustomerGroupsOpts.data?.search)?.map(group => {
-    return { label: group.name, value: group.id };
-  });
+  // const groupOptions = mapEdgesToItems(searchCustomerGroupsOpts.data?.search)?.map(group => {
+  //   return { label: group.name, value: group.id };
+  // });
 
   useEffect(() => {
     // Restart reward type to percentage if  no currency
@@ -113,7 +113,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
               disabled={disabled || channelfield.disabled}
             />
           </RuleInputWrapper>
-          <RuleInputWrapper>
+          {/* <RuleInputWrapper>
             <Multiselect
               {...groupfield}
               label={"Grupy klientów"}
@@ -124,7 +124,7 @@ export const RuleForm = <ErrorCode,>({ errors, openPlayground }: RuleFormProps<E
                 ) as Option[]
               }
             />
-          </RuleInputWrapper>
+          </RuleInputWrapper> */}
 
           <RuleConditions
             hasSelectedChannels={hasSelectedChannel}
