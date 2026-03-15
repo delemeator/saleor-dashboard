@@ -220,7 +220,7 @@ export const CategoryUpdatePage = ({
             )}
 
             <Savebar>
-              <Savebar.DeleteButton onClick={onDelete} />
+              {/* <Savebar.DeleteButton onClick={onDelete} /> */}
               <Savebar.Spacer />
               <Savebar.CancelButton onClick={() => navigate(backHref)} />
               <Savebar.ConfirmButton

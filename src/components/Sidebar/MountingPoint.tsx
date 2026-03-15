@@ -17,8 +17,8 @@ export const MountingPoint = () => {
         <Text size={3} fontWeight="bold">
           {shop?.name || ""}
         </Text>
-        {!shop?.name.toLowerCase().includes("dajar") && (
-          <a href="https://dashboard.dajar.com" target="_blank" rel="noreferrer">
+        {(!shop?.name.toLowerCase().includes("dajar") || shop?.name.toLowerCase().includes("b2b")) && (
+          <a href="https://dashboard.dajar.eu" target="_blank" rel="noreferrer">
             <Text size={3}>Dashboard Dajar</Text>
           </a>
         )}
