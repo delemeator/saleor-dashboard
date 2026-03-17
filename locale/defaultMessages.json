@@ -6548,6 +6548,9 @@
   "ZCSOaS": {
     "string": "Limit to voucher code use once"
   },
+  "l7n9sP": {
+    "string": "Applies only to non-discounted products"
+  },
   "ZDJEat": {
     "context": "button",
     "string": "Load More"

@@ -75,6 +75,7 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
   onlyForStaff: boolean;
+  excludeDiscountedProducts: boolean;
   channelListings: ChannelVoucherData[];
   name: string;
   discountType: DiscountTypeEnum;
@@ -215,6 +216,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
     onlyForStaff: voucher?.onlyForStaff || false,
+    excludeDiscountedProducts: voucher?.excludeDiscountedProducts || false,
     channelListings,
     name: voucher?.name || "",
     discountType,

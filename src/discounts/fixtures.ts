@@ -611,6 +611,7 @@ export const voucherDetails: VoucherDetailsFragment = {
   applyOncePerOrder: false,
   singleUse: false,
   onlyForStaff: false,
+  excludeDiscountedProducts: false,
   categoriesCount: {
     __typename: "CategoryCountableConnection",
     totalCount: 0,

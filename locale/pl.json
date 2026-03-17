@@ -1713,6 +1713,9 @@
   "ZCSOaS": {
     "string": "Limit użycia kodu kuponu do jednego razu"
   },
+  "l7n9sP": {
+    "string": "Stosuj tylko do nieprzecenionych produktów"
+  },
   "ZJOX8n": {
     "context": "alert message",
     "string": "Produkt już nie istnieje"

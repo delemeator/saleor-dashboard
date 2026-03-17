@@ -115,6 +115,13 @@ const VoucherLimits = ({
           name={"singleUse" satisfies keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
+        <ControlledCheckbox
+          testId="exclude-discounted-products"
+          checked={data.excludeDiscountedProducts}
+          label={intl.formatMessage(messages.excludeDiscountedProducts)}
+          name={"excludeDiscountedProducts" satisfies keyof VoucherDetailsPageFormData}
+          onChange={onChange}
+        />
       </DashboardCard.Content>
     </DashboardCard>
   );

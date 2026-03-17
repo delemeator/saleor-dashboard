@@ -32,6 +32,7 @@ export class VouchersPage extends BasePage {
       .locator('input[type="checkbox"]'),
     readonly oncePerCustomerLimitCheckbox = page.getByTestId("apply-once-per-customer"),
     readonly onlyForStaffLimitCheckbox = page.getByTestId("only-for-staff"),
+    readonly excludeDiscountedProductsCheckbox = page.getByTestId("exclude-discounted-products"),
     readonly singleUseLimitCheckbox = page.getByTestId("single-use"),
     readonly usageLimitSection = page.getByTestId("usage-limit-section"),
     readonly valueSection = page.getByTestId("value-section"),
@@ -145,6 +146,10 @@ export class VouchersPage extends BasePage {
 
   async clickOnlyForStaffLimitCheckbox() {
     await this.onlyForStaffLimitCheckbox.click();
+  }
+
+  async clickExcludeDiscountedProductsCheckbox() {
+    await this.excludeDiscountedProductsCheckbox.click();
   }
 
   async clickOncePerCustomerLimitCheckbox() {

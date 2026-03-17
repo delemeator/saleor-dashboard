@@ -35,4 +35,8 @@ export default defineMessages({
     defaultMessage: "Limit to voucher code use once",
     id: "ZCSOaS",
   },
+  excludeDiscountedProducts: {
+    defaultMessage: "Exclude discounted products",
+    id: "ZD38ZM",
+  },
 });

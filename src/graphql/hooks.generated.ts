@@ -683,6 +683,7 @@ export const VoucherDetailsFragmentDoc = gql`
   applyOncePerOrder
   applyOncePerCustomer
   onlyForStaff
+  excludeDiscountedProducts
   singleUse
   variantsCount: variants {
     totalCount
