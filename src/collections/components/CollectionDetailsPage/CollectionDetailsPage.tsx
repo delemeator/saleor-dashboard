@@ -188,7 +188,7 @@ const CollectionDetailsPage = ({
             )}
           </DetailPageLayout.RightSidebar>
           <Savebar>
-            <Savebar.DeleteButton onClick={onCollectionRemove} />
+            <Savebar.DeleteButton onClick={onCollectionRemove} disabled={!canEdit} />
             <Savebar.Spacer />
             <Savebar.CancelButton onClick={() => navigate(collectionListBackLink)} />
             <Savebar.ConfirmButton

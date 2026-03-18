@@ -12,7 +12,7 @@ import {
   getExtensionsItemsForCategoryOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { CategoryFragment } from "@dashboard/graphql";
+import { CategoryFragment, PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
@@ -22,6 +22,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
+import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth";
 
 interface CategoryTableProps
   extends PageListProps,
@@ -55,6 +57,9 @@ export const CategoryListPage = ({
   ...listProps
 }: CategoryTableProps) => {
   const navigate = useNavigator();
+  const { user } = useUser();
+
+  const canEdit = hasPermission(PermissionEnum.MANAGE_MENUS, user);
 
   const intl = useIntl();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -129,7 +134,7 @@ export const CategoryListPage = ({
             />
           </Box>
           {selectedCategoriesIds.length > 0 && (
-            <BulkDeleteButton onClick={onCategoriesDelete}>
+            <BulkDeleteButton onClick={onCategoriesDelete} disabled={!canEdit}>
               <FormattedMessage {...messages.bulkCategoryDelete} />
             </BulkDeleteButton>
           )}

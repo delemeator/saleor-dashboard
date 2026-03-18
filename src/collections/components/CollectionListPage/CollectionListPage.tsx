@@ -30,6 +30,9 @@ import { useLocation } from "react-router";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
+import { useUser } from "@dashboard/auth";
+import { hasPermission } from "@dashboard/auth/misc";
+import { PermissionEnum } from "@dashboard/graphql";
 
 interface CollectionListPageProps
   extends PageListProps,
@@ -67,6 +70,8 @@ const CollectionListPage = ({
   const intl = useIntl();
   const location = useLocation();
   const navigate = useNavigator();
+  const {user} = useUser();
+  const canEdit = user && hasPermission(PermissionEnum.MANAGE_MENUS, user);
   const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const filterDependency = filterStructure.find(getByName("channel"));
@@ -152,7 +157,7 @@ const CollectionListPage = ({
             actions={
               <Box display="flex" gap={4}>
                 {selectedCollectionIds.length > 0 && (
-                  <BulkDeleteButton onClick={onCollectionsDelete}>
+                  <BulkDeleteButton onClick={onCollectionsDelete} disabled={!canEdit}>
                     <FormattedMessage defaultMessage="Delete collections" id="FTYkgw" />
                   </BulkDeleteButton>
                 )}

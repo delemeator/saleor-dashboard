@@ -6828,7 +6828,6 @@ export type VoucherFieldPolicy = {
 	discountValue?: FieldPolicy<any> | FieldReadFunction<any>,
 	discountValueType?: FieldPolicy<any> | FieldReadFunction<any>,
 	endDate?: FieldPolicy<any> | FieldReadFunction<any>,
-	excludeDiscountedProducts?: FieldPolicy<any> | FieldReadFunction<any>,
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	metadata?: FieldPolicy<any> | FieldReadFunction<any>,
 	metafield?: FieldPolicy<any> | FieldReadFunction<any>,
