@@ -204,12 +204,12 @@ const Routes = () => {
                     component={SearchSection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_PRODUCTS, PermissionEnum.MANAGE_MENUS]}
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     path="/categories"
                     component={CategorySection}
                   />
                   <SectionRoute
-                    permissions={[PermissionEnum.MANAGE_PRODUCTS, PermissionEnum.MANAGE_MENUS]}
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     path="/collections"
                     component={CollectionSection}
                   />

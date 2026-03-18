@@ -73,6 +73,7 @@ const CollectionDetailsPage = ({
   const navigate = useNavigator();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canEdit = user && hasPermission(PermissionEnum.MANAGE_MENUS, user);
 
   const collectionListBackLink = useBackLinkWithState({
     path: collectionListPath,
@@ -193,7 +194,7 @@ const CollectionDetailsPage = ({
             <Savebar.ConfirmButton
               transitionState={saveButtonBarState}
               onClick={submit}
-              disabled={isSaveDisabled}
+              disabled={isSaveDisabled || !canEdit}
             />
           </Savebar>
         </DetailPageLayout>

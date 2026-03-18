@@ -86,6 +86,7 @@ export const CategoryUpdatePage = ({
   const navigate = useNavigator();
   const { user } = useUser();
   const canTranslate = user && hasPermission(PermissionEnum.MANAGE_TRANSLATIONS, user);
+  const canEdit = user && hasPermission(PermissionEnum.MANAGE_MENUS, user);
 
   const categoryBackListUrl = useBackLinkWithState({
     path: categoryListPath,
@@ -218,7 +219,6 @@ export const CategoryUpdatePage = ({
                 onSelectProductsIds={onSelectProductsIds}
               />
             )}
-
             <Savebar>
               {/* <Savebar.DeleteButton onClick={onDelete} /> */}
               <Savebar.Spacer />
@@ -226,7 +226,7 @@ export const CategoryUpdatePage = ({
               <Savebar.ConfirmButton
                 transitionState={saveButtonBarState}
                 onClick={submit}
-                disabled={!!isSaveDisabled}
+                disabled={!!isSaveDisabled || !canEdit}
               />
             </Savebar>
           </DetailPageLayout.Content>
