@@ -37,7 +37,7 @@ export const getExtensionsConfig = () => ({
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
-  first: 20,
+  first: 100,
   query: "",
 };
 
@@ -46,7 +46,7 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
   before: undefined,
 };
 
-export const PAGINATE_BY = 20;
+export const PAGINATE_BY = 100;
 export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns =
