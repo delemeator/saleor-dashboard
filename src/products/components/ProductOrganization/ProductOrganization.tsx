@@ -192,9 +192,6 @@ export const ProductOrganization = (props: ProductOrganizationProps) => {
             helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
             loading={fetchMoreCategories?.loading}
             onChange={o => {
-              if (fetchMoreCategories.hasMore) {
-                fetchMoreCategories.onFetchMore();
-              }
               onCategoryChange({
                 /**
                  * Fake change event
