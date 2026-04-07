@@ -12,11 +12,11 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerDetailsPage, {
-  CustomerDetailsPageFormData,
+  type CustomerDetailsPageFormData,
 } from "../components/CustomerDetailsPage";
 import { useCustomerDetails } from "../hooks/useCustomerDetails";
 import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
-import { customerListUrl, customerUrl, CustomerUrlQueryParams } from "../urls";
+import { customerListUrl, customerUrl, type CustomerUrlQueryParams } from "../urls";
 
 interface CustomerDetailsViewProps {
   id: string;

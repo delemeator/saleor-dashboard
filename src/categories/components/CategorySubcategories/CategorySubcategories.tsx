@@ -1,15 +1,15 @@
+import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
 import { categoryAddUrl } from "@dashboard/categories/urls";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
-import { CategoryDetailsQuery, PermissionEnum } from "@dashboard/graphql";
-import { ListProps, ListViews, RelayToFlat } from "@dashboard/types";
+import { type CategoryDetailsQuery,PermissionEnum } from "@dashboard/graphql";
+import { type ListProps, type ListViews, type RelayToFlat } from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { FormattedMessage } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
-import { useUser } from "@dashboard/auth";
-import { hasPermission } from "@dashboard/auth/misc";
 
 interface CategorySubcategoriesProps
   extends Pick<ListProps<ListViews.CATEGORY_LIST>, "onUpdateListSettings" | "settings"> {

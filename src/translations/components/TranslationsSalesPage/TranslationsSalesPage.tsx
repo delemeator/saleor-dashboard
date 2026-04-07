@@ -6,11 +6,11 @@ import { AppWidgets } from "@dashboard/extensions/components/AppWidgets/AppWidge
 import { ExtensionsButtonSelector } from "@dashboard/extensions/components/ExtensionsButtonSelector/ExtensionsButtonSelector";
 import { getExtensionsItemsForTranslationDetails } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
+import { LanguageCodeEnum, type SaleTranslationFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
-import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
+import { type TranslationsEntitiesPageProps } from "@dashboard/translations/types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,

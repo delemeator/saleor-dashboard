@@ -156,6 +156,7 @@
       "ProductVariantBackInStock",
       "ProductVariantCreated",
       "ProductVariantDeleted",
+      "ProductVariantDiscountedPriceUpdated",
       "ProductVariantMetadataUpdated",
       "ProductVariantOutOfStock",
       "ProductVariantStockUpdated",
@@ -222,6 +223,7 @@
       "App",
       "AppExtension",
       "AppInstallation",
+      "AppProblem",
       "AppToken",
       "Attribute",
       "AttributeTranslatableContent",
@@ -434,21 +436,6 @@
     ],
     "UserOrApp": [
       "App",
-      "User"
-    ],
-    "_Entity": [
-      "Address",
-      "App",
-      "Category",
-      "Collection",
-      "CustomerGroup",
-      "Group",
-      "Order",
-      "PageType",
-      "Product",
-      "ProductMedia",
-      "ProductType",
-      "ProductVariant",
       "User"
     ]
   }

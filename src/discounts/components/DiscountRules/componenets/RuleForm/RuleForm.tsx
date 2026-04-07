@@ -1,14 +1,12 @@
-// import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { createEmptyCodition, Rule } from "@dashboard/discounts/models";
+import { createEmptyCodition, type Rule } from "@dashboard/discounts/models";
 import { PromotionTypeEnum, RewardValueTypeEnum } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 // import useCustomerGroupSearch from "@dashboard/searches/useCustomerGroupSearch";
 import { getFormErrors } from "@dashboard/utils/errors";
-import { CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
-// import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { type CommonError, getCommonFormFieldErrorMessage } from "@dashboard/utils/errors/common";
 import { RichTextContext } from "@dashboard/utils/richText/context";
 import useRichText from "@dashboard/utils/richText/useRichText";
-import { Box, Input, Multiselect, Option } from "@saleor/macaw-ui-next";
+import { Box, Input, type Option } from "@saleor/macaw-ui-next";
 import { useEffect, useMemo } from "react";
 import { useController, useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";

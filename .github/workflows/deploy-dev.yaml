@@ -15,11 +15,6 @@ jobs:
       id-token: write # needed by aws-actions/configure-aws-credentials
       contents: read
     env:
-      ## backward compatibility for older versions
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-      ## backward compatibility for older versions
-      API_URI: /graphql/
-
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
@@ -28,13 +23,12 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.DEV_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
       IS_CLOUD_INSTANCE: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event.inputs.git_ref }}
 
@@ -45,11 +39,11 @@ jobs:
           RELEASE="${CURRENT_VERSION}-${HASH}"
           echo "CUSTOM_VERSION=${RELEASE}" >> $GITHUB_ENV
           echo "SENTRY_RELEASE=${RELEASE}" >> $GITHUB_ENV
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Package
         timeout-minutes: 15
@@ -68,19 +62,19 @@ jobs:
 
       - name: Deploy dev
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev2/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-load-test2/"
 
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/saleor-dev-data-test/"
         env:
           DEPLOYMENT_BUCKET: ${{ secrets.AWS_CLOUD_DEV_DEPLOYMENT_BUCKET }}

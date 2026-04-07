@@ -24,19 +24,19 @@ jobs:
           vault-url: ${{ secrets.VAULT_URL }}
           vault-jwt: ${{ secrets.VAULT_JWT }}
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ steps.get-token.outputs.token }}
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
       - name: Install Dependencies
         run: pnpm install
       - name: Publishing version
-        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1.7.0
         id: changesets
         with:
           title: "Prepare release ${{ github.ref_name }}"
@@ -63,12 +63,8 @@ jobs:
     outputs:
       MINOR_VERSION: ${{ env.MINOR_VERSION }}
       CUSTOM_VERSION: ${{ env.CUSTOM_VERSION || env.VERSION }}
+      ENVIRONMENT: ${{ env.ENVIRONMENT }}
     env:
-      ## backward compatibility for older versions
-      APPS_MARKETPLACE_API_URI: "https://apps.staging.saleor.io/api/v2/saleor-apps"
-      ## backward compatibility for older versions
-      API_URI: /graphql/
-
       API_URL: /graphql/
       APP_MOUNT_URI: /dashboard/
       STATIC_URL: /dashboard/static/
@@ -77,14 +73,13 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      APPS_MARKETPLACE_API_URL: "https://apps.staging.saleor.io/api/v2/saleor-apps"
       EXTENSIONS_API_URL: "https://apps.staging.saleor.io/api/v1/extensions"
       VERSION: ${{ github.event.inputs.git_ref || github.ref_name }}
       IS_CLOUD_INSTANCE: true
       ENABLED_SERVICE_NAME_HEADER: true
       ONBOARDING_USER_JOINED_DATE_THRESHOLD: ${{ vars.STAGING_ONBOARDING_USER_JOINED_DATE_THRESHOLD }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ env.VERSION }}
 
@@ -109,11 +104,11 @@ jobs:
           minor_version=$(echo "$VERSION" | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#\1.\2#p')
           echo "MINOR_VERSION=${minor_version}" >> "$GITHUB_ENV"
 
-      - uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v4.0.0
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: ".nvmrc"
+          node-version-file: "package.json"
           cache: "pnpm"
 
       - name: Create check in prepare release PR
@@ -145,7 +140,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
-          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/"
+          aws s3 sync build/dashboard "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/static/" --delete
           aws s3 cp build/dashboard/index.html "s3://${DEPLOYMENT_BUCKET}/${ENVIRONMENT}/"
 
           IFS=',' read -ra DISTRIBUTIONS_ARRAY <<< "${CDN_DISTRIBUTIONS}"
@@ -169,17 +164,6 @@ jobs:
           SUMMARY: "Deploy finished with status ${{ steps.deploy.outcome }}. To check details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           DETAILS_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-      - name: Notify Slack
-        if: ${{ always() }}
-        env:
-          JOB_DEPLOYMENT_KIND: staging
-          JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment of ${{ env.CUSTOM_VERSION || env.VERSION }} to ${{ env.ENVIRONMENT }}"
-        run: |
-          python3 ./.github/workflows/notify/notify-slack.py
-
       - name: Prepare Sandbox release pull request
         if: needs.prepare-release.outputs.hasChangesets == 'false'
         run: |
@@ -198,6 +182,22 @@ jobs:
           }')
 
           gh api /repos/saleor/saleor-cloud-deployments/dispatches --input - <<< $payload
+
+  notify-slack:
+    needs: build
+    if: always()
+    permissions: {}
+    uses: saleor/saleor-internal-actions/.github/workflows/notify-slack.yaml@eb0c692da7bf13f5e1a82c17488b24c514dd10a1 # v1.10.0
+    with:
+      type: deployment
+      ref: ${{ needs.build.outputs.CUSTOM_VERSION || github.ref_name }}
+      status: ${{ needs.build.result }}
+      product: dashboard
+      environment: ${{ needs.build.outputs.ENVIRONMENT }}
+      mention_on: failure
+    secrets:
+      mention_group_id: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
+      slack-webhook-url: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
 
   run-tests-on-release:
     needs: [prepare-release, build]

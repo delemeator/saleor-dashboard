@@ -1,4 +1,6 @@
-import { categoryAddUrl, CategoryListUrlSortField } from "@dashboard/categories/urls";
+import { hasPermission } from "@dashboard/auth/misc";
+import { useUser } from "@dashboard/auth/useUser";
+import { categoryAddUrl, type CategoryListUrlSortField } from "@dashboard/categories/urls";
 import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
@@ -12,18 +14,21 @@ import {
   getExtensionsItemsForCategoryOverviewActions,
 } from "@dashboard/extensions/getExtensionsItems";
 import { useExtensions } from "@dashboard/extensions/hooks/useExtensions";
-import { CategoryFragment, PermissionEnum } from "@dashboard/graphql";
+import { type CategoryFragment, PermissionEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@dashboard/types";
+import {
+  type PageListProps,
+  type SearchPageProps,
+  type SortPage,
+  type TabPageProps,
+} from "@dashboard/types";
 import { Box, Button } from "@saleor/macaw-ui-next";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import { messages } from "./messages";
-import { hasPermission } from "@dashboard/auth/misc";
-import { useUser } from "@dashboard/auth";
 
 interface CategoryTableProps
   extends PageListProps,
