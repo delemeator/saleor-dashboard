@@ -75,13 +75,13 @@ interface OrderReturnProps {
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-const getOrderRefundPageFormData = (): OrderReturnData => ({
+const getOrderRefundPageFormData = (transactionId?: string | null): OrderReturnData => ({
   amount: undefined,
   amountCalculationMode: OrderRefundAmountCalculationMode.MANUAL,
   refundShipmentCosts: false,
   autoGrantRefund: true,
   autoSendRefund: true,
-  transactionId: "",
+  transactionId: transactionId || "",
 });
 
 function useOrderReturnForm(
@@ -94,7 +94,7 @@ function useOrderReturnForm(
     triggerChange,
     formId,
     setIsSubmitDisabled,
-  } = useForm(getOrderRefundPageFormData(), undefined, {
+  } = useForm(getOrderRefundPageFormData(order.transactions.filter(t => t.chargedAmount.amount > 0)[0]?.id), undefined, {
     confirmLeave: true,
   });
   const [isAmountDirty, setAmountDirty] = React.useState(false);

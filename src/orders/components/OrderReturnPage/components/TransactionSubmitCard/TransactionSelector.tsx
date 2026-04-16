@@ -91,7 +91,7 @@ export const TransactionSelector = ({
           defaultMessage: "Select transaction",
           id: "qy/XqL",
         })}
-        value={value || options[0]?.value || null}
+        value={value || null}
         options={options}
       />
     </Box>
