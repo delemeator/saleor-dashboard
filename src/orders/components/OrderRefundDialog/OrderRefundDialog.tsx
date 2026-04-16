@@ -10,6 +10,7 @@ import { useOrderRefundDialog } from "./useOrderRefundDialog";
 interface OrderRefundDialogProps {
   open: boolean;
   onClose: () => void;
+  onReturn: () => void;
   onStandardRefund: () => void;
   onManualRefund: () => void;
 }
@@ -17,6 +18,7 @@ interface OrderRefundDialogProps {
 export const OrderRefundDialog = ({
   open,
   onClose,
+  onReturn,
   onStandardRefund,
   onManualRefund,
 }: OrderRefundDialogProps) => {
@@ -41,6 +43,15 @@ export const OrderRefundDialog = ({
             display="flex"
             flexDirection="column"
           >
+            <Box>
+              <RadioTiles.RadioTile
+                value={"product-refund"}
+                data-test-id="product-refund"
+                checked={selectedRefundType === "product-refund"}
+                title={"Zwrot produktów i pieniędzy"}
+                description={"Zarejestruj zwrot produktów od klienta i zwróć pieniądze."}
+              />
+            </Box>
             <Box>
               <RadioTiles.RadioTile
                 value={"standard"}
@@ -74,7 +85,13 @@ export const OrderRefundDialog = ({
             <Text fontWeight="medium">{intl.formatMessage(buttonMessages.back)}</Text>
           </Button>
           <Button
-            onClick={selectedRefundType === "standard" ? onStandardRefund : onManualRefund}
+            onClick={
+              selectedRefundType === "standard"
+                ? onStandardRefund
+                : selectedRefundType === "product-refund"
+                ? onReturn
+                : onManualRefund
+            }
             data-test-id="proceed-button"
           >
             <Text fontWeight="medium" color="buttonDefaultPrimary">

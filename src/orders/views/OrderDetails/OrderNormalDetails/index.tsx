@@ -509,6 +509,7 @@ export const OrderNormalDetails = ({
       <OrderRefundDialog
         open={params.action === "add-refund"}
         onClose={closeModal}
+        onReturn={() => navigate(orderReturnUrl(id), { replace: true })}
         onStandardRefund={() => navigate(orderTransactionRefundUrl(id), { replace: true })}
         onManualRefund={() => navigate(orderManualTransactionRefundUrl(id), { replace: true })}
       />

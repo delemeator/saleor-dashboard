@@ -1316,7 +1316,7 @@
   },
   "QX0gQb": {
     "context": "radio button label",
-    "string": "Użyj listy produktów, aby sugerować kwotę zwrotu. Idealne do zwracania konkretnych przedmiotów lub całego zamówienia."
+    "string": "Użyj listy produktów, aby sugerować kwotę zwrotu. Użyj tylko jeśli klient nie odsyła produktu"
   },
   "Qb2XN5": {
     "string": "Funkcja \"Oznacz jako opłacone\" tworzy {link} - używane przez aplikacje płatnicze"
@@ -1855,7 +1855,7 @@
   },
   "cN8pa0": {
     "context": "radio button label",
-    "string": "Zwrot z pozycjami wiersza"
+    "string": "Zwrot środków BEZ zwrotu produktu"
   },
   "cOki0G": {
     "string": "Co się stanie, jeśli odmówię?"
