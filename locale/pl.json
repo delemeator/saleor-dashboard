@@ -1901,6 +1901,9 @@
   "d68yq7": {
     "string": "Usuń karty podarunkowe"
   },
+  "qy/XqL": {
+    "string": "Wybierz płatność"
+  },
   "d7dT8o": {
     "context": "button, sets granted refund amount in input",
     "string": "Ustaw maks."

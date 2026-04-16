@@ -79,8 +79,8 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
   amount: undefined,
   amountCalculationMode: OrderRefundAmountCalculationMode.MANUAL,
   refundShipmentCosts: false,
-  autoGrantRefund: false,
-  autoSendRefund: false,
+  autoGrantRefund: true,
+  autoSendRefund: true,
   transactionId: "",
 });
 
