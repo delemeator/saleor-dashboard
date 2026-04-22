@@ -13308,6 +13308,8 @@ export const OrderListDocument = gql`
         number
         paymentStatus
         status
+        digitStatus: metafield(key: "digitStatus")
+        digitWarehouse: metafield(key: "digitWarehouse")
         total {
           __typename
           gross {

@@ -66,6 +66,16 @@ export const orderListStaticColumnAdapter = (
       title: intl.formatMessage(columnsMessages.channel),
       width: 200,
     },
+    {
+      "id": "digitStatus",
+      "title": "Stat.",
+      "width": 50,
+    },
+    {
+      "id": "digitWarehouse",
+      "title": "Mag.",
+      "width": 50,
+    }
   ].map(column => ({
     ...column,
     icon: getColumnSortDirectionIcon(sort, column.id),
@@ -107,6 +117,10 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
         return getTotalCellContent(rowData);
       case "channel":
         return getChannelCellContent(rowData);
+      case "digitStatus":
+        return readonlyTextCell(rowData.digitStatus ?? "-");
+      case "digitWarehouse":
+        return readonlyTextCell(rowData.digitWarehouse ?? "-");
       default:
         return textCell("");
     }

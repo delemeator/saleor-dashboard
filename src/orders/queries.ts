@@ -34,6 +34,8 @@ export const orderListQuery = gql`
           number
           paymentStatus
           status
+          digitStatus: metafield(key: "digitStatus")
+          digitWarehouse: metafield(key: "digitWarehouse")
           total {
             __typename
             gross {
