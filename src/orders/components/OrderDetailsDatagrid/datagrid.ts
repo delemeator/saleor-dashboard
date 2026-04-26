@@ -88,6 +88,8 @@ export const createGetCellContent =
       return readonlyTextCell("", false);
     }
 
+    const discounted = rowData.undiscountedUnitPrice.gross.amount - 0.001 > rowData.unitPrice.gross.amount;
+
     switch (columnId) {
       case "product":
         return thumbnailCell(
@@ -105,7 +107,7 @@ export const createGetCellContent =
         return moneyDiscountedCell(
           {
             value: rowData.unitPrice.gross.amount,
-            undiscounted: rowData.undiscountedUnitPrice.gross.amount,
+            undiscounted: discounted ? rowData.undiscountedUnitPrice.gross.amount : rowData.unitPrice.gross.amount,
             currency: rowData.unitPrice.gross.currency,
             locale,
             lineItemId: rowData.id,
@@ -117,7 +119,7 @@ export const createGetCellContent =
         return moneyDiscountedCell(
           {
             value: rowData.totalPrice.gross.amount,
-            undiscounted: rowData.undiscountedUnitPrice.gross.amount * rowData.quantity,
+            undiscounted: discounted ? rowData.undiscountedUnitPrice.gross.amount * rowData.quantity : rowData.totalPrice.gross.amount,
             currency: rowData.totalPrice.gross.currency,
             locale,
             lineItemId: rowData.id,
