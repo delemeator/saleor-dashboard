@@ -4,6 +4,7 @@ import {
   buttonCell,
   loadingCell,
   moneyCell,
+  moneyDiscountedCell,
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
@@ -16,6 +17,7 @@ import { type GridCell, type Item } from "@glideapps/glide-data-grid";
 import { type IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
+import { Locale } from "@dashboard/components/Locale";
 
 export const orderDetailsStaticColumnsAdapter = (
   intl: IntlShape,
@@ -65,10 +67,11 @@ interface GetCellContentProps {
   loading: boolean;
   intl: IntlShape;
   onOrderLineShowMetadata: (id: string) => void;
+  locale: Locale;
 }
 
 export const createGetCellContent =
-  ({ columns, data, loading, onOrderLineShowMetadata, intl }: GetCellContentProps) =>
+  ({ columns, data, loading, onOrderLineShowMetadata, intl, locale }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
     if (loading) {
       return loadingCell();
@@ -99,9 +102,14 @@ export const createGetCellContent =
       case "quantity":
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "price":
-        return moneyCell(
-          rowData.unitPrice.gross.amount,
-          rowData.unitPrice.gross.currency,
+        return moneyDiscountedCell(
+          {
+            value: rowData.unitPrice.gross.amount,
+            undiscounted: rowData.unitPrice.gross.amount,
+            currency: rowData.unitPrice.gross.currency,
+            locale,
+            lineItemId: rowData.id,
+          },
           readonyOptions,
         );
 

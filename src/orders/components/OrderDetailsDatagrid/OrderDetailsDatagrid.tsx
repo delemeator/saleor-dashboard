@@ -23,6 +23,7 @@ import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { createGetCellContent, orderDetailsStaticColumnsAdapter } from "./datagrid";
 import { messages } from "./messages";
 import { OrderDetailsRowActions } from "./OrderDetailsRowActions";
+import useLocale from "@dashboard/hooks/useLocale";
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
@@ -38,6 +39,7 @@ export const OrderDetailsDatagrid = ({
   datagridCustomTheme = {},
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
+  const { locale } = useLocale();
 
   const datagrid = useDatagridChangeState();
   const { updateListSettings, settings } = useListSettings(ListViews.ORDER_DETAILS_LIST);
@@ -68,6 +70,7 @@ export const OrderDetailsDatagrid = ({
       loading,
       onOrderLineShowMetadata,
       intl,
+      locale
     }),
     [visibleColumns, loading, lines, intl, onOrderLineShowMetadata],
   );
