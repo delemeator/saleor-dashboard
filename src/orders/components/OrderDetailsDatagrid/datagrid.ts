@@ -105,7 +105,7 @@ export const createGetCellContent =
         return moneyDiscountedCell(
           {
             value: rowData.unitPrice.gross.amount,
-            undiscounted: rowData.unitPrice.gross.amount,
+            undiscounted: rowData.undiscountedUnitPrice.gross.amount,
             currency: rowData.unitPrice.gross.currency,
             locale,
             lineItemId: rowData.id,
@@ -114,9 +114,14 @@ export const createGetCellContent =
         );
 
       case "total":
-        return moneyCell(
-          rowData.totalPrice.gross.amount,
-          rowData.totalPrice.gross.currency,
+        return moneyDiscountedCell(
+          {
+            value: rowData.totalPrice.gross.amount,
+            undiscounted: rowData.undiscountedUnitPrice.gross.amount * rowData.quantity,
+            currency: rowData.totalPrice.gross.currency,
+            locale,
+            lineItemId: rowData.id,
+          },
           readonyOptions,
         );
       case "isGift":
