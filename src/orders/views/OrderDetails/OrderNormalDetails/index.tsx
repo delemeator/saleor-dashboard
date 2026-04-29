@@ -324,7 +324,12 @@ export const OrderNormalDetails = ({
           confirmButtonState={orderTransactionAction.opts.status}
           errors={orderTransactionAction.opts.data?.transactionRequestAction?.errors ?? []}
           orderTotal={order.total.gross}
-          authorizedAmount={selectedTransaction.authorizedAmount}
+          authorizedAmount={{
+            ...selectedTransaction.authorizedAmount,
+            amount:
+              selectedTransaction.authorizedAmount.amount +
+              selectedTransaction.authorizePendingAmount.amount,
+          }}
           chargedAmount={selectedTransaction.chargedAmount}
           orderBalance={order.totalBalance}
           onClose={closeModal}
