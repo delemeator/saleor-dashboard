@@ -189,8 +189,10 @@ const AttributeRow = ({
             label=""
             name={`attribute:${attribute.label}`}
             id={`attribute:${attribute.label}`}
-            onChange={event => onChange(attribute.id, event.target.value)}
-            type="number"
+            autoComplete="off"
+            inputMode="decimal"
+            onChange={event => onChange(attribute.id, event.target.value.replace(/,/g, "."))}
+            type="text"
             value={attribute.value[0]}
             size="small"
             helperText={getErrorMessage(error, intl)}
