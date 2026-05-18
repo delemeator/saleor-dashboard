@@ -161,6 +161,7 @@ export interface Node {
 }
 export interface Container extends Node {
   name: string;
+  slug?: string;
 }
 export interface SlugNode {
   slug: string;

@@ -1,7 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
 import { Grid } from "@dashboard/components/Grid";
-import { type DiscountErrorFragment } from "@dashboard/graphql";
+import { VoucherTypeEnum, type DiscountErrorFragment } from "@dashboard/graphql";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import { TextField } from "@material-ui/core";
@@ -117,10 +117,11 @@ const VoucherLimits = ({
         />
         <ControlledCheckbox
           testId="exclude-discounted-products"
-          checked={data.excludeDiscountedProducts}
+          checked={data.excludeDiscountedProducts && data.type === VoucherTypeEnum.SPECIFIC_PRODUCT}
           label={intl.formatMessage(messages.excludeDiscountedProducts)}
           name={"excludeDiscountedProducts" satisfies keyof VoucherDetailsPageFormData}
           onChange={onChange}
+          disabled={data.type !== VoucherTypeEnum.SPECIFIC_PRODUCT}
         />
       </DashboardCard.Content>
     </DashboardCard>

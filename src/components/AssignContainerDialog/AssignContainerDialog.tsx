@@ -82,6 +82,8 @@ const AssignContainerDialog = ({
 
   const itemCount = containers?.length ?? 0;
 
+  const modifiedContainers = containers.map(container => container.slug ? { ...container, name: `${container.name} (${container.slug})` } : container)
+
   return (
     <DashboardModal onChange={onClose} open={open}>
       <DashboardModal.Content size="sm" __gridTemplateRows="auto auto 1fr auto">
@@ -119,13 +121,13 @@ const AssignContainerDialog = ({
               )}
               {selectionMode === "single" ? (
                 <SingleSelectionRows
-                  containers={containers}
+                  containers={modifiedContainers}
                   selectedItemId={singleSelection.selectedItemId}
                   onSelect={singleSelection.handleSelect}
                 />
               ) : (
                 <MultiSelectionRows
-                  containers={containers}
+                  containers={modifiedContainers}
                   isSelected={multiSelection.isSelected}
                   onToggle={multiSelection.handleToggle}
                 />

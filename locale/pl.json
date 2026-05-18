@@ -2878,7 +2878,7 @@
   },
   "ymo+cm": {
     "context": "voucher discount",
-    "string": "Wszystkie produkty"
+    "string": "Całe zamówienie (nie stosować z \"exclude discounted products\")"
   },
   "ys0jH2": {
     "context": "channel publication status",
