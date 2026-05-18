@@ -50,7 +50,7 @@ const AssignModelDialogInner = ({
   });
 
   const containers: Container[] = useMemo(
-    () => pages?.map(page => ({ id: page.id, name: page.title })) ?? [],
+    () => pages?.map(page => ({ id: page.id, name: page.title, slug: page.slug })) ?? [],
     [pages],
   );
 

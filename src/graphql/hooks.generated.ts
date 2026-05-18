@@ -16916,6 +16916,7 @@ export const SearchCollectionsDocument = gql`
       node {
         id
         name
+        slug
       }
     }
     pageInfo {
@@ -17240,6 +17241,7 @@ export const SearchPagesDocument = gql`
       node {
         id
         title
+        slug
       }
     }
     pageInfo {

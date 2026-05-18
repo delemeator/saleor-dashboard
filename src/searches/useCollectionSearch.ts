@@ -22,6 +22,7 @@ export const searchCollections = gql`
         node {
           id
           name
+          slug
         }
       }
       pageInfo {
