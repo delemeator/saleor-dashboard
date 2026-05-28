@@ -18,15 +18,14 @@ export const generateDraftVoucherCode = (code: string) => {
 
 const generateChunk = customAlphabet("23456789ABCDEFGHJKLMNPQRSTUVWXYZ", 4);
 
-const generateFormattedCode = () => {
-  return `${generateChunk()}-${generateChunk()}-${generateChunk()}`;
+const generateFormattedCode = (chunks: number = 3) => {
+  return Array.from({ length: chunks }).map(() => generateChunk()).join("-");
 };
 
 export const generateMultipleVoucherCodes = (quantity: string, prefix?: string) => {
   return Array.from({ length: Number(quantity) }).map(() => {
-    const newCode = generateFormattedCode(); 
     
-    return generateDraftVoucherCode(prefix ? `${prefix}-${newCode}` : newCode);
+    return generateDraftVoucherCode(prefix ? `${prefix}-${generateFormattedCode(3)}` : generateFormattedCode(4));
   });
 };
 
