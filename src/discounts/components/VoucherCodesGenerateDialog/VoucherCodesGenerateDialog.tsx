@@ -21,7 +21,7 @@ const initialData: GenerateMultipleVoucherCodeFormData = {
   quantity: "",
   prefix: "",
 };
-const MAX_VOUCHER_CODES = 50;
+const MAX_VOUCHER_CODES = 1000;
 
 export const VoucherCodesGenerateDialog = ({
   open,

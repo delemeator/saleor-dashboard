@@ -4,7 +4,7 @@ import {
   type SearchProductsOpts,
 } from "@dashboard/discounts/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { v4 as uuidv4 } from "uuid";
+import { customAlphabet } from "nanoid";
 
 import { type VoucherCode } from "../VoucherCodesDatagrid/types";
 import { type FormData } from "./types";
@@ -16,10 +16,18 @@ export const generateDraftVoucherCode = (code: string) => {
   };
 };
 
+const generateChunk = customAlphabet("23456789ABCDEFGHJKLMNPQRSTUVWXYZ", 4);
+
+const generateFormattedCode = () => {
+  return `${generateChunk()}-${generateChunk()}-${generateChunk()}`;
+};
+
 export const generateMultipleVoucherCodes = (quantity: string, prefix?: string) => {
-  return Array.from({ length: Number(quantity) }).map(() =>
-    generateDraftVoucherCode(prefix ? `${prefix}-${uuidv4()}` : uuidv4()),
-  );
+  return Array.from({ length: Number(quantity) }).map(() => {
+    const newCode = generateFormattedCode(); 
+    
+    return generateDraftVoucherCode(prefix ? `${prefix}-${newCode}` : newCode);
+  });
 };
 
 export const voucherCodeExists = (code: string, voucherCodes: VoucherCode[]) => {
