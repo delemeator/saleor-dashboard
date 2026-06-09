@@ -44,6 +44,10 @@ export function useRefundWithinReturn({
                 id: line.data.orderLineId,
                 quantity: line.value,
               })),
+              ...formData.waitingItemsQuantities.map(line => ({
+                id: line.data.orderLineId,
+                quantity: line.value,
+              })),
               ...formData.unfulfilledItemsQuantities.map(({ id, value }) => ({
                 id,
                 quantity: value,
