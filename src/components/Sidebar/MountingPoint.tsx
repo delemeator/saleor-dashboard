@@ -37,6 +37,11 @@ export const MountingPoint = () => {
             <Text size={3}>Dashboard Patio</Text>
           </a>
         )}
+        {!shop?.name.toLowerCase().includes("marketplace") && (
+          <a href="https://dashboard.dajar.pro" target="_blank" rel="noreferrer">
+            <Text size={3}>Dashboard Marketplace</Text>
+          </a>
+        )}
       </Box>
     </Box>
   );
