@@ -475,6 +475,8 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   postalCode: data?.postalCode || "",
   streetAddress1: data?.streetAddress1 || "",
   streetAddress2: data?.streetAddress2 || "",
+  // keeps vatId and KSeF fields when a customer address is copied onto an order
+  metadata: data?.metadata?.map(({ key, value }) => ({ key, value })) ?? [],
 });
 
 export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
